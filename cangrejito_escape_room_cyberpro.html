@@ -1,0 +1,1629 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Operación Rescate Cangrejito Pistachito</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Courier New", monospace;
+        background: #0a0e27;
+        color: #00ff88;
+        overflow-x: hidden;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 1.5rem;
+        min-height: 100vh;
+        position: relative;
+      }
+
+      .background-crab {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 400px;
+        opacity: 0.08;
+        z-index: 0;
+        pointer-events: none;
+        filter: brightness(1.2);
+      }
+
+      .content {
+        position: relative;
+        z-index: 1;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 2rem;
+        border-top: 2px solid #ff0080;
+        border-bottom: 2px solid #ff0080;
+        padding: 1rem 0;
+      }
+
+      .header-text {
+        font-size: 16px;
+        letter-spacing: 3px;
+        color: #ff0080;
+        text-transform: uppercase;
+        text-shadow: 0 0 10px rgba(255, 0, 128, 0.5);
+        animation: flicker 0.15s infinite;
+      }
+
+      @keyframes flicker {
+        0%,
+        100% {
+          text-shadow: 0 0 10px rgba(255, 0, 128, 0.5);
+        }
+        50% {
+          text-shadow: 0 0 20px rgba(255, 0, 128, 0.8);
+        }
+      }
+
+      .mission-status {
+        font-size: 11px;
+        color: #ff0080;
+        margin-top: 0.5rem;
+        letter-spacing: 2px;
+      }
+
+      .status-bar {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin: 1.5rem 0;
+        padding: 1rem;
+        border: 1px solid #ff008044;
+        background: linear-gradient(
+          90deg,
+          rgba(255, 0, 128, 0.05),
+          transparent
+        );
+      }
+
+      .status-item {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .status-value {
+        color: #ff0080;
+        font-weight: bold;
+      }
+
+      .clue-display {
+        margin-bottom: 2rem;
+        padding: 1.5rem;
+        border: 2px solid #ff0080;
+        background: rgba(255, 0, 128, 0.03);
+        box-shadow: 0 0 20px rgba(255, 0, 128, 0.2);
+      }
+
+      .clue-label {
+        font-size: 10px;
+        color: #ff0080;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 0.5rem;
+        animation: pulse-red 2s infinite;
+      }
+
+      @keyframes pulse-red {
+        0%,
+        100% {
+          opacity: 0.7;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+
+      .clue-text {
+        font-size: 16px;
+        color: #ff0080;
+        line-height: 1.6;
+        font-weight: bold;
+      }
+
+      .pin-section {
+        text-align: center;
+        margin: 2rem 0;
+      }
+
+      .pin-label {
+        font-size: 10px;
+        color: #ff0080;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 1rem;
+      }
+
+      .pin-display {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(65px, 1fr));
+        gap: 12px;
+        margin-bottom: 2rem;
+      }
+
+      .pin-digit {
+        aspect-ratio: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid;
+        font-weight: bold;
+        font-size: 28px;
+        position: relative;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background: rgba(0, 0, 0, 0.6);
+      }
+
+      .pin-digit.locked {
+        border-color: #ff0080;
+        color: #ff0080;
+        box-shadow:
+          0 0 15px rgba(255, 0, 128, 0.5),
+          inset 0 0 15px rgba(255, 0, 128, 0.1);
+      }
+
+      .pin-digit.available {
+        border-color: #ffe066;
+        color: #ffe066;
+        box-shadow:
+          0 0 18px rgba(255, 224, 102, 0.45),
+          inset 0 0 15px rgba(255, 224, 102, 0.08);
+      }
+
+      .pin-digit.selected {
+        border-color: #ffffff;
+        color: #ffffff;
+        box-shadow:
+          0 0 26px rgba(255, 255, 255, 0.7),
+          inset 0 0 18px rgba(255, 255, 255, 0.16);
+      }
+
+      .pin-digit.future {
+        cursor: default;
+        opacity: 0.72;
+      }
+
+      .pin-digit.unlocked {
+        border-color: #00ff88;
+        color: #00ff88;
+        box-shadow:
+          0 0 20px rgba(0, 255, 136, 0.6),
+          inset 0 0 15px rgba(0, 255, 136, 0.1);
+        text-shadow: 0 0 10px rgba(0, 255, 136, 0.8);
+      }
+
+      .pin-digit.unlocked:hover {
+        box-shadow:
+          0 0 30px rgba(0, 255, 136, 0.9),
+          inset 0 0 20px rgba(0, 255, 136, 0.2);
+        transform: scale(1.08);
+      }
+
+      .pin-digit.locked:hover {
+        box-shadow:
+          0 0 25px rgba(255, 0, 128, 0.8),
+          inset 0 0 20px rgba(255, 0, 128, 0.15);
+        border-color: #ff66ff;
+        animation: unlock-pulse 0.5s;
+      }
+
+      .pin-digit.future:hover {
+        border-color: #ff0080;
+        box-shadow:
+          0 0 15px rgba(255, 0, 128, 0.5),
+          inset 0 0 15px rgba(255, 0, 128, 0.1);
+        animation: none;
+        transform: none;
+      }
+
+      @keyframes unlock-pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
+
+      .lock-icon {
+        font-size: 24px;
+      }
+
+      .pin-index {
+        position: absolute;
+        top: 5px;
+        left: 6px;
+        font-size: 8px;
+        line-height: 1;
+        opacity: 0.78;
+      }
+
+      .timer {
+        font-size: 8px;
+        color: #ff0080;
+        position: absolute;
+        bottom: 4px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: bold;
+      }
+
+      .tooltip {
+        position: absolute;
+        bottom: 120%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.98);
+        color: #ff0080;
+        padding: 0.8rem 1rem;
+        border-radius: 0;
+        font-size: 9px;
+        white-space: nowrap;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.2s;
+        z-index: 10;
+        border: 1px solid #ff0080;
+        box-shadow: 0 0 10px rgba(255, 0, 128, 0.5);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        line-height: 1.4;
+      }
+
+      .pin-digit:hover .tooltip {
+        opacity: 1;
+      }
+
+      .input-section {
+        background: rgba(255, 0, 128, 0.05);
+        border: 2px solid #ff0080;
+        padding: 1.5rem;
+        margin: 2rem 0;
+        box-shadow: 0 0 15px rgba(255, 0, 128, 0.2);
+      }
+
+      .input-label {
+        font-size: 11px;
+        color: #ff0080;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 1rem;
+      }
+
+      .input-group {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 1rem;
+      }
+
+      input[type="text"] {
+        flex: 1;
+        background: rgba(255, 0, 128, 0.1);
+        border: 1px solid #ff0080;
+        color: #ff0080;
+        padding: 0.8rem;
+        font-size: 16px;
+        font-family: "Courier New", monospace;
+        text-align: center;
+        letter-spacing: 4px;
+        box-shadow: inset 0 0 10px rgba(255, 0, 128, 0.1);
+      }
+
+      input[type="text"]::placeholder {
+        color: rgba(255, 0, 128, 0.3);
+      }
+
+      input[type="text"]:focus {
+        outline: none;
+        box-shadow:
+          inset 0 0 15px rgba(255, 0, 128, 0.3),
+          0 0 15px rgba(255, 0, 128, 0.4);
+        border-color: #ff66ff;
+      }
+
+      button {
+        background: #ff0080;
+        color: #fff;
+        border: 1px solid #ff0080;
+        padding: 0.8rem 1.5rem;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        box-shadow: 0 0 10px rgba(255, 0, 128, 0.4);
+        transition: all 0.3s;
+        font-family: "Courier New", monospace;
+      }
+
+      button:hover {
+        box-shadow: 0 0 20px rgba(255, 0, 128, 0.8);
+      }
+
+      button:disabled {
+        cursor: not-allowed;
+        opacity: 0.45;
+        box-shadow: none;
+      }
+
+      input[type="text"]:disabled {
+        cursor: not-allowed;
+        opacity: 0.55;
+      }
+
+      .validation-message {
+        margin-top: 1rem;
+        padding: 1rem;
+        text-align: center;
+        font-weight: bold;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        display: none;
+      }
+
+      .validation-message.success {
+        display: block;
+        background: rgba(0, 255, 136, 0.1);
+        border: 2px solid #00ff88;
+        color: #00ff88;
+        box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+        animation: success-glow 0.5s ease;
+      }
+
+      .validation-message.error {
+        display: block;
+        background: rgba(255, 0, 128, 0.1);
+        border: 2px solid #ff0080;
+        color: #ff0080;
+        box-shadow: 0 0 20px rgba(255, 0, 128, 0.5);
+        animation: error-shake 0.3s ease;
+      }
+
+      @keyframes success-glow {
+        0% {
+          transform: scale(0.95);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      @keyframes error-shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-10px);
+        }
+        75% {
+          transform: translateX(10px);
+        }
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin: 2rem 0;
+      }
+
+      .stat-card {
+        padding: 1rem;
+        border: 1px solid #ff0080;
+        background: rgba(255, 0, 128, 0.05);
+        text-align: center;
+        box-shadow: 0 0 10px rgba(255, 0, 128, 0.2);
+      }
+
+      .stat-number {
+        font-size: 32px;
+        color: #ff0080;
+        font-weight: bold;
+        text-shadow: 0 0 10px rgba(255, 0, 128, 0.6);
+      }
+
+      .stat-label {
+        font-size: 9px;
+        color: #ff0080;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-top: 0.5rem;
+      }
+
+      .game-placeholder {
+        background: rgba(255, 0, 128, 0.08);
+        border: 2px dashed #ff0080;
+        padding: 2rem;
+        text-align: center;
+        margin: 1.5rem 0;
+        border-radius: 4px;
+        color: #ff0080;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .admin-toggle {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 40px;
+        height: 40px;
+        background: rgba(0, 0, 0, 0.7);
+        border: 2px solid #ff0080;
+        color: #ff0080;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        box-shadow: 0 0 15px rgba(255, 0, 128, 0.3);
+        z-index: 100;
+      }
+
+      .admin-toggle:hover {
+        box-shadow: 0 0 25px rgba(255, 0, 128, 0.6);
+      }
+
+      /* Login Modal */
+      .login-modal {
+        display: flex;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.99);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .login-modal.hidden {
+        display: none;
+      }
+
+      .login-box {
+        background: #0a0e27;
+        border: 2px solid #ff0080;
+        padding: 2rem;
+        text-align: center;
+        box-shadow: 0 0 40px rgba(255, 0, 128, 0.5);
+        max-width: 400px;
+      }
+
+      .login-title {
+        color: #ff0080;
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 2rem;
+      }
+
+      .login-input {
+        width: 100%;
+        background: rgba(255, 0, 128, 0.1);
+        border: 1px solid #ff0080;
+        color: #ff0080;
+        padding: 0.8rem;
+        font-size: 14px;
+        font-family: "Courier New", monospace;
+        text-align: center;
+        letter-spacing: 2px;
+        margin-bottom: 1rem;
+        box-shadow: inset 0 0 10px rgba(255, 0, 128, 0.1);
+      }
+
+      .login-input::placeholder {
+        color: rgba(255, 0, 128, 0.3);
+      }
+
+      .login-input:focus {
+        outline: none;
+        box-shadow: inset 0 0 15px rgba(255, 0, 128, 0.3);
+        border-color: #ff66ff;
+      }
+
+      .login-button {
+        width: 100%;
+      }
+
+      .admin-panel {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.98);
+        z-index: 200;
+        overflow-y: auto;
+        padding: 2rem;
+        border: 2px solid #ff0080;
+      }
+
+      .admin-panel.active {
+        display: block;
+      }
+
+      .admin-close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: #ff0080;
+        color: #fff;
+        border: none;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        font-size: 14px;
+        box-shadow: 0 0 15px rgba(255, 0, 128, 0.5);
+      }
+
+      .admin-close:hover {
+        box-shadow: 0 0 25px rgba(255, 0, 128, 0.8);
+      }
+
+      .day-config {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .day-card {
+        margin-bottom: 1.5rem;
+        padding: 1.5rem;
+        background: rgba(255, 0, 128, 0.05);
+        border: 1px solid #ff0080;
+        box-shadow: 0 0 10px rgba(255, 0, 128, 0.2);
+      }
+
+      .day-card-title {
+        color: #ff0080;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+
+      input[type="number"],
+      input[type="date"],
+      textarea {
+        width: 100%;
+        background: rgba(255, 0, 128, 0.1);
+        border: 1px solid #ff0080;
+        color: #ff0080;
+        padding: 0.6rem;
+        margin: 0.5rem 0;
+        font-size: 12px;
+        font-family: "Courier New", monospace;
+        box-shadow: inset 0 0 10px rgba(255, 0, 128, 0.1);
+      }
+
+      input[type="number"]::placeholder,
+      input[type="date"]::placeholder,
+      textarea::placeholder {
+        color: rgba(255, 0, 128, 0.3);
+      }
+
+      input[type="number"]:focus,
+      input[type="date"]:focus,
+      textarea:focus {
+        outline: none;
+        box-shadow:
+          inset 0 0 15px rgba(255, 0, 128, 0.3),
+          0 0 15px rgba(255, 0, 128, 0.4);
+        border-color: #ff66ff;
+      }
+
+      label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+        cursor: pointer;
+        font-size: 12px;
+        color: #ff0080;
+      }
+
+      input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+        accent-color: #ff0080;
+      }
+
+      .admin-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        justify-content: center;
+        margin-bottom: 1rem;
+      }
+
+      .admin-meta {
+        color: rgba(255, 0, 128, 0.7);
+        font-size: 10px;
+        margin-bottom: 1.5rem;
+        text-align: center;
+      }
+
+      .field-help {
+        color: rgba(255, 0, 128, 0.75);
+        font-size: 10px;
+        line-height: 1.4;
+        margin-top: 0.25rem;
+      }
+
+      @media (max-width: 640px) {
+        .container {
+          padding: 1rem;
+        }
+
+        .background-crab {
+          font-size: 230px;
+        }
+
+        .header-text {
+          font-size: 13px;
+          letter-spacing: 2px;
+        }
+
+        .mission-status {
+          font-size: 9px;
+          line-height: 1.5;
+        }
+
+        .status-bar {
+          display: grid;
+          grid-template-columns: 1fr;
+        }
+
+        .input-group {
+          flex-direction: column;
+        }
+
+        .pin-display {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+          gap: 8px;
+        }
+
+        .pin-digit {
+          min-height: 64px;
+          font-size: 22px;
+        }
+
+        .tooltip {
+          display: none;
+        }
+
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .admin-panel {
+          padding: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background-crab" id="crabBg">🦀</div>
+
+    <div class="login-modal hidden" id="loginModal">
+      <div class="login-box">
+        <div class="login-title">█ Acceso Restringido</div>
+        <input
+          type="password"
+          class="login-input"
+          id="passwordInput"
+          placeholder="Contraseña CIA"
+          onkeypress="handleLoginKey(event)"
+        />
+        <button class="login-button" onclick="handleLogin()">Acceder</button>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+        <div class="header">
+          <div class="header-text">
+            █ OPERACIÓN: RESCATE CANGREJITO PISTACHITO
+          </div>
+          <div class="mission-status">
+            AGENTE: INVESTIGADORA POMELA | NIVEL: CRÍTICO | STATUS: ACTIVO
+          </div>
+        </div>
+
+        <div class="status-bar">
+          <div class="status-item">
+            ESTADO CONEXIÓN: <span class="status-value">CIFRADA</span>
+          </div>
+          <div class="status-item">
+            CIFRAS DECODIFICADAS:
+            <span class="status-value" id="progressValue">0/12</span>
+          </div>
+          <div class="status-item">
+            ALERTA: <span class="status-value">MÁXIMA</span>
+          </div>
+          <div class="status-item">
+            PROGRESO:
+            <span class="status-value" id="saveStatus">GUARDADO LOCAL</span>
+          </div>
+        </div>
+
+        <div class="clue-display" id="clueSection">
+          <div class="clue-label">▸ PISTA ACTUAL DEL DÍA</div>
+          <div class="clue-text" id="clueText">Esperando pista del día...</div>
+        </div>
+
+        <div id="gameArea"></div>
+
+        <div class="input-section">
+          <div class="input-label" id="inputLabel">
+            ▸ INTRODUCIR CIFRA DEL DÍA
+          </div>
+          <div class="input-group">
+            <input type="text" id="pinInput" placeholder="0-9" maxlength="1" />
+            <button id="validateButton" onclick="validatePin()">VALIDAR</button>
+          </div>
+          <div class="validation-message" id="validationMessage"></div>
+        </div>
+
+        <div class="pin-section">
+          <div class="pin-label">▸ CÓDIGO DE RESCATE (12 CIFRAS)</div>
+          <div class="pin-display" id="pinDisplay"></div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-number" id="solvedCount">0</div>
+            <div class="stat-label">Cifras Resueltas</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="remainingCount">12</div>
+            <div class="stat-label">Aún Bloqueadas</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="admin-toggle" id="adminToggle" title="Acceso Admin">
+      ⚙️
+    </button>
+
+    <div class="admin-panel" id="adminPanel">
+      <button class="admin-close" id="adminClose">CERRAR</button>
+      <div class="day-config">
+        <div
+          style="
+            margin-bottom: 2rem;
+            color: #ff0080;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 14px;
+          "
+        >
+          █ PANEL DE ADMINISTRACIÓN █
+        </div>
+        <div class="admin-actions">
+          <button type="button" onclick="exportProgress()">
+            COPIAR BACKUP
+          </button>
+          <button type="button" onclick="resetLocalProgress()">
+            REINICIAR SAVE LOCAL
+          </button>
+        </div>
+        <div class="admin-meta" id="adminMeta"></div>
+        <div id="dayConfig"></div>
+      </div>
+    </div>
+
+    <script>
+      const ADMIN_PASSWORD = "admin";
+      const APP_VERSION = 2;
+      const STORAGE_KEY = "cangrejito-progress-v2";
+      const LEGACY_STORAGE_KEY = "cangrejito-config";
+
+      const MISSION_DAYS = [
+        {
+          id: "day-01",
+          date: "17/07",
+          unlockAt: "2026-07-17T00:00:00+02:00",
+          digit: 5,
+          clue: "Canal oficial activo. Localiza el primer objeto clasificado y mide un lateral en centímetros.",
+          method: "Medida en cm del lateral",
+          type: "item",
+        },
+        {
+          id: "day-02",
+          date: "18/07",
+          unlockAt: "2026-07-18T00:00:00+02:00",
+          digit: 7,
+          clue: "Sigue la ruta que llegue por el canal oficial. Al final, mira el reverso de la pista.",
+          method: "Número en la parte trasera del post-it",
+          type: "treasure",
+        },
+        {
+          id: "day-03",
+          date: "19/07",
+          unlockAt: "2026-07-19T00:00:00+02:00",
+          digit: 9,
+          clue: "Reto deportivo. La taquilla coincide con el minuto del gol indicado por el canal oficial.",
+          method: "Último dígito del año de fundación de la RFEF (1909)",
+          type: "item",
+        },
+        {
+          id: "day-04",
+          date: "20/07",
+          unlockAt: "2026-07-20T00:00:00+02:00",
+          digit: 6,
+          clue: "Misión supermercado. Consigue el objeto del Carre y fíjate en la primera cifra de su peso.",
+          method: "Primera cifra del peso (60-70g)",
+          type: "item",
+        },
+        {
+          id: "day-05",
+          date: "21/07",
+          unlockAt: "2026-07-21T00:00:00+02:00",
+          digit: 9,
+          clue: "Módulo Pixel Art. Completa la imagen cuando se active y cuenta los cuadrados rojos.",
+          method: "Número de cuadrados rojos en la imagen",
+          type: "game",
+          gameType: "pixelart",
+        },
+        {
+          id: "day-06",
+          date: "22/07",
+          unlockAt: "2026-07-22T00:00:00+02:00",
+          digit: 1,
+          clue: "Objetivo Flaming Hot. Verifica el tercer dígito del número de serie bajo el código de barras.",
+          method: "Tercer dígito del número de serie",
+          type: "item",
+        },
+        {
+          id: "day-07",
+          date: "23/07",
+          unlockAt: "2026-07-23T00:00:00+02:00",
+          digit: 8,
+          clue: "Boss Fight clasificado. Derrota al objetivo cuando el módulo esté disponible.",
+          method: "Cifra mostrada tras derrotar al boss",
+          type: "game",
+          gameType: "boss",
+        },
+        {
+          id: "day-08",
+          date: "24/07",
+          unlockAt: "2026-07-24T00:00:00+02:00",
+          digit: 1,
+          clue: "Misión Amatriciana. Feliz viernes. Valida ingredientes por el canal oficial y usa el total aprobado.",
+          method: "Primer dígito del precio total aprobado",
+          type: "mission",
+        },
+        {
+          id: "day-09",
+          date: "25/07",
+          unlockAt: "2026-07-25T00:00:00+02:00",
+          digit: 3,
+          clue: "Operación Taco Bell. Comprueba tus coronas y toma la primera cifra del contador en miles.",
+          method: "Número de coronas en miles",
+          type: "mission",
+        },
+        {
+          id: "day-10",
+          date: "26/07",
+          unlockAt: "2026-07-26T00:00:00+02:00",
+          digit: 7,
+          clue: "Quiz clasificado. Supera las preguntas y cuenta las líneas del mensaje final.",
+          method: "Número de líneas del mensaje de amor",
+          type: "game",
+          gameType: "quiz",
+        },
+        {
+          id: "day-11",
+          date: "27/07",
+          unlockAt: "2026-07-27T00:00:00+02:00",
+          digit: 0,
+          clue: "Busca una incorporación floral entre lo cotidiano. La cifra está en la última cifra del volumen.",
+          method: "Última cifra de los mililitros (ej: 100)",
+          type: "item",
+        },
+        {
+          id: "day-12",
+          date: "28/07",
+          unlockAt: "2026-07-28T00:00:00+02:00",
+          digit: 3,
+          clue: "Banco especial. Cuando recibas las coordenadas, la cifra está en el primer dígito después de la N.",
+          method: "Primer dígito tras la N en las coordenadas",
+          type: "final",
+        },
+      ];
+
+      const adminToggle = document.getElementById("adminToggle");
+      const adminPanel = document.getElementById("adminPanel");
+      const adminClose = document.getElementById("adminClose");
+      const loginModal = document.getElementById("loginModal");
+      const pinInput = document.getElementById("pinInput");
+      const validateButton = document.getElementById("validateButton");
+
+      let adminAuthenticated = false;
+      let storageHealthy = true;
+      let validationTimer = null;
+      let state = loadState();
+
+      adminToggle.addEventListener("click", () => {
+        if (!adminAuthenticated) {
+          loginModal.classList.remove("hidden");
+        } else {
+          adminPanel.classList.toggle("active");
+          renderDayConfig(getDays());
+        }
+      });
+
+      adminClose.addEventListener("click", () => {
+        adminPanel.classList.remove("active");
+        adminAuthenticated = false;
+        loginModal.classList.remove("hidden");
+      });
+
+      pinInput.addEventListener("keypress", (event) => {
+        if (event.key === "Enter") validatePin();
+      });
+
+      pinInput.addEventListener("input", () => {
+        pinInput.value = pinInput.value.replace(/\D/g, "").slice(0, 1);
+      });
+
+      function createDefaultState() {
+        return {
+          schemaVersion: 2,
+          appVersion: APP_VERSION,
+          selectedDayId: null,
+          solved: {},
+          overrides: {},
+          manualAvailable: {},
+          createdAt: new Date().toISOString(),
+          updatedAt: null,
+        };
+      }
+
+      function loadState() {
+        const saved = readStorage(STORAGE_KEY);
+        if (saved) {
+          try {
+            return normalizeState(JSON.parse(saved));
+          } catch (error) {
+            console.warn(
+              "No se pudo leer el progreso v2, se intentará migrar.",
+              error,
+            );
+          }
+        }
+
+        const migrated = migrateLegacyState();
+        persistState(migrated);
+        return migrated;
+      }
+
+      function normalizeState(rawState) {
+        const nextState = createDefaultState();
+        return {
+          ...nextState,
+          ...rawState,
+          schemaVersion: 2,
+          appVersion: APP_VERSION,
+          solved: rawState && rawState.solved ? rawState.solved : {},
+          overrides: rawState && rawState.overrides ? rawState.overrides : {},
+          manualAvailable:
+            rawState && rawState.manualAvailable
+              ? rawState.manualAvailable
+              : {},
+        };
+      }
+
+      function migrateLegacyState() {
+        const migrated = createDefaultState();
+        const legacyRaw = readStorage(LEGACY_STORAGE_KEY);
+
+        if (!legacyRaw) return migrated;
+
+        try {
+          const legacy = JSON.parse(legacyRaw);
+
+          if (
+            Number.isInteger(legacy.currentDay) &&
+            MISSION_DAYS[legacy.currentDay - 1]
+          ) {
+            migrated.selectedDayId = MISSION_DAYS[legacy.currentDay - 1].id;
+          }
+
+          if (Array.isArray(legacy.days)) {
+            legacy.days.forEach((legacyDay, index) => {
+              const baseDay = MISSION_DAYS[index];
+              if (!baseDay) return;
+
+              const override = {};
+              ["digit", "clue", "method", "type", "gameType"].forEach(
+                (field) => {
+                  if (
+                    legacyDay[field] !== undefined &&
+                    legacyDay[field] !== baseDay[field]
+                  ) {
+                    override[field] = legacyDay[field];
+                  }
+                },
+              );
+
+              if (Object.keys(override).length > 0) {
+                migrated.overrides[baseDay.id] = override;
+              }
+
+              if (legacyDay.locked === false) {
+                migrated.solved[baseDay.id] = {
+                  digit: Number.isFinite(Number(legacyDay.digit))
+                    ? Number(legacyDay.digit)
+                    : baseDay.digit,
+                  solvedAt: legacyDay.unlockedTime
+                    ? new Date(legacyDay.unlockedTime).toISOString()
+                    : new Date().toISOString(),
+                  appVersion: "legacy",
+                };
+              }
+            });
+          }
+        } catch (error) {
+          console.warn("No se pudo migrar el progreso antiguo.", error);
+        }
+
+        return migrated;
+      }
+
+      function readStorage(key) {
+        try {
+          return localStorage.getItem(key);
+        } catch (error) {
+          storageHealthy = false;
+          console.warn("localStorage no está disponible.", error);
+          return null;
+        }
+      }
+
+      function persistState(nextState) {
+        try {
+          nextState.updatedAt = new Date().toISOString();
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
+          storageHealthy = true;
+        } catch (error) {
+          storageHealthy = false;
+          console.error("No se pudo guardar el progreso local.", error);
+        }
+      }
+
+      function saveState() {
+        persistState(state);
+        updateSaveStatus();
+      }
+
+      function getDays() {
+        return MISSION_DAYS.map((day) => ({
+          ...day,
+          ...(state.overrides[day.id] || {}),
+        }));
+      }
+
+      function getDayIndex(dayId) {
+        return MISSION_DAYS.findIndex((day) => day.id === dayId);
+      }
+
+      function isSolved(day) {
+        return Boolean(state.solved[day.id]);
+      }
+
+      function isAvailable(day) {
+        return (
+          isSolved(day) ||
+          Boolean(state.manualAvailable[day.id]) ||
+          Date.now() >= new Date(day.unlockAt).getTime()
+        );
+      }
+
+      function getSelectedDay(days) {
+        const current = days.find((day) => day.id === state.selectedDayId);
+        if (current && (isAvailable(current) || isSolved(current)))
+          return current;
+
+        const firstAvailableUnsolved = days.find(
+          (day) => isAvailable(day) && !isSolved(day),
+        );
+        const lastAvailable = [...days]
+          .reverse()
+          .find((day) => isAvailable(day));
+        const selected = firstAvailableUnsolved || lastAvailable || days[0];
+
+        if (selected && state.selectedDayId !== selected.id) {
+          state.selectedDayId = selected.id;
+          saveState();
+        }
+
+        return selected;
+      }
+
+      function handleLoginKey(event) {
+        if (event.key === "Enter") handleLogin();
+      }
+
+      function handleLogin() {
+        const password = document.getElementById("passwordInput").value;
+        if (password === ADMIN_PASSWORD) {
+          adminAuthenticated = true;
+          loginModal.classList.add("hidden");
+          adminPanel.classList.add("active");
+          document.getElementById("passwordInput").value = "";
+          renderDayConfig(getDays());
+        } else {
+          alert("❌ CONTRASEÑA INCORRECTA");
+          document.getElementById("passwordInput").value = "";
+        }
+      }
+
+      function validatePin() {
+        const days = getDays();
+        const selectedDay = getSelectedDay(days);
+        const input = pinInput.value.trim();
+
+        if (!selectedDay || !isAvailable(selectedDay)) {
+          showValidationMessage("⚠ TRANSMISIÓN AÚN BLOQUEADA", "error", 2500);
+          return;
+        }
+
+        if (isSolved(selectedDay)) {
+          showValidationMessage("✓ CIFRA YA DECODIFICADA", "success", 2500);
+          pinInput.value = "";
+          return;
+        }
+
+        if (!/^\d$/.test(input)) {
+          showValidationMessage("⚠ INTRODUCE UN DÍGITO", "error", 2500);
+          return;
+        }
+
+        if (Number(input) === Number(selectedDay.digit)) {
+          state.solved[selectedDay.id] = {
+            digit: Number(selectedDay.digit),
+            solvedAt: new Date().toISOString(),
+            appVersion: APP_VERSION,
+          };
+          const nextAvailableDay = getDays().find(
+            (day) => isAvailable(day) && !isSolved(day),
+          );
+          state.selectedDayId = nextAvailableDay
+            ? nextAvailableDay.id
+            : selectedDay.id;
+          saveState();
+          render();
+          pinInput.value = "";
+          showValidationMessage(
+            "✓ CIFRA CORRECTA DECODIFICADA",
+            "success",
+            3500,
+          );
+        } else {
+          pinInput.value = "";
+          showValidationMessage(
+            "✗ CIFRA INCORRECTA | ACCESO DENEGADO",
+            "error",
+            2500,
+          );
+        }
+      }
+
+      function selectDay(dayId) {
+        const day = getDays().find((candidate) => candidate.id === dayId);
+        if (!day) return;
+
+        if (!isAvailable(day) && !isSolved(day)) {
+          showValidationMessage(
+            `⚠ DÍA ${getDayIndex(dayId) + 1} AÚN BLOQUEADO`,
+            "error",
+            2500,
+          );
+          return;
+        }
+
+        state.selectedDayId = dayId;
+        saveState();
+        render();
+      }
+
+      function updateDay(dayId, field, value) {
+        const days = getDays();
+        const day = days.find((candidate) => candidate.id === dayId);
+        const baseDay = MISSION_DAYS.find(
+          (candidate) => candidate.id === dayId,
+        );
+        if (!day || !baseDay) return;
+
+        if (field === "solved") {
+          if (Boolean(value)) {
+            state.solved[dayId] = {
+              digit: Number(day.digit),
+              solvedAt: new Date().toISOString(),
+              appVersion: APP_VERSION,
+              source: "admin",
+            };
+          } else {
+            delete state.solved[dayId];
+          }
+        } else if (field === "manualAvailable") {
+          if (Boolean(value)) {
+            state.manualAvailable[dayId] = true;
+          } else {
+            delete state.manualAvailable[dayId];
+          }
+        } else if (field === "unlockDate") {
+          setOverride(
+            dayId,
+            "unlockAt",
+            value ? `${value}T00:00:00+02:00` : baseDay.unlockAt,
+          );
+        } else if (field === "digit") {
+          const parsed = Math.min(
+            9,
+            Math.max(0, Number.parseInt(value, 10) || 0),
+          );
+          setOverride(dayId, "digit", parsed);
+          if (state.solved[dayId]) state.solved[dayId].digit = parsed;
+        } else {
+          setOverride(dayId, field, value);
+        }
+
+        saveState();
+        render();
+      }
+
+      function setOverride(dayId, field, value) {
+        const baseDay = MISSION_DAYS.find((day) => day.id === dayId);
+        if (!baseDay) return;
+
+        const override = { ...(state.overrides[dayId] || {}) };
+        const sameAsBase = String(value ?? "") === String(baseDay[field] ?? "");
+
+        if (sameAsBase || value === undefined) {
+          delete override[field];
+        } else {
+          override[field] = value;
+        }
+
+        if (Object.keys(override).length === 0) {
+          delete state.overrides[dayId];
+        } else {
+          state.overrides[dayId] = override;
+        }
+      }
+
+      function render() {
+        const days = getDays();
+        const selectedDay = getSelectedDay(days);
+        const solvedCount = days.filter(isSolved).length;
+        const selectedIndex = selectedDay ? getDayIndex(selectedDay.id) : 0;
+        const canValidate =
+          selectedDay && isAvailable(selectedDay) && !isSolved(selectedDay);
+
+        document.getElementById("progressValue").textContent =
+          `${solvedCount}/12`;
+        document.getElementById("solvedCount").textContent = solvedCount;
+        document.getElementById("remainingCount").textContent =
+          12 - solvedCount;
+        document.getElementById("inputLabel").textContent = selectedDay
+          ? `▸ INTRODUCIR CIFRA - DÍA ${selectedIndex + 1} (${selectedDay.date})`
+          : "▸ INTRODUCIR CIFRA DEL DÍA";
+
+        pinInput.disabled = !canValidate;
+        validateButton.disabled = !canValidate;
+        pinInput.placeholder = canValidate ? "0-9" : "BLOQ";
+
+        document.getElementById("clueText").textContent = getClueText(
+          selectedDay,
+          days,
+        );
+        renderGameArea(selectedDay);
+        renderPinDisplay(days, selectedDay);
+        renderDayConfig(days);
+        updateSaveStatus();
+      }
+
+      function getClueText(selectedDay, days) {
+        if (!selectedDay) return "Esperando transmisión segura...";
+
+        if (days.every(isSolved)) {
+          return "CÓDIGO DE RESCATE COMPLETO. Canal oficial autorizado para cierre de misión.";
+        }
+
+        if (!isAvailable(selectedDay)) {
+          return `Transmisión programada para el ${selectedDay.date}. Mantén el canal oficial abierto.`;
+        }
+
+        if (isSolved(selectedDay)) {
+          return `Día ${getDayIndex(selectedDay.id) + 1} ya decodificado. Selecciona otro día disponible o espera la próxima transmisión.`;
+        }
+
+        return selectedDay.clue;
+      }
+
+      function renderGameArea(selectedDay) {
+        const gameArea = document.getElementById("gameArea");
+        gameArea.innerHTML = "";
+
+        if (
+          !selectedDay ||
+          selectedDay.type !== "game" ||
+          !isAvailable(selectedDay) ||
+          isSolved(selectedDay)
+        ) {
+          return;
+        }
+
+        const gameContent = {
+          pixelart: "🎮 MÓDULO PIXEL ART - PENDIENTE DE ACTIVACIÓN",
+          boss: "⚔️ BOSS FIGHT - PENDIENTE DE ACTIVACIÓN",
+          quiz: "📝 QUIZ RELACIÓN - PENDIENTE DE ACTIVACIÓN",
+        };
+
+        const placeholder = document.createElement("div");
+        placeholder.className = "game-placeholder";
+        placeholder.textContent =
+          gameContent[selectedDay.gameType] ||
+          "MÓDULO CLASIFICADO - PENDIENTE DE ACTIVACIÓN";
+        gameArea.appendChild(placeholder);
+      }
+
+      function renderPinDisplay(days, selectedDay) {
+        const pinDisplay = document.getElementById("pinDisplay");
+        pinDisplay.innerHTML = "";
+
+        days.forEach((day, index) => {
+          const solved = isSolved(day);
+          const available = isAvailable(day);
+          const selected = selectedDay && selectedDay.id === day.id;
+          const digitBox = document.createElement("div");
+
+          digitBox.className = `pin-digit ${solved ? "unlocked" : available ? "available" : "locked future"}${selected ? " selected" : ""}`;
+          digitBox.setAttribute(
+            "role",
+            available || solved ? "button" : "presentation",
+          );
+          digitBox.tabIndex = available || solved ? 0 : -1;
+
+          if (available || solved) {
+            digitBox.addEventListener("click", () => selectDay(day.id));
+            digitBox.addEventListener("keydown", (event) => {
+              if (event.key === "Enter" || event.key === " ") selectDay(day.id);
+            });
+          }
+
+          const indexBadge = document.createElement("div");
+          indexBadge.className = "pin-index";
+          indexBadge.textContent = index + 1;
+          digitBox.appendChild(indexBadge);
+
+          const mainValue = document.createElement("div");
+          mainValue.className = solved ? "" : "lock-icon";
+          mainValue.textContent = solved
+            ? String(state.solved[day.id].digit ?? day.digit)
+            : available
+              ? "◇"
+              : "🔒";
+          digitBox.appendChild(mainValue);
+
+          const tooltip = document.createElement("div");
+          tooltip.className = "tooltip";
+          tooltip.style.whiteSpace = "normal";
+          tooltip.textContent = getPinTooltip(day, index, solved, available);
+          digitBox.appendChild(tooltip);
+
+          if (!solved) {
+            const timer = document.createElement("div");
+            timer.className = "timer";
+            timer.textContent = available
+              ? "ACTIVA"
+              : formatTimeUntil(day.unlockAt);
+            digitBox.appendChild(timer);
+          }
+
+          pinDisplay.appendChild(digitBox);
+        });
+      }
+
+      function getPinTooltip(day, index, solved, available) {
+        if (solved) {
+          return `${day.date} | Guardada | ${day.method}`;
+        }
+
+        if (available) {
+          return `Día ${index + 1} disponible. Selecciona este bloque e introduce la cifra.`;
+        }
+
+        return `Disponible el ${day.date}. Faltan ${formatTimeUntil(day.unlockAt)}.`;
+      }
+
+      function renderDayConfig(days) {
+        const dayConfigDiv = document.getElementById("dayConfig");
+        const adminMeta = document.getElementById("adminMeta");
+        if (!dayConfigDiv || !adminMeta) return;
+        if (!adminPanel.classList.contains("active")) return;
+
+        const solvedCount = days.filter(isSolved).length;
+        adminMeta.textContent = `Save: ${STORAGE_KEY} | Versión HTML: ${APP_VERSION} | Resueltas: ${solvedCount}/12`;
+        dayConfigDiv.innerHTML = "";
+
+        days.forEach((day, index) => {
+          const solved = isSolved(day);
+          const available = isAvailable(day);
+          const status = solved
+            ? "RESUELTO"
+            : available
+              ? "DISPONIBLE"
+              : "PROGRAMADO";
+          const dayEl = document.createElement("div");
+          dayEl.className = "day-card";
+
+          dayEl.innerHTML = `
+        <div class="day-card-title">▸ DÍA ${index + 1} (${escapeHtml(day.date)}) | ${status}</div>
+
+        <div style="font-size: 10px; color: #ff0080; margin-bottom: 0.5rem;">DÍGITO DEL PIN</div>
+        <input type="number" min="0" max="9" value="${escapeAttr(day.digit)}" onchange="updateDay('${day.id}', 'digit', this.value)" placeholder="0-9">
+
+        <div style="font-size: 10px; color: #ff0080; margin-top: 1rem; margin-bottom: 0.5rem;">FECHA DE APERTURA</div>
+        <input type="date" value="${escapeAttr(dateInputValue(day.unlockAt))}" onchange="updateDay('${day.id}', 'unlockDate', this.value)">
+        <div class="field-help">Se abre automáticamente a las 00:00 hora España. También puedes marcarlo como disponible manualmente.</div>
+
+        <div style="font-size: 10px; color: #ff0080; margin-top: 1rem; margin-bottom: 0.5rem;">PISTA VISIBLE</div>
+        <textarea onchange="updateDay('${day.id}', 'clue', this.value)" placeholder="Pista del día" style="min-height: 70px;">${escapeHtml(day.clue)}</textarea>
+
+        <div style="font-size: 10px; color: #ff0080; margin-top: 1rem; margin-bottom: 0.5rem;">MÉTODO ADMIN / TOOLTIP TRAS RESOLVER</div>
+        <input type="text" value="${escapeAttr(day.method)}" onchange="updateDay('${day.id}', 'method', this.value)" placeholder="Cómo se sacó la cifra">
+
+        <div style="font-size: 10px; color: #ff0080; margin-top: 1rem; margin-bottom: 0.5rem;">TIPO DE PISTA</div>
+        <input type="text" value="${escapeAttr(day.type)}" onchange="updateDay('${day.id}', 'type', this.value)" placeholder="item, game, mission, treasure, final">
+
+        <div style="font-size: 10px; color: #ff0080; margin-top: 1rem; margin-bottom: 0.5rem;">TIPO DE JUEGO</div>
+        <input type="text" value="${escapeAttr(day.gameType || "")}" onchange="updateDay('${day.id}', 'gameType', this.value)" placeholder="pixelart, boss, quiz">
+
+        <label>
+          <input type="checkbox" ${state.manualAvailable[day.id] ? "checked" : ""} onchange="updateDay('${day.id}', 'manualAvailable', this.checked)">
+          <span>Disponible manualmente</span>
+        </label>
+
+        <label>
+          <input type="checkbox" ${solved ? "checked" : ""} onchange="updateDay('${day.id}', 'solved', this.checked)">
+          <span>Cifra resuelta</span>
+        </label>
+
+        <div style="margin-top: 1rem;">
+          <button type="button" onclick="selectDay('${day.id}')">SELECCIONAR DÍA</button>
+        </div>
+      `;
+
+          dayConfigDiv.appendChild(dayEl);
+        });
+      }
+
+      function showValidationMessage(text, type, duration) {
+        const message = document.getElementById("validationMessage");
+        message.textContent = text;
+        message.className = `validation-message ${type}`;
+
+        if (validationTimer) clearTimeout(validationTimer);
+        validationTimer = setTimeout(() => {
+          message.className = "validation-message";
+        }, duration);
+      }
+
+      function updateSaveStatus() {
+        const saveStatus = document.getElementById("saveStatus");
+        if (!saveStatus) return;
+        saveStatus.textContent = storageHealthy
+          ? "GUARDADO LOCAL"
+          : "NO GUARDADO";
+      }
+
+      function formatTimeUntil(unlockAt) {
+        const diffMs = new Date(unlockAt).getTime() - Date.now();
+        if (diffMs <= 0) return "HOY";
+
+        const minutes = Math.ceil(diffMs / 60000);
+        if (minutes < 60) return `${minutes}m`;
+
+        const hours = Math.ceil(minutes / 60);
+        if (hours < 24) return `${hours}h`;
+
+        return `${Math.ceil(hours / 24)}d`;
+      }
+
+      function dateInputValue(unlockAt) {
+        return String(unlockAt || "").slice(0, 10);
+      }
+
+      function exportProgress() {
+        const payload = JSON.stringify(
+          { storageKey: STORAGE_KEY, state },
+          null,
+          2,
+        );
+
+        if (navigator.clipboard) {
+          navigator.clipboard
+            .writeText(payload)
+            .then(() => alert("Backup copiado al portapapeles."))
+            .catch(() => prompt("Copia este backup:", payload));
+        } else {
+          prompt("Copia este backup:", payload);
+        }
+      }
+
+      function resetLocalProgress() {
+        const confirmed = confirm(
+          "Esto borra el progreso local de este navegador. ¿Seguro?",
+        );
+        if (!confirmed) return;
+
+        try {
+          localStorage.removeItem(STORAGE_KEY);
+        } catch (error) {
+          console.warn("No se pudo borrar el save local.", error);
+        }
+
+        state = createDefaultState();
+        saveState();
+        render();
+        showValidationMessage("SAVE LOCAL REINICIADO", "success", 2500);
+      }
+
+      function escapeHtml(value) {
+        return String(value ?? "").replace(
+          /[&<>"']/g,
+          (char) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            })[char],
+        );
+      }
+
+      function escapeAttr(value) {
+        return escapeHtml(value);
+      }
+
+      render();
+      setInterval(() => {
+        if (!adminPanel.classList.contains("active")) render();
+      }, 60000);
+    </script>
+  </body>
+</html>
