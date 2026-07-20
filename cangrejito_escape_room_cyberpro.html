@@ -2082,10 +2082,8 @@
 
           if (painted) {
             context.fillStyle = color;
-          } else if (colorIndex === activeColor) {
-            context.fillStyle = withAlpha(color, 0.42);
           } else {
-            context.fillStyle = withAlpha(color, 0.12);
+            context.fillStyle = "#05070d";
           }
 
           context.fillRect(x, y, Math.ceil(cellWidth), Math.ceil(cellHeight));
@@ -2107,14 +2105,6 @@
           context.lineTo(canvas.width, y);
           context.stroke();
         }
-      }
-
-      function withAlpha(hexColor, alpha) {
-        const value = hexColor.replace("#", "");
-        const red = Number.parseInt(value.slice(0, 2), 16);
-        const green = Number.parseInt(value.slice(2, 4), 16);
-        const blue = Number.parseInt(value.slice(4, 6), 16);
-        return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
       }
 
       function downloadPixelArtImage() {
