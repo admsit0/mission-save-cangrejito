@@ -466,6 +466,157 @@
         letter-spacing: 1px;
       }
 
+      .pixel-art-game {
+        margin: 1.5rem 0;
+        padding: 1rem;
+        border: 2px solid #ff0080;
+        background:
+          linear-gradient(180deg, rgba(255, 0, 128, 0.08), rgba(0, 255, 136, 0.03)),
+          rgba(0, 0, 0, 0.42);
+        box-shadow:
+          0 0 18px rgba(255, 0, 128, 0.28),
+          inset 0 0 24px rgba(255, 0, 128, 0.08);
+      }
+
+      .pixel-art-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .pixel-art-title {
+        color: #ff0080;
+        font-size: 12px;
+        font-weight: bold;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+
+      .pixel-art-progress {
+        color: #00ff88;
+        font-size: 11px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        text-align: right;
+        white-space: nowrap;
+      }
+
+      .pixel-progress-track {
+        height: 8px;
+        margin: 0.75rem 0 1rem;
+        border: 1px solid rgba(0, 255, 136, 0.45);
+        background: rgba(0, 0, 0, 0.65);
+        overflow: hidden;
+      }
+
+      .pixel-progress-fill {
+        height: 100%;
+        width: 0;
+        background: linear-gradient(90deg, #ff0080, #00ff88);
+        box-shadow: 0 0 14px rgba(0, 255, 136, 0.55);
+        transition: width 0.25s ease;
+      }
+
+      .pixel-grid {
+        --pixel-cols: 22;
+        display: grid;
+        grid-template-columns: repeat(var(--pixel-cols), minmax(0, 1fr));
+        width: min(100%, 520px);
+        margin: 0 auto 1rem;
+        border: 1px solid rgba(255, 0, 128, 0.6);
+        background: #05070d;
+        touch-action: manipulation;
+        user-select: none;
+      }
+
+      .pixel-cell {
+        aspect-ratio: 1;
+        min-width: 0;
+        padding: 0;
+        border: 1px solid rgba(255, 0, 128, 0.12);
+        background: rgba(255, 0, 128, 0.035);
+        color: rgba(255, 0, 128, 0.62);
+        box-shadow: none;
+        font-size: 9px;
+        line-height: 1;
+        letter-spacing: 0;
+        text-align: center;
+        text-transform: none;
+      }
+
+      .pixel-cell:hover {
+        border-color: rgba(255, 255, 255, 0.55);
+        box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.18);
+      }
+
+      .pixel-cell.revealed {
+        color: transparent;
+        text-shadow: none;
+        border-color: rgba(255, 255, 255, 0.08);
+      }
+
+      .pixel-palette {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
+        gap: 0.5rem;
+        margin: 1rem 0;
+      }
+
+      .pixel-color {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 0.5rem;
+        padding: 0.6rem 0.7rem;
+        background: rgba(255, 0, 128, 0.07);
+        color: #ff0080;
+        border: 1px solid rgba(255, 0, 128, 0.7);
+        box-shadow: 0 0 8px rgba(255, 0, 128, 0.16);
+      }
+
+      .pixel-color.revealed {
+        color: #00ff88;
+        border-color: #00ff88;
+        box-shadow: 0 0 12px rgba(0, 255, 136, 0.35);
+      }
+
+      .pixel-swatch {
+        width: 18px;
+        height: 18px;
+        flex: 0 0 18px;
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        box-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
+      }
+
+      .pixel-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        justify-content: center;
+        margin-top: 1rem;
+      }
+
+      .pixel-complete {
+        display: none;
+        margin-top: 1rem;
+        padding: 0.9rem;
+        border: 1px solid #00ff88;
+        color: #00ff88;
+        background: rgba(0, 255, 136, 0.08);
+        font-size: 11px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        line-height: 1.5;
+        text-align: center;
+        text-transform: uppercase;
+      }
+
+      .pixel-complete.active {
+        display: block;
+      }
+
       .admin-toggle {
         position: fixed;
         bottom: 20px;
@@ -723,6 +874,37 @@
           grid-template-columns: 1fr;
         }
 
+        .pixel-art-game {
+          padding: 0.75rem;
+        }
+
+        .pixel-art-header {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 0.4rem;
+        }
+
+        .pixel-art-progress {
+          text-align: left;
+        }
+
+        .pixel-grid {
+          width: 100%;
+        }
+
+        .pixel-cell {
+          font-size: 8px;
+        }
+
+        .pixel-palette {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .pixel-color {
+          padding: 0.55rem;
+          font-size: 10px;
+        }
+
         .admin-panel {
           padding: 1rem;
         }
@@ -844,7 +1026,7 @@
 
     <script>
       const ADMIN_PASSWORD = "admin";
-      const APP_VERSION = 2;
+      const APP_VERSION = 3;
       const STORAGE_KEY = "cangrejito-progress-v2";
       const LEGACY_STORAGE_KEY = "cangrejito-config";
 
@@ -880,20 +1062,20 @@
           id: "day-04",
           date: "20/07",
           unlockAt: "2026-07-20T00:00:00+02:00",
-          digit: 6,
-          clue: "Misión supermercado. Consigue el objeto del Carre y fíjate en la primera cifra de su peso.",
-          method: "Primera cifra del peso (60-70g)",
-          type: "item",
+          digit: 9,
+          clue: "Módulo Pixel Art. Descifra la imagen clasificada y cuenta los cuadrados rojos al terminar.",
+          method: "Número de cuadrados rojos en la imagen",
+          type: "game",
+          gameType: "pixelart",
         },
         {
           id: "day-05",
           date: "21/07",
           unlockAt: "2026-07-21T00:00:00+02:00",
-          digit: 9,
-          clue: "Módulo Pixel Art. Completa la imagen cuando se active y cuenta los cuadrados rojos.",
-          method: "Número de cuadrados rojos en la imagen",
-          type: "game",
-          gameType: "pixelart",
+          digit: 6,
+          clue: "Misión cookie. Consigue el objetivo del supermercado y fíjate en la primera cifra de su peso.",
+          method: "Primera cifra del peso (60-70g)",
+          type: "item",
         },
         {
           id: "day-06",
@@ -962,6 +1144,51 @@
         },
       ];
 
+      const PIXEL_ART_DATA = {
+        id: "pixelart-day-04",
+        cols: 22,
+        rows: 26,
+        filename: "operacion-pixel-art-cangrejito.png",
+        palette: [
+          ["NOCHE", "#070911"],
+          ["SOMBRA", "#251c21"],
+          ["BRONCE", "#563522"],
+          ["PIEL", "#9c6240"],
+          ["LUZ", "#d19a63"],
+          ["NEON", "#f1c43d"],
+          ["AZUL", "#1594d0"],
+          ["ROJO", "#e3343f"],
+        ],
+        cells: [
+          [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1],
+          [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 1, 1, 1, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 2, 1, 1, 1, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 2, 1, 1, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0],
+          [4, 0, 0, 0, 0, 0, 1, 0, 3, 3, 2, 3, 1, 0, 0, 1, 2, 2, 2, 1, 1, 0],
+          [1, 0, 0, 0, 0, 1, 1, 0, 0, 2, 3, 3, 2, 3, 3, 3, 4, 4, 4, 3, 0, 0],
+          [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 2, 1, 3, 3, 2, 2, 2, 3, 2, 2, 0],
+          [0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 3, 1, 0, 7, 3, 1, 1, 2, 2, 2, 2, 1],
+          [0, 0, 0, 0, 0, 1, 2, 7, 7, 4, 7, 3, 1, 7, 3, 1, 1, 1, 1, 2, 2, 3],
+          [1, 1, 0, 0, 0, 0, 3, 3, 2, 7, 7, 3, 3, 3, 2, 2, 0, 0, 1, 2, 2, 3],
+          [1, 0, 0, 0, 1, 3, 4, 4, 3, 4, 4, 7, 4, 3, 7, 3, 1, 0, 1, 2, 2, 2],
+          [1, 1, 0, 0, 2, 3, 4, 4, 4, 3, 3, 3, 2, 2, 2, 2, 1, 0, 1, 1, 2, 2],
+          [1, 1, 1, 1, 3, 3, 4, 4, 3, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 2, 2],
+          [1, 2, 1, 1, 3, 3, 3, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 2],
+          [2, 2, 0, 0, 2, 3, 3, 3, 3, 2, 1, 1, 2, 1, 0, 0, 1, 1, 1, 1, 1, 2],
+          [2, 1, 1, 0, 0, 2, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 2],
+          [1, 1, 1, 0, 0, 1, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+          [1, 1, 1, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1],
+          [1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1],
+          [1, 1, 1, 1, 0, 0, 2, 2, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+          [1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 3, 3, 2, 0, 0, 0, 0],
+          [1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 4, 4, 4, 3, 3, 3, 0, 0],
+        ],
+      };
+
       const adminToggle = document.getElementById("adminToggle");
       const adminPanel = document.getElementById("adminPanel");
       const adminClose = document.getElementById("adminClose");
@@ -1005,6 +1232,8 @@
           solved: {},
           overrides: {},
           manualAvailable: {},
+          gameProgress: {},
+          migrations: {},
           createdAt: new Date().toISOString(),
           updatedAt: null,
         };
@@ -1014,7 +1243,9 @@
         const saved = readStorage(STORAGE_KEY);
         if (saved) {
           try {
-            return normalizeState(JSON.parse(saved));
+            const normalized = normalizeState(JSON.parse(saved));
+            persistState(normalized);
+            return normalized;
           } catch (error) {
             console.warn(
               "No se pudo leer el progreso v2, se intentará migrar.",
@@ -1023,14 +1254,14 @@
           }
         }
 
-        const migrated = migrateLegacyState();
+        const migrated = applyStateMigrations(migrateLegacyState());
         persistState(migrated);
         return migrated;
       }
 
       function normalizeState(rawState) {
         const nextState = createDefaultState();
-        return {
+        const normalized = {
           ...nextState,
           ...rawState,
           schemaVersion: 2,
@@ -1041,7 +1272,56 @@
             rawState && rawState.manualAvailable
               ? rawState.manualAvailable
               : {},
+          gameProgress:
+            rawState && rawState.gameProgress ? rawState.gameProgress : {},
+          migrations: rawState && rawState.migrations ? rawState.migrations : {},
         };
+
+        return applyStateMigrations(normalized);
+      }
+
+      function applyStateMigrations(nextState) {
+        if (!nextState.migrations.pixelArtMovedToDay20) {
+          migratePixelArtDaySwap(nextState);
+          nextState.migrations.pixelArtMovedToDay20 = new Date().toISOString();
+        }
+
+        return nextState;
+      }
+
+      function migratePixelArtDaySwap(nextState) {
+        const oldDay04 = nextState.solved["day-04"];
+        const oldDay05 = nextState.solved["day-05"];
+        const oldDay04WasCookie = oldDay04 && Number(oldDay04.digit) === 6;
+        const oldDay05WasPixelArt = oldDay05 && Number(oldDay05.digit) === 9;
+
+        if (!oldDay04WasCookie && !oldDay05WasPixelArt) return;
+
+        const migratedAt = new Date().toISOString();
+        delete nextState.solved["day-04"];
+        delete nextState.solved["day-05"];
+
+        if (oldDay05WasPixelArt) {
+          nextState.solved["day-04"] = {
+            ...oldDay05,
+            digit: 9,
+            migratedFrom: "day-05-pixelart",
+            migratedAt,
+          };
+        }
+
+        if (oldDay04WasCookie) {
+          nextState.solved["day-05"] = {
+            ...oldDay04,
+            digit: 6,
+            migratedFrom: "day-04-cookie",
+            migratedAt,
+          };
+        }
+
+        if (nextState.selectedDayId === "day-05" && !oldDay05WasPixelArt) {
+          nextState.selectedDayId = "day-04";
+        }
       }
 
       function migrateLegacyState() {
@@ -1150,6 +1430,11 @@
         );
       }
 
+      function isPinEntryUnlocked(day) {
+        if (!day || day.gameType !== "pixelart") return true;
+        return isPixelArtComplete(getPixelArtSave(false));
+      }
+
       function getSelectedDay(days) {
         const current = days.find((day) => day.id === state.selectedDayId);
         if (current && (isAvailable(current) || isSolved(current)))
@@ -1202,6 +1487,11 @@
         if (isSolved(selectedDay)) {
           showValidationMessage("✓ CIFRA YA DECODIFICADA", "success", 2500);
           pinInput.value = "";
+          return;
+        }
+
+        if (!isPinEntryUnlocked(selectedDay)) {
+          showValidationMessage("⚠ COMPLETA EL MÓDULO ACTIVO", "error", 2500);
           return;
         }
 
@@ -1330,7 +1620,10 @@
         const solvedCount = days.filter(isSolved).length;
         const selectedIndex = selectedDay ? getDayIndex(selectedDay.id) : 0;
         const canValidate =
-          selectedDay && isAvailable(selectedDay) && !isSolved(selectedDay);
+          selectedDay &&
+          isAvailable(selectedDay) &&
+          !isSolved(selectedDay) &&
+          isPinEntryUnlocked(selectedDay);
 
         document.getElementById("progressValue").textContent =
           `${solvedCount}/12`;
@@ -1343,7 +1636,11 @@
 
         pinInput.disabled = !canValidate;
         validateButton.disabled = !canValidate;
-        pinInput.placeholder = canValidate ? "0-9" : "BLOQ";
+        pinInput.placeholder = canValidate
+          ? "0-9"
+          : selectedDay && selectedDay.gameType === "pixelart"
+            ? "JUEGO"
+            : "BLOQ";
 
         document.getElementById("clueText").textContent = getClueText(
           selectedDay,
@@ -1386,8 +1683,12 @@
           return;
         }
 
+        if (selectedDay.gameType === "pixelart") {
+          renderPixelArtGame(gameArea);
+          return;
+        }
+
         const gameContent = {
-          pixelart: "🎮 MÓDULO PIXEL ART - PENDIENTE DE ACTIVACIÓN",
           boss: "⚔️ BOSS FIGHT - PENDIENTE DE ACTIVACIÓN",
           quiz: "📝 QUIZ RELACIÓN - PENDIENTE DE ACTIVACIÓN",
         };
@@ -1398,6 +1699,213 @@
           gameContent[selectedDay.gameType] ||
           "MÓDULO CLASIFICADO - PENDIENTE DE ACTIVACIÓN";
         gameArea.appendChild(placeholder);
+      }
+
+      function renderPixelArtGame(gameArea) {
+        const progress = getPixelArtSave();
+        const revealedColors = progress.revealedColors || {};
+        const revealedCells = getPixelArtRevealedCellCount(progress);
+        const totalCells = PIXEL_ART_DATA.cols * PIXEL_ART_DATA.rows;
+        const percent = Math.round((revealedCells / totalCells) * 100);
+        const complete = isPixelArtComplete(progress);
+
+        const wrapper = document.createElement("div");
+        wrapper.className = "pixel-art-game";
+
+        const header = document.createElement("div");
+        header.className = "pixel-art-header";
+
+        const title = document.createElement("div");
+        title.className = "pixel-art-title";
+        title.textContent = "▸ MÓDULO PIXEL ART";
+
+        const progressLabel = document.createElement("div");
+        progressLabel.className = "pixel-art-progress";
+        progressLabel.textContent = `${percent}% DESCIFRADO`;
+
+        header.appendChild(title);
+        header.appendChild(progressLabel);
+        wrapper.appendChild(header);
+
+        const progressTrack = document.createElement("div");
+        progressTrack.className = "pixel-progress-track";
+        const progressFill = document.createElement("div");
+        progressFill.className = "pixel-progress-fill";
+        progressFill.style.width = `${percent}%`;
+        progressTrack.appendChild(progressFill);
+        wrapper.appendChild(progressTrack);
+
+        const grid = document.createElement("div");
+        grid.className = "pixel-grid";
+        grid.style.setProperty("--pixel-cols", PIXEL_ART_DATA.cols);
+
+        PIXEL_ART_DATA.cells.flat().forEach((colorIndex, cellIndex) => {
+          const cell = document.createElement("button");
+          const revealed = Boolean(revealedColors[colorIndex]);
+          cell.type = "button";
+          cell.className = `pixel-cell${revealed ? " revealed" : ""}`;
+          cell.textContent = revealed ? "" : String(colorIndex + 1);
+          cell.style.backgroundColor = revealed
+            ? PIXEL_ART_DATA.palette[colorIndex][1]
+            : "rgba(255, 0, 128, 0.035)";
+          cell.setAttribute(
+            "aria-label",
+            `Pixel ${cellIndex + 1}, color ${colorIndex + 1}`,
+          );
+          cell.addEventListener("click", () => revealPixelArtColor(colorIndex));
+          grid.appendChild(cell);
+        });
+
+        wrapper.appendChild(grid);
+
+        const palette = document.createElement("div");
+        palette.className = "pixel-palette";
+
+        PIXEL_ART_DATA.palette.forEach(([name, color], colorIndex) => {
+          const colorButton = document.createElement("button");
+          const revealed = Boolean(revealedColors[colorIndex]);
+          colorButton.type = "button";
+          colorButton.className = `pixel-color${revealed ? " revealed" : ""}`;
+          colorButton.addEventListener("click", () =>
+            revealPixelArtColor(colorIndex),
+          );
+
+          const swatch = document.createElement("span");
+          swatch.className = "pixel-swatch";
+          swatch.style.backgroundColor = color;
+
+          const label = document.createElement("span");
+          label.textContent = `${colorIndex + 1} ${name}`;
+
+          colorButton.appendChild(swatch);
+          colorButton.appendChild(label);
+          palette.appendChild(colorButton);
+        });
+
+        wrapper.appendChild(palette);
+
+        const actions = document.createElement("div");
+        actions.className = "pixel-actions";
+
+        const resetButton = document.createElement("button");
+        resetButton.type = "button";
+        resetButton.textContent = "REINICIAR PIXEL ART";
+        resetButton.addEventListener("click", resetPixelArtGame);
+        actions.appendChild(resetButton);
+
+        const downloadButton = document.createElement("button");
+        downloadButton.type = "button";
+        downloadButton.textContent = "DESCARGAR IMAGEN";
+        downloadButton.disabled = !complete;
+        downloadButton.addEventListener("click", downloadPixelArtImage);
+        actions.appendChild(downloadButton);
+
+        wrapper.appendChild(actions);
+
+        const completeMessage = document.createElement("div");
+        completeMessage.className = `pixel-complete${complete ? " active" : ""}`;
+        completeMessage.textContent =
+          "IMAGEN DESCIFRADA. CUENTA LOS CUADRADOS ROJOS Y ENVÍA LA CIFRA EN EL TERMINAL.";
+        wrapper.appendChild(completeMessage);
+
+        gameArea.appendChild(wrapper);
+      }
+
+      function getPixelArtSave(create = true) {
+        if (!state.gameProgress) state.gameProgress = {};
+        if (!state.gameProgress[PIXEL_ART_DATA.id] && create) {
+          state.gameProgress[PIXEL_ART_DATA.id] = {
+            revealedColors: {},
+            completedAt: null,
+            downloadedAt: null,
+          };
+        }
+
+        return (
+          state.gameProgress[PIXEL_ART_DATA.id] || {
+            revealedColors: {},
+            completedAt: null,
+            downloadedAt: null,
+          }
+        );
+      }
+
+      function revealPixelArtColor(colorIndex) {
+        const progress = getPixelArtSave();
+        if (!progress.revealedColors) progress.revealedColors = {};
+
+        const wasComplete = isPixelArtComplete(progress);
+        progress.revealedColors[colorIndex] = true;
+        const nowComplete = isPixelArtComplete(progress);
+
+        if (nowComplete && !wasComplete) {
+          progress.completedAt = new Date().toISOString();
+          progress.downloadedAt = new Date().toISOString();
+          saveState();
+          render();
+          setTimeout(() => {
+            downloadPixelArtImage();
+            alert(
+              "IMAGEN DESCIFRADA. Cuenta los cuadrados ROJOS: esa es la cifra de hoy.",
+            );
+          }, 150);
+          return;
+        }
+
+        saveState();
+        render();
+      }
+
+      function resetPixelArtGame() {
+        state.gameProgress[PIXEL_ART_DATA.id] = {
+          revealedColors: {},
+          completedAt: null,
+          downloadedAt: null,
+        };
+        saveState();
+        render();
+      }
+
+      function isPixelArtComplete(progress) {
+        const revealedColors = (progress && progress.revealedColors) || {};
+        return getPixelArtRequiredColors().every((colorIndex) =>
+          Boolean(revealedColors[colorIndex]),
+        );
+      }
+
+      function getPixelArtRequiredColors() {
+        return Array.from(new Set(PIXEL_ART_DATA.cells.flat()));
+      }
+
+      function getPixelArtRevealedCellCount(progress) {
+        const revealedColors = (progress && progress.revealedColors) || {};
+        return PIXEL_ART_DATA.cells
+          .flat()
+          .filter((colorIndex) => Boolean(revealedColors[colorIndex])).length;
+      }
+
+      function downloadPixelArtImage() {
+        const scale = 24;
+        const canvas = document.createElement("canvas");
+        if (!canvas.getContext) return;
+
+        canvas.width = PIXEL_ART_DATA.cols * scale;
+        canvas.height = PIXEL_ART_DATA.rows * scale;
+        const context = canvas.getContext("2d");
+
+        PIXEL_ART_DATA.cells.forEach((row, rowIndex) => {
+          row.forEach((colorIndex, colIndex) => {
+            context.fillStyle = PIXEL_ART_DATA.palette[colorIndex][1];
+            context.fillRect(colIndex * scale, rowIndex * scale, scale, scale);
+          });
+        });
+
+        const link = document.createElement("a");
+        link.download = PIXEL_ART_DATA.filename;
+        link.href = canvas.toDataURL("image/png");
+        if (document.body) document.body.appendChild(link);
+        link.click();
+        if (link.parentNode) link.parentNode.removeChild(link);
       }
 
       function renderPinDisplay(days, selectedDay) {
