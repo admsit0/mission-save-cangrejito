@@ -519,16 +519,23 @@
         transition: width 0.25s ease;
       }
 
-      .pixel-grid {
-        --pixel-cols: 22;
-        display: grid;
-        grid-template-columns: repeat(var(--pixel-cols), minmax(0, 1fr));
+      .pixel-board {
         width: min(100%, 520px);
         margin: 0 auto 1rem;
         border: 1px solid rgba(255, 0, 128, 0.6);
         background: #05070d;
-        touch-action: manipulation;
+        box-shadow:
+          0 0 18px rgba(255, 0, 128, 0.22),
+          inset 0 0 18px rgba(0, 0, 0, 0.65);
+      }
+
+      .pixel-canvas {
+        display: block;
+        width: 100%;
+        aspect-ratio: 1;
+        touch-action: none;
         user-select: none;
+        cursor: crosshair;
       }
 
       .pixel-cell {
@@ -580,6 +587,20 @@
         color: #00ff88;
         border-color: #00ff88;
         box-shadow: 0 0 12px rgba(0, 255, 136, 0.35);
+      }
+
+      .pixel-color.active {
+        color: #ffffff;
+        border-color: #ffffff;
+        box-shadow:
+          0 0 18px rgba(255, 255, 255, 0.42),
+          inset 0 0 12px rgba(255, 255, 255, 0.12);
+      }
+
+      .pixel-color-count {
+        margin-left: auto;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 9px;
       }
 
       .pixel-swatch {
@@ -888,12 +909,8 @@
           text-align: left;
         }
 
-        .pixel-grid {
+        .pixel-board {
           width: 100%;
-        }
-
-        .pixel-cell {
-          font-size: 8px;
         }
 
         .pixel-palette {
@@ -1146,46 +1163,86 @@
 
       const PIXEL_ART_DATA = {
         id: "pixelart-day-04",
-        cols: 22,
-        rows: 26,
+        cols: 64,
+        rows: 64,
         filename: "operacion-pixel-art-cangrejito.png",
         palette: [
-          ["NOCHE", "#070911"],
-          ["SOMBRA", "#251c21"],
-          ["BRONCE", "#563522"],
-          ["PIEL", "#9c6240"],
-          ["LUZ", "#d19a63"],
-          ["NEON", "#f1c43d"],
-          ["AZUL", "#1594d0"],
-          ["ROJO", "#e3343f"],
+          ["NOCHE", "#05070d"],
+          ["SOMBRA", "#1b151d"],
+          ["METAL", "#33262b"],
+          ["BRONCE", "#5b3925"],
+          ["PIEL", "#93603d"],
+          ["LUZ", "#ca905b"],
+          ["NEON", "#f2c747"],
+          ["PELO", "#794629"],
+          ["AZUL", "#1192d0"],
+          ["ROJO", "#e53945"],
         ],
-        cells: [
-          [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1],
-          [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 1, 1, 1, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 2, 1, 1, 1, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 2, 1, 1, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0],
-          [4, 0, 0, 0, 0, 0, 1, 0, 3, 3, 2, 3, 1, 0, 0, 1, 2, 2, 2, 1, 1, 0],
-          [1, 0, 0, 0, 0, 1, 1, 0, 0, 2, 3, 3, 2, 3, 3, 3, 4, 4, 4, 3, 0, 0],
-          [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 2, 1, 3, 3, 2, 2, 2, 3, 2, 2, 0],
-          [0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 3, 1, 0, 7, 3, 1, 1, 2, 2, 2, 2, 1],
-          [0, 0, 0, 0, 0, 1, 2, 7, 7, 4, 7, 3, 1, 7, 3, 1, 1, 1, 1, 2, 2, 3],
-          [1, 1, 0, 0, 0, 0, 3, 3, 2, 7, 7, 3, 3, 3, 2, 2, 0, 0, 1, 2, 2, 3],
-          [1, 0, 0, 0, 1, 3, 4, 4, 3, 4, 4, 7, 4, 3, 7, 3, 1, 0, 1, 2, 2, 2],
-          [1, 1, 0, 0, 2, 3, 4, 4, 4, 3, 3, 3, 2, 2, 2, 2, 1, 0, 1, 1, 2, 2],
-          [1, 1, 1, 1, 3, 3, 4, 4, 3, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 2, 2],
-          [1, 2, 1, 1, 3, 3, 3, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 2],
-          [2, 2, 0, 0, 2, 3, 3, 3, 3, 2, 1, 1, 2, 1, 0, 0, 1, 1, 1, 1, 1, 2],
-          [2, 1, 1, 0, 0, 2, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 2],
-          [1, 1, 1, 0, 0, 1, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
-          [1, 1, 1, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1],
-          [1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1],
-          [1, 1, 1, 1, 0, 0, 2, 2, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
-          [1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 3, 3, 2, 0, 0, 0, 0],
-          [1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 4, 4, 4, 3, 3, 3, 0, 0],
+        rowStrings: [
+          "0000000000000000000001111112100112331100011111211111111101111111",
+          "0000000000000000012000000000001221132100000013100011110000011221",
+          "0000000000000000132333732100123121133110000130000010010000111121",
+          "0000000000000000000000000002333131112210000300001000000001111111",
+          "0000000000000000000011000111000033333331003100000010000000011111",
+          "0000000000000000000000001001110033212333791000000000000000001111",
+          "0000000000000000000001203101111103331211093000000000000000000001",
+          "0000000000000000000021011100011110333111107300000000000000000018",
+          "0000000000000000002100011121001111033311100910000000000000002882",
+          "0000000000000000010000001111100111103731110090000001000000222000",
+          "0000000000000000000000000111120011110373111009000000000011110000",
+          "0000000000000000010000000011112000110033211112200000001001100011",
+          "0000000000000000000000000000111210011003711011300000013000000010",
+          "0000000000000000000020000000011111001100331013310000000000000000",
+          "0000000000000000000035000000000111100010037111001000000000000000",
+          "0000000000000000000074060000000011110000001000233102000000000000",
+          "0000000000000010100036156300000000111000000032112200100000000002",
+          "0000000000000011100036263670000000011000000013111110000000002221",
+          "3000000000000011100016416001600000000000000000311111010001220000",
+          "6600000000000021200036446000660000000010113331010012000110000000",
+          "6500000000000122300036406600640010000027554745200001200000000000",
+          "2000000000000232300000756700766066002777656666653000100000000000",
+          "0000000000000132300000005661563066654555666666566300000000000000",
+          "0000000000000033711000000046751044354666555456565530001000000000",
+          "0000000000000133323332220000360060566547133445455452001001000000",
+          "0000000000013321002211110200000074654312112744337344200000000001",
+          "0000000000000000001275543200000036667123113337332334500000000100",
+          "0000000000310000127456666651000006564101211333331737570000000300",
+          "0000000000300132315996666666000046666300211213233233550000000000",
+          "0000000000101102245636666666500066666400110213227273454000001000",
+          "0001000000100111463546666665418037114411100111213333755300001200",
+          "0000000000000012663165666666574859373331000010321733745412002800",
+          "0000000100000002655015666666602855133331000010313737375530102201",
+          "2888821000000005556201666666698666300341100000213333374553000052",
+          "2100001000001356666401556666665656656663100002323333377454735513",
+          "1010011000034556666677556666664657665557100003312373237455444455",
+          "2111000000245556665665555566654333554777310003211373317755375555",
+          "2111101000744555666665544556655402533377310003230173323755477455",
+          "2111101010445555566665432345657737433337330101131137322745537344",
+          "1112212103555555555665432227447114433333731102113013323775571174",
+          "2222320232465555555554732333374300233333331001103013311374551254",
+          "3022332232765455555554773233337410333333330101112203731137467566",
+          "2432410012265455555455554333332001333333310101011311732137755666",
+          "2133700002255554555555557333331131333333100101112171373133375556",
+          "3333310001246544455555543333220740333211111111112123177323334555",
+          "3333220000226544555544732210013540000000111111011203137713734445",
+          "3233021000224544444473331123773331000000011111110202227331734774",
+          "3330112000012444747733313777757221000000000111100220223773737737",
+          "2220212000000744777333300310013100000000000001101131123773337433",
+          "2302211000000247333333000000000000000000000001100112022377373473",
+          "2303211100000077333332000000000000000000000001132112011373733773",
+          "2013111100000107333331000000000000000000000000010111202133373773",
+          "2022211100000203333320000010001011000000000000000011111217333733",
+          "1031211110000007333200000102111011210000000200101010111313733373",
+          "0122111120000003332001101002020111110000000000001001111201373773",
+          "0212101020000002310231220011010100122000000000001101011110137343",
+          "0202111021000000100722121011010011111100000000000101011113133337",
+          "1212110022000000653222221111000011111100000000000010001131133137",
+          "1012110122000000642223310101000111111111000000000010000213113323",
+          "1021110121000000612233200101000110110000000000000000000021311333",
+          "1022000121000000727200000100001111000156664200000000000001121033",
+          "0122100120000010220000000200001020004666666665100000000000101101",
+          "0122100120000031300000000200000100056666665445664000000000000000",
+          "0111101110000001000000001000000001566655554555555510000000000001",
         ],
       };
 
@@ -1199,6 +1256,10 @@
       let adminAuthenticated = false;
       let storageHealthy = true;
       let validationTimer = null;
+      let pixelArtPainting = false;
+      let pixelArtCanvas = null;
+      let pixelArtProgressLabel = null;
+      let pixelArtProgressFill = null;
       let state = loadState();
 
       adminToggle.addEventListener("click", () => {
@@ -1703,9 +1764,9 @@
 
       function renderPixelArtGame(gameArea) {
         const progress = getPixelArtSave();
-        const revealedColors = progress.revealedColors || {};
-        const revealedCells = getPixelArtRevealedCellCount(progress);
-        const totalCells = PIXEL_ART_DATA.cols * PIXEL_ART_DATA.rows;
+        const paintedCells = progress.paintedCells || {};
+        const revealedCells = getPixelArtPaintedCount(progress);
+        const totalCells = getPixelArtRequiredCellCount();
         const percent = Math.round((revealedCells / totalCells) * 100);
         const complete = isPixelArtComplete(progress);
 
@@ -1722,6 +1783,7 @@
         const progressLabel = document.createElement("div");
         progressLabel.className = "pixel-art-progress";
         progressLabel.textContent = `${percent}% DESCIFRADO`;
+        pixelArtProgressLabel = progressLabel;
 
         header.appendChild(title);
         header.appendChild(progressLabel);
@@ -1732,53 +1794,52 @@
         const progressFill = document.createElement("div");
         progressFill.className = "pixel-progress-fill";
         progressFill.style.width = `${percent}%`;
+        pixelArtProgressFill = progressFill;
         progressTrack.appendChild(progressFill);
         wrapper.appendChild(progressTrack);
 
-        const grid = document.createElement("div");
-        grid.className = "pixel-grid";
-        grid.style.setProperty("--pixel-cols", PIXEL_ART_DATA.cols);
+        const board = document.createElement("div");
+        board.className = "pixel-board";
 
-        PIXEL_ART_DATA.cells.flat().forEach((colorIndex, cellIndex) => {
-          const cell = document.createElement("button");
-          const revealed = Boolean(revealedColors[colorIndex]);
-          cell.type = "button";
-          cell.className = `pixel-cell${revealed ? " revealed" : ""}`;
-          cell.textContent = revealed ? "" : String(colorIndex + 1);
-          cell.style.backgroundColor = revealed
-            ? PIXEL_ART_DATA.palette[colorIndex][1]
-            : "rgba(255, 0, 128, 0.035)";
-          cell.setAttribute(
-            "aria-label",
-            `Pixel ${cellIndex + 1}, color ${colorIndex + 1}`,
-          );
-          cell.addEventListener("click", () => revealPixelArtColor(colorIndex));
-          grid.appendChild(cell);
-        });
-
-        wrapper.appendChild(grid);
+        const canvas = document.createElement("canvas");
+        canvas.className = "pixel-canvas";
+        canvas.width = 768;
+        canvas.height = 768;
+        canvas.setAttribute("aria-label", "Lienzo del módulo Pixel Art");
+        bindPixelArtCanvas(canvas);
+        board.appendChild(canvas);
+        wrapper.appendChild(board);
+        pixelArtCanvas = canvas;
 
         const palette = document.createElement("div");
         palette.className = "pixel-palette";
 
         PIXEL_ART_DATA.palette.forEach(([name, color], colorIndex) => {
+          if (colorIndex === 0) return;
           const colorButton = document.createElement("button");
-          const revealed = Boolean(revealedColors[colorIndex]);
+          const colorTotal = getPixelArtColorCellCount(colorIndex);
+          const colorPainted = Object.keys(paintedCells).filter(
+            (cellIndex) => getPixelArtColorAt(Number(cellIndex)) === colorIndex,
+          ).length;
+          const active = progress.activeColor === colorIndex;
           colorButton.type = "button";
-          colorButton.className = `pixel-color${revealed ? " revealed" : ""}`;
-          colorButton.addEventListener("click", () =>
-            revealPixelArtColor(colorIndex),
-          );
+          colorButton.className = `pixel-color${active ? " active" : ""}${colorPainted === colorTotal ? " revealed" : ""}`;
+          colorButton.addEventListener("click", () => selectPixelArtColor(colorIndex));
 
           const swatch = document.createElement("span");
           swatch.className = "pixel-swatch";
           swatch.style.backgroundColor = color;
 
           const label = document.createElement("span");
-          label.textContent = `${colorIndex + 1} ${name}`;
+          label.textContent = `${colorIndex} ${name}`;
+
+          const count = document.createElement("span");
+          count.className = "pixel-color-count";
+          count.textContent = `${colorPainted}/${colorTotal}`;
 
           colorButton.appendChild(swatch);
           colorButton.appendChild(label);
+          colorButton.appendChild(count);
           palette.appendChild(colorButton);
         });
 
@@ -1809,13 +1870,17 @@
         wrapper.appendChild(completeMessage);
 
         gameArea.appendChild(wrapper);
+        drawPixelArtCanvas(canvas);
       }
 
       function getPixelArtSave(create = true) {
         if (!state.gameProgress) state.gameProgress = {};
-        if (!state.gameProgress[PIXEL_ART_DATA.id] && create) {
+        const existing = state.gameProgress[PIXEL_ART_DATA.id];
+        if ((!existing || existing.mode !== "paint-v2") && create) {
           state.gameProgress[PIXEL_ART_DATA.id] = {
-            revealedColors: {},
+            mode: "paint-v2",
+            activeColor: 5,
+            paintedCells: {},
             completedAt: null,
             downloadedAt: null,
           };
@@ -1823,25 +1888,78 @@
 
         return (
           state.gameProgress[PIXEL_ART_DATA.id] || {
-            revealedColors: {},
+            mode: "paint-v2",
+            activeColor: 5,
+            paintedCells: {},
             completedAt: null,
             downloadedAt: null,
           }
         );
       }
 
-      function revealPixelArtColor(colorIndex) {
+      function selectPixelArtColor(colorIndex) {
         const progress = getPixelArtSave();
-        if (!progress.revealedColors) progress.revealedColors = {};
+        progress.activeColor = colorIndex;
+        saveState();
+        render();
+      }
 
-        const wasComplete = isPixelArtComplete(progress);
-        progress.revealedColors[colorIndex] = true;
-        const nowComplete = isPixelArtComplete(progress);
+      function bindPixelArtCanvas(canvas) {
+        canvas.addEventListener("pointerdown", (event) => {
+          pixelArtPainting = true;
+          if (canvas.setPointerCapture) canvas.setPointerCapture(event.pointerId);
+          paintPixelArtAt(canvas, event);
+        });
 
-        if (nowComplete && !wasComplete) {
+        canvas.addEventListener("pointermove", (event) => {
+          if (!pixelArtPainting) return;
+          paintPixelArtAt(canvas, event);
+        });
+
+        ["pointerup", "pointercancel", "pointerleave"].forEach((eventName) => {
+          canvas.addEventListener(eventName, () => {
+            pixelArtPainting = false;
+          });
+        });
+      }
+
+      function paintPixelArtAt(canvas, event) {
+        if (event.cancelable) event.preventDefault();
+
+        const progress = getPixelArtSave();
+        const activeColor = Number(progress.activeColor || 5);
+        const position = getPixelArtPointerCell(canvas, event);
+        if (!position) return;
+
+        const paintedCells = progress.paintedCells || {};
+        let changed = false;
+        const brushRadius = 1;
+
+        for (let y = position.row - brushRadius; y <= position.row + brushRadius; y += 1) {
+          for (let x = position.col - brushRadius; x <= position.col + brushRadius; x += 1) {
+            if (x < 0 || y < 0 || x >= PIXEL_ART_DATA.cols || y >= PIXEL_ART_DATA.rows) continue;
+            const cellIndex = y * PIXEL_ART_DATA.cols + x;
+            if (paintedCells[cellIndex]) continue;
+            if (getPixelArtColorAt(cellIndex) !== activeColor) continue;
+            paintedCells[cellIndex] = true;
+            changed = true;
+          }
+        }
+
+        if (!changed) return;
+
+        progress.paintedCells = paintedCells;
+        const completedNow = isPixelArtComplete(progress) && !progress.completedAt;
+        if (completedNow) {
           progress.completedAt = new Date().toISOString();
           progress.downloadedAt = new Date().toISOString();
-          saveState();
+        }
+
+        saveState();
+        drawPixelArtCanvas(canvas);
+        syncPixelArtProgress();
+
+        if (completedNow) {
           render();
           setTimeout(() => {
             downloadPixelArtImage();
@@ -1849,16 +1967,32 @@
               "IMAGEN DESCIFRADA. Cuenta los cuadrados ROJOS: esa es la cifra de hoy.",
             );
           }, 150);
-          return;
         }
+      }
 
-        saveState();
-        render();
+      function getPixelArtPointerCell(canvas, event) {
+        const rect = canvas.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        if (x < 0 || y < 0 || x > rect.width || y > rect.height) return null;
+
+        return {
+          col: Math.min(
+            PIXEL_ART_DATA.cols - 1,
+            Math.floor((x / rect.width) * PIXEL_ART_DATA.cols),
+          ),
+          row: Math.min(
+            PIXEL_ART_DATA.rows - 1,
+            Math.floor((y / rect.height) * PIXEL_ART_DATA.rows),
+          ),
+        };
       }
 
       function resetPixelArtGame() {
         state.gameProgress[PIXEL_ART_DATA.id] = {
-          revealedColors: {},
+          mode: "paint-v2",
+          activeColor: 5,
+          paintedCells: {},
           completedAt: null,
           downloadedAt: null,
         };
@@ -1867,21 +2001,120 @@
       }
 
       function isPixelArtComplete(progress) {
-        const revealedColors = (progress && progress.revealedColors) || {};
-        return getPixelArtRequiredColors().every((colorIndex) =>
-          Boolean(revealedColors[colorIndex]),
+        return getPixelArtPaintedCount(progress) >= getPixelArtRequiredCellCount();
+      }
+
+      function getPixelArtCells() {
+        if (!PIXEL_ART_DATA.flatCells) {
+          PIXEL_ART_DATA.flatCells = PIXEL_ART_DATA.rowStrings
+            .join("")
+            .split("")
+            .map((char) => Number.parseInt(char, 36));
+        }
+
+        return PIXEL_ART_DATA.flatCells;
+      }
+
+      function getPixelArtColorAt(cellIndex) {
+        return getPixelArtCells()[cellIndex];
+      }
+
+      function getPixelArtRequiredCellCount() {
+        if (!PIXEL_ART_DATA.requiredCellCount) {
+          PIXEL_ART_DATA.requiredCellCount = getPixelArtCells().filter(
+            (colorIndex) => colorIndex !== 0,
+          ).length;
+        }
+
+        return PIXEL_ART_DATA.requiredCellCount;
+      }
+
+      function getPixelArtColorCellCount(colorIndex) {
+        return getPixelArtCells().filter((cellColor) => cellColor === colorIndex).length;
+      }
+
+      function getPixelArtPaintedCount(progress) {
+        const paintedCells = (progress && progress.paintedCells) || {};
+        return Object.keys(paintedCells).filter(
+          (cellIndex) => getPixelArtColorAt(Number(cellIndex)) !== 0,
+        ).length;
+      }
+
+      function syncPixelArtProgress() {
+        const progress = getPixelArtSave(false);
+        const percent = Math.round(
+          (getPixelArtPaintedCount(progress) / getPixelArtRequiredCellCount()) * 100,
         );
+
+        if (pixelArtProgressLabel) {
+          pixelArtProgressLabel.textContent = `${percent}% DESCIFRADO`;
+        }
+
+        if (pixelArtProgressFill) {
+          pixelArtProgressFill.style.width = `${percent}%`;
+        }
       }
 
-      function getPixelArtRequiredColors() {
-        return Array.from(new Set(PIXEL_ART_DATA.cells.flat()));
+      function drawPixelArtCanvas(canvas) {
+        if (!canvas || !canvas.getContext) return;
+
+        const context = canvas.getContext("2d");
+        if (!context) return;
+
+        const progress = getPixelArtSave(false);
+        const paintedCells = (progress && progress.paintedCells) || {};
+        const activeColor = Number((progress && progress.activeColor) || 5);
+        const cells = getPixelArtCells();
+        const cellWidth = canvas.width / PIXEL_ART_DATA.cols;
+        const cellHeight = canvas.height / PIXEL_ART_DATA.rows;
+
+        context.fillStyle = "#05070d";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+
+        cells.forEach((colorIndex, cellIndex) => {
+          const col = cellIndex % PIXEL_ART_DATA.cols;
+          const row = Math.floor(cellIndex / PIXEL_ART_DATA.cols);
+          const x = col * cellWidth;
+          const y = row * cellHeight;
+          const isBackground = colorIndex === 0;
+          const painted = isBackground || Boolean(paintedCells[cellIndex]);
+          const color = PIXEL_ART_DATA.palette[colorIndex][1];
+
+          if (painted) {
+            context.fillStyle = color;
+          } else if (colorIndex === activeColor) {
+            context.fillStyle = withAlpha(color, 0.42);
+          } else {
+            context.fillStyle = withAlpha(color, 0.12);
+          }
+
+          context.fillRect(x, y, Math.ceil(cellWidth), Math.ceil(cellHeight));
+        });
+
+        context.strokeStyle = "rgba(255, 0, 128, 0.12)";
+        context.lineWidth = 1;
+        for (let col = 0; col <= PIXEL_ART_DATA.cols; col += 4) {
+          const x = col * cellWidth;
+          context.beginPath();
+          context.moveTo(x, 0);
+          context.lineTo(x, canvas.height);
+          context.stroke();
+        }
+        for (let row = 0; row <= PIXEL_ART_DATA.rows; row += 4) {
+          const y = row * cellHeight;
+          context.beginPath();
+          context.moveTo(0, y);
+          context.lineTo(canvas.width, y);
+          context.stroke();
+        }
       }
 
-      function getPixelArtRevealedCellCount(progress) {
-        const revealedColors = (progress && progress.revealedColors) || {};
-        return PIXEL_ART_DATA.cells
-          .flat()
-          .filter((colorIndex) => Boolean(revealedColors[colorIndex])).length;
+      function withAlpha(hexColor, alpha) {
+        const value = hexColor.replace("#", "");
+        const red = Number.parseInt(value.slice(0, 2), 16);
+        const green = Number.parseInt(value.slice(2, 4), 16);
+        const blue = Number.parseInt(value.slice(4, 6), 16);
+        return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
       }
 
       function downloadPixelArtImage() {
@@ -1893,11 +2126,11 @@
         canvas.height = PIXEL_ART_DATA.rows * scale;
         const context = canvas.getContext("2d");
 
-        PIXEL_ART_DATA.cells.forEach((row, rowIndex) => {
-          row.forEach((colorIndex, colIndex) => {
-            context.fillStyle = PIXEL_ART_DATA.palette[colorIndex][1];
-            context.fillRect(colIndex * scale, rowIndex * scale, scale, scale);
-          });
+        getPixelArtCells().forEach((colorIndex, cellIndex) => {
+          const colIndex = cellIndex % PIXEL_ART_DATA.cols;
+          const rowIndex = Math.floor(cellIndex / PIXEL_ART_DATA.cols);
+          context.fillStyle = PIXEL_ART_DATA.palette[colorIndex][1];
+          context.fillRect(colIndex * scale, rowIndex * scale, scale, scale);
         });
 
         const link = document.createElement("a");
