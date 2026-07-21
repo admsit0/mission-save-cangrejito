@@ -1089,9 +1089,9 @@
           id: "day-05",
           date: "21/07",
           unlockAt: "2026-07-21T00:00:00+02:00",
-          digit: 6,
-          clue: "Misión cookie. Consigue el objetivo del supermercado y fíjate en la primera cifra de su peso.",
-          method: "Primera cifra del peso (60-70g)",
+          digit: 0,
+          clue: "Busca una incorporación floral entre lo cotidiano. La cifra está en la última cifra del volumen.",
+          method: "Última cifra de los mililitros (ej: 100)",
           type: "item",
         },
         {
@@ -1145,9 +1145,9 @@
           id: "day-11",
           date: "27/07",
           unlockAt: "2026-07-27T00:00:00+02:00",
-          digit: 0,
-          clue: "Busca una incorporación floral entre lo cotidiano. La cifra está en la última cifra del volumen.",
-          method: "Última cifra de los mililitros (ej: 100)",
+          digit: 6,
+          clue: "Misión cookie. Consigue el objetivo del supermercado y fíjate en la primera cifra de su peso.",
+          method: "Primera cifra del peso (60-70g)",
           type: "item",
         },
         {
@@ -1442,6 +1442,11 @@
           nextState.migrations.pixelArtMovedToDay20 = new Date().toISOString();
         }
 
+        if (!nextState.migrations.cookieMovedToDay27) {
+          migrateCookieFloralDaySwap(nextState);
+          nextState.migrations.cookieMovedToDay27 = new Date().toISOString();
+        }
+
         return nextState;
       }
 
@@ -1477,6 +1482,44 @@
 
         if (nextState.selectedDayId === "day-05" && !oldDay05WasPixelArt) {
           nextState.selectedDayId = "day-04";
+        }
+      }
+
+      function migrateCookieFloralDaySwap(nextState) {
+        const oldDay05 = nextState.solved["day-05"];
+        const oldDay11 = nextState.solved["day-11"];
+        const oldDay05WasCookie = oldDay05 && Number(oldDay05.digit) === 6;
+        const oldDay11WasFloral = oldDay11 && Number(oldDay11.digit) === 0;
+
+        if (!oldDay05WasCookie && !oldDay11WasFloral) return;
+
+        const selectedDayId = nextState.selectedDayId;
+        const migratedAt = new Date().toISOString();
+        delete nextState.solved["day-05"];
+        delete nextState.solved["day-11"];
+
+        if (oldDay11WasFloral) {
+          nextState.solved["day-05"] = {
+            ...oldDay11,
+            digit: 0,
+            migratedFrom: "day-11-floral",
+            migratedAt,
+          };
+        }
+
+        if (oldDay05WasCookie) {
+          nextState.solved["day-11"] = {
+            ...oldDay05,
+            digit: 6,
+            migratedFrom: "day-05-cookie",
+            migratedAt,
+          };
+        }
+
+        if (selectedDayId === "day-05" && oldDay05WasCookie) {
+          nextState.selectedDayId = "day-11";
+        } else if (selectedDayId === "day-11" && oldDay11WasFloral) {
+          nextState.selectedDayId = "day-05";
         }
       }
 
