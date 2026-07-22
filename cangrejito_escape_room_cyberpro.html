@@ -638,6 +638,163 @@
         display: block;
       }
 
+      .quiz-game {
+        margin: 1.5rem 0;
+        padding: 1rem;
+        border: 2px solid #ff0080;
+        background:
+          linear-gradient(180deg, rgba(255, 0, 128, 0.08), rgba(0, 255, 136, 0.03)),
+          rgba(0, 0, 0, 0.42);
+        box-shadow:
+          0 0 18px rgba(255, 0, 128, 0.28),
+          inset 0 0 24px rgba(255, 0, 128, 0.08);
+      }
+
+      .quiz-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .quiz-title {
+        color: #ff0080;
+        font-size: 12px;
+        font-weight: bold;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+
+      .quiz-status {
+        color: #00ff88;
+        font-size: 11px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        text-align: right;
+        white-space: nowrap;
+      }
+
+      .quiz-rules {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.75rem;
+        margin: 1rem 0;
+      }
+
+      .quiz-rule {
+        border: 1px solid rgba(255, 0, 128, 0.55);
+        background: rgba(255, 0, 128, 0.06);
+        padding: 0.75rem;
+        min-height: 72px;
+      }
+
+      .quiz-rule-label {
+        color: rgba(255, 255, 255, 0.62);
+        font-size: 9px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      .quiz-rule-value {
+        margin-top: 0.45rem;
+        color: #00ff88;
+        font-size: 18px;
+        font-weight: bold;
+        letter-spacing: 1px;
+      }
+
+      .quiz-panel {
+        border: 1px solid rgba(0, 255, 136, 0.45);
+        background: rgba(0, 0, 0, 0.38);
+        padding: 1rem;
+      }
+
+      .quiz-copy {
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 12px;
+        line-height: 1.65;
+        margin: 0 0 1rem;
+      }
+
+      .quiz-question-meta {
+        color: #00ff88;
+        font-size: 10px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-bottom: 0.65rem;
+      }
+
+      .quiz-question {
+        color: #ffffff;
+        font-size: 17px;
+        font-weight: bold;
+        line-height: 1.45;
+        margin-bottom: 1rem;
+      }
+
+      .quiz-options {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.7rem;
+      }
+
+      .quiz-answer-form {
+        display: flex;
+        gap: 0.75rem;
+      }
+
+      .quiz-answer-input {
+        min-width: 0;
+        text-transform: uppercase;
+      }
+
+      .quiz-option {
+        min-height: 58px;
+        text-align: left;
+        white-space: normal;
+        line-height: 1.35;
+        background: rgba(255, 0, 128, 0.08);
+        color: #ff66ff;
+        border-color: rgba(255, 0, 128, 0.75);
+        box-shadow: 0 0 8px rgba(255, 0, 128, 0.16);
+      }
+
+      .quiz-option:hover {
+        color: #ffffff;
+        border-color: #ffffff;
+      }
+
+      .quiz-result {
+        display: block;
+        margin-top: 1rem;
+        padding: 0.9rem;
+        border: 1px solid #ff0080;
+        color: #ff0080;
+        background: rgba(255, 0, 128, 0.08);
+        font-size: 11px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        line-height: 1.5;
+        text-align: center;
+        text-transform: uppercase;
+      }
+
+      .quiz-result.success {
+        border-color: #00ff88;
+        color: #00ff88;
+        background: rgba(0, 255, 136, 0.08);
+      }
+
+      .quiz-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        justify-content: center;
+        margin-top: 1rem;
+      }
+
       .admin-toggle {
         position: fixed;
         bottom: 20px;
@@ -922,6 +1079,30 @@
           font-size: 10px;
         }
 
+        .quiz-game {
+          padding: 0.75rem;
+        }
+
+        .quiz-header {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 0.4rem;
+        }
+
+        .quiz-status {
+          text-align: left;
+        }
+
+        .quiz-rules,
+        .quiz-options,
+        .quiz-answer-form {
+          grid-template-columns: 1fr;
+        }
+
+        .quiz-answer-form {
+          display: grid;
+        }
+
         .admin-panel {
           padding: 1rem;
         }
@@ -1043,7 +1224,7 @@
 
     <script>
       const ADMIN_PASSWORD = "admin";
-      const APP_VERSION = 3;
+      const APP_VERSION = 4;
       const STORAGE_KEY = "cangrejito-progress-v2";
       const LEGACY_STORAGE_KEY = "cangrejito-config";
 
@@ -1098,10 +1279,11 @@
           id: "day-06",
           date: "22/07",
           unlockAt: "2026-07-22T00:00:00+02:00",
-          digit: 1,
-          clue: "Objetivo Flaming Hot. Verifica el tercer dígito del número de serie bajo el código de barras.",
-          method: "Tercer dígito del número de serie",
-          type: "item",
+          digit: 4,
+          clue: "Quiz clasificado. Supera el test de relación para desbloquear la cifra de hoy.",
+          method: "Quiz de relación superado con 13 aciertos de 15",
+          type: "game",
+          gameType: "quiz",
         },
         {
           id: "day-07",
@@ -1135,11 +1317,10 @@
           id: "day-10",
           date: "26/07",
           unlockAt: "2026-07-26T00:00:00+02:00",
-          digit: 7,
-          clue: "Quiz clasificado. Supera las preguntas y cuenta las líneas del mensaje final.",
-          method: "Número de líneas del mensaje de amor",
-          type: "game",
-          gameType: "quiz",
+          digit: 1,
+          clue: "Objetivo Flaming Hot. Verifica el tercer dígito del número de serie bajo el código de barras.",
+          method: "Tercer dígito del número de serie",
+          type: "item",
         },
         {
           id: "day-11",
@@ -1340,6 +1521,81 @@
         ],
       });
 
+      const QUIZ_DATA = {
+        id: "relationship-quiz-day-06-v2",
+        mode: "relationship-quiz-v2",
+        passingScore: 13,
+        digit: 4,
+        questions: [
+          {
+            prompt: "Nuestro aniversario. Responde en formato DD/MM.",
+            type: "date",
+            answer: "14/02",
+          },
+          {
+            prompt: "El día que perdimos la virginidad. Responde en formato DD/MM.",
+            type: "date",
+            answer: "24/09",
+          },
+          {
+            prompt: "El día que te pedí ser mi novia. Responde en formato DD/MM.",
+            type: "date",
+            answer: "26/09",
+          },
+          {
+            prompt: "El día que dije mi primer te amo. Responde en formato DD/MM.",
+            type: "date",
+            answer: "14/08",
+          },
+          {
+            prompt: "Mi cumpleaños. Responde en formato DD/MM.",
+            type: "date",
+            answer: "25/11",
+          },
+          {
+            prompt: "Tu cumpleaños. Responde en formato DD/MM.",
+            type: "date",
+            answer: "26/12",
+          },
+          {
+            prompt: "Mi color favorito en una palabra.",
+            type: "open",
+          },
+          {
+            prompt: "Mi comida favorita en una palabra.",
+            type: "open",
+          },
+          {
+            prompt: "Mi bebida favorita en una palabra.",
+            type: "open",
+          },
+          {
+            prompt: "Mi dulce favorito en una palabra.",
+            type: "open",
+          },
+          {
+            prompt: "Mi mote favorito para ti en una palabra.",
+            type: "open",
+          },
+          {
+            prompt: "Un plan perfecto conmigo en una palabra.",
+            type: "open",
+          },
+          {
+            prompt: "Una canción nuestra en una palabra.",
+            type: "open",
+          },
+          {
+            prompt: "Un lugar nuestro en una palabra.",
+            type: "open",
+          },
+          {
+            prompt: "Una palabra para nuestra misión.",
+            type: "open",
+          },
+        ],
+      };
+
       const adminToggle = document.getElementById("adminToggle");
       const adminPanel = document.getElementById("adminPanel");
       const adminClose = document.getElementById("adminClose");
@@ -1447,6 +1703,11 @@
           nextState.migrations.cookieMovedToDay27 = new Date().toISOString();
         }
 
+        if (!nextState.migrations.flamingHotMovedToDay26) {
+          migrateFlamingHotQuizDaySwap(nextState);
+          nextState.migrations.flamingHotMovedToDay26 = new Date().toISOString();
+        }
+
         return nextState;
       }
 
@@ -1520,6 +1781,44 @@
           nextState.selectedDayId = "day-11";
         } else if (selectedDayId === "day-11" && oldDay11WasFloral) {
           nextState.selectedDayId = "day-05";
+        }
+      }
+
+      function migrateFlamingHotQuizDaySwap(nextState) {
+        const oldDay06 = nextState.solved["day-06"];
+        const oldDay10 = nextState.solved["day-10"];
+        const oldDay06WasFlamingHot = oldDay06 && Number(oldDay06.digit) === 1;
+        const oldDay10WasQuiz = oldDay10 && Number(oldDay10.digit) === 7;
+
+        if (!oldDay06WasFlamingHot && !oldDay10WasQuiz) return;
+
+        const selectedDayId = nextState.selectedDayId;
+        const migratedAt = new Date().toISOString();
+        delete nextState.solved["day-06"];
+        delete nextState.solved["day-10"];
+
+        if (oldDay10WasQuiz) {
+          nextState.solved["day-06"] = {
+            ...oldDay10,
+            digit: 4,
+            migratedFrom: "day-10-quiz",
+            migratedAt,
+          };
+        }
+
+        if (oldDay06WasFlamingHot) {
+          nextState.solved["day-10"] = {
+            ...oldDay06,
+            digit: 1,
+            migratedFrom: "day-06-flaming-hot",
+            migratedAt,
+          };
+        }
+
+        if (selectedDayId === "day-10" && oldDay10WasQuiz) {
+          nextState.selectedDayId = "day-06";
+        } else if (selectedDayId === "day-06" && oldDay06WasFlamingHot) {
+          nextState.selectedDayId = "day-06";
         }
       }
 
@@ -1630,8 +1929,10 @@
       }
 
       function isPinEntryUnlocked(day) {
-        if (!day || day.gameType !== "pixelart") return true;
-        return isPixelArtComplete(getPixelArtSave(false));
+        if (!day) return true;
+        if (day.gameType === "pixelart") return isPixelArtComplete(getPixelArtSave(false));
+        if (day.gameType === "quiz") return false;
+        return true;
       }
 
       function getSelectedDay(days) {
@@ -1837,7 +2138,7 @@
         validateButton.disabled = !canValidate;
         pinInput.placeholder = canValidate
           ? "0-9"
-          : selectedDay && selectedDay.gameType === "pixelart"
+          : selectedDay && selectedDay.type === "game"
             ? "JUEGO"
             : "BLOQ";
 
@@ -1887,9 +2188,13 @@
           return;
         }
 
+        if (selectedDay.gameType === "quiz") {
+          renderRelationshipQuizGame(gameArea, selectedDay);
+          return;
+        }
+
         const gameContent = {
           boss: "⚔️ BOSS FIGHT - PENDIENTE DE ACTIVACIÓN",
-          quiz: "📝 QUIZ RELACIÓN - PENDIENTE DE ACTIVACIÓN",
         };
 
         const placeholder = document.createElement("div");
@@ -2291,6 +2596,361 @@
         if (document.body) document.body.appendChild(link);
         link.click();
         if (link.parentNode) link.parentNode.removeChild(link);
+      }
+
+      function renderRelationshipQuizGame(gameArea, selectedDay) {
+        const progress = getRelationshipQuizSave();
+        const configured = isRelationshipQuizConfigured();
+        const wrapper = document.createElement("div");
+        wrapper.className = "quiz-game";
+
+        const header = document.createElement("div");
+        header.className = "quiz-header";
+
+        const title = document.createElement("div");
+        title.className = "quiz-title";
+        title.textContent = "▸ MÓDULO QUIZ RELACIÓN";
+
+        const status = document.createElement("div");
+        status.className = "quiz-status";
+        status.textContent = progress.lastScore === null
+          ? "ACCESO SIN INTENTOS"
+          : `ÚLTIMO RESULTADO: ${progress.lastScore}/${QUIZ_DATA.questions.length}`;
+
+        header.appendChild(title);
+        header.appendChild(status);
+        wrapper.appendChild(header);
+
+        const rules = document.createElement("div");
+        rules.className = "quiz-rules";
+        rules.appendChild(createQuizRule("Preguntas", QUIZ_DATA.questions.length));
+        rules.appendChild(
+          createQuizRule(
+            "Mínimo",
+            `${QUIZ_DATA.passingScore}/${QUIZ_DATA.questions.length}`,
+          ),
+        );
+        rules.appendChild(createQuizRule("Cifra", "Bloqueada"));
+        wrapper.appendChild(rules);
+
+        if (!configured) {
+          const pending = document.createElement("div");
+          pending.className = "quiz-panel";
+
+          const text = document.createElement("p");
+          text.className = "quiz-copy";
+          text.textContent =
+            "Canal preparado. Falta cargar respuestas clasificadas antes de iniciar el test.";
+          pending.appendChild(text);
+          wrapper.appendChild(pending);
+          gameArea.appendChild(wrapper);
+          return;
+        }
+
+        if (!progress.started) {
+          renderRelationshipQuizIntro(wrapper);
+        } else if (progress.completedAt && !progress.passed) {
+          renderRelationshipQuizRetry(wrapper, progress);
+        } else {
+          renderRelationshipQuizQuestion(wrapper, selectedDay, progress);
+        }
+
+        gameArea.appendChild(wrapper);
+      }
+
+      function createQuizRule(label, value) {
+        const item = document.createElement("div");
+        item.className = "quiz-rule";
+
+        const labelEl = document.createElement("div");
+        labelEl.className = "quiz-rule-label";
+        labelEl.textContent = label;
+
+        const valueEl = document.createElement("div");
+        valueEl.className = "quiz-rule-value";
+        valueEl.textContent = String(value);
+
+        item.appendChild(labelEl);
+        item.appendChild(valueEl);
+        return item;
+      }
+
+      function renderRelationshipQuizIntro(wrapper) {
+        const panel = document.createElement("div");
+        panel.className = "quiz-panel";
+
+        const copy = document.createElement("p");
+        copy.className = "quiz-copy";
+        copy.textContent =
+          `Antes de empezar: necesitas acertar al menos ${QUIZ_DATA.passingScore} de ${QUIZ_DATA.questions.length}. Si no llegas, el intento queda sellado y tendrás que repetirlo desde el principio.`;
+        panel.appendChild(copy);
+
+        const actions = document.createElement("div");
+        actions.className = "quiz-actions";
+
+        const startButton = document.createElement("button");
+        startButton.type = "button";
+        startButton.textContent = "INICIAR QUIZ";
+        startButton.addEventListener("click", startRelationshipQuiz);
+        actions.appendChild(startButton);
+
+        panel.appendChild(actions);
+        wrapper.appendChild(panel);
+      }
+
+      function renderRelationshipQuizRetry(wrapper, progress) {
+        const panel = document.createElement("div");
+        panel.className = "quiz-panel";
+
+        const result = document.createElement("div");
+        result.className = "quiz-result";
+        result.textContent =
+          `INTENTO FALLIDO: ${progress.lastScore}/${QUIZ_DATA.questions.length}. REQUIERE ${QUIZ_DATA.passingScore}/${QUIZ_DATA.questions.length}.`;
+        panel.appendChild(result);
+
+        const actions = document.createElement("div");
+        actions.className = "quiz-actions";
+
+        const retryButton = document.createElement("button");
+        retryButton.type = "button";
+        retryButton.textContent = "REPETIR QUIZ";
+        retryButton.addEventListener("click", startRelationshipQuiz);
+        actions.appendChild(retryButton);
+
+        panel.appendChild(actions);
+        wrapper.appendChild(panel);
+      }
+
+      function renderRelationshipQuizQuestion(wrapper, selectedDay, progress) {
+        const questionIndex = Math.min(
+          Number(progress.currentIndex) || 0,
+          QUIZ_DATA.questions.length - 1,
+        );
+        const question = QUIZ_DATA.questions[questionIndex];
+        const panel = document.createElement("div");
+        panel.className = "quiz-panel";
+
+        const meta = document.createElement("div");
+        meta.className = "quiz-question-meta";
+        meta.textContent = `Pregunta ${questionIndex + 1} de ${QUIZ_DATA.questions.length}`;
+        panel.appendChild(meta);
+
+        const prompt = document.createElement("div");
+        prompt.className = "quiz-question";
+        prompt.textContent = question.prompt;
+        panel.appendChild(prompt);
+
+        const form = document.createElement("form");
+        form.className = "quiz-answer-form";
+        form.addEventListener("submit", (event) => {
+          event.preventDefault();
+          const answerInput = form.querySelector("input");
+          answerRelationshipQuizQuestion(
+            selectedDay.id,
+            questionIndex,
+            answerInput ? answerInput.value : "",
+          );
+        });
+
+        const answerInput = document.createElement("input");
+        answerInput.type = "text";
+        answerInput.className = "quiz-answer-input";
+        answerInput.autocomplete = "off";
+        answerInput.inputMode = question.type === "date" ? "numeric" : "text";
+        answerInput.placeholder = question.type === "date" ? "DD/MM" : "UNA PALABRA";
+
+        const submitButton = document.createElement("button");
+        submitButton.type = "submit";
+        submitButton.textContent = "VALIDAR";
+
+        form.appendChild(answerInput);
+        form.appendChild(submitButton);
+        panel.appendChild(form);
+        wrapper.appendChild(panel);
+
+        setTimeout(() => answerInput.focus(), 0);
+      }
+
+      function getRelationshipQuizSave(create = true) {
+        if (!state.gameProgress) state.gameProgress = {};
+        const existing = state.gameProgress[QUIZ_DATA.id];
+        if ((!existing || existing.mode !== QUIZ_DATA.mode) && create) {
+          state.gameProgress[QUIZ_DATA.id] = createDefaultRelationshipQuizSave();
+        }
+
+        return state.gameProgress[QUIZ_DATA.id] || createDefaultRelationshipQuizSave();
+      }
+
+      function createDefaultRelationshipQuizSave() {
+        return {
+          mode: QUIZ_DATA.mode,
+          started: false,
+          startedAt: null,
+          currentIndex: 0,
+          answers: [],
+          attempts: 0,
+          lastScore: null,
+          completedAt: null,
+          passed: false,
+        };
+      }
+
+      function isRelationshipQuizConfigured() {
+        return (
+          QUIZ_DATA.questions.length === 15 &&
+          QUIZ_DATA.questions.every(
+            (question) =>
+              question.type === "open" ||
+              (question.type === "date" && Boolean(question.answer)),
+          )
+        );
+      }
+
+      function startRelationshipQuiz() {
+        const progress = getRelationshipQuizSave();
+        progress.started = true;
+        progress.startedAt = new Date().toISOString();
+        progress.currentIndex = 0;
+        progress.answers = [];
+        progress.completedAt = null;
+        progress.passed = false;
+        saveState();
+        render();
+      }
+
+      function answerRelationshipQuizQuestion(dayId, questionIndex, rawAnswer) {
+        const progress = getRelationshipQuizSave();
+        if (!progress.started || progress.completedAt) return;
+        if (Number(progress.currentIndex) !== questionIndex) return;
+
+        const question = QUIZ_DATA.questions[questionIndex];
+        const answer = String(rawAnswer || "").trim();
+        if (!answer) {
+          showValidationMessage("⚠ RESPUESTA REQUERIDA", "error", 1800);
+          return;
+        }
+
+        const correct = isRelationshipQuizAnswerCorrect(question, answer);
+        progress.answers = progress.answers.slice(0, questionIndex);
+        progress.answers.push({ questionIndex, answer, correct });
+        progress.currentIndex = questionIndex + 1;
+
+        if (progress.currentIndex >= QUIZ_DATA.questions.length) {
+          finishRelationshipQuizAttempt(dayId, progress);
+          return;
+        }
+
+        saveState();
+        render();
+      }
+
+      function finishRelationshipQuizAttempt(dayId, progress) {
+        const score = calculateRelationshipQuizScore(progress);
+        progress.attempts = (Number(progress.attempts) || 0) + 1;
+        progress.lastScore = score;
+        progress.completedAt = new Date().toISOString();
+        progress.passed = score >= QUIZ_DATA.passingScore;
+
+        if (progress.passed) {
+          const quizDay = getDays().find((day) => day.id === dayId);
+          state.solved[dayId] = {
+            digit: Number(quizDay ? quizDay.digit : QUIZ_DATA.digit),
+            solvedAt: new Date().toISOString(),
+            appVersion: APP_VERSION,
+            source: "quiz",
+            score,
+          };
+          const nextAvailableDay = getDays().find(
+            (day) => isAvailable(day) && !isSolved(day),
+          );
+          state.selectedDayId = nextAvailableDay ? nextAvailableDay.id : dayId;
+          saveState();
+          render();
+          showValidationMessage(
+            `✓ QUIZ SUPERADO | CIFRA ${state.solved[dayId].digit} DECODIFICADA`,
+            "success",
+            5000,
+          );
+          return;
+        }
+
+        saveState();
+        render();
+        showValidationMessage(
+          `✗ ${score}/${QUIZ_DATA.questions.length} | REINTENTO OBLIGATORIO`,
+          "error",
+          3500,
+        );
+      }
+
+      function calculateRelationshipQuizScore(progress) {
+        return ((progress && progress.answers) || []).filter(
+          (answer) => answer.correct,
+        ).length;
+      }
+
+      function isRelationshipQuizAnswerCorrect(question, answer) {
+        if (!question || !String(answer || "").trim()) return false;
+        if (question.type === "open") return true;
+        if (question.type !== "date") return false;
+
+        return canonicalizeQuizDate(answer) === canonicalizeQuizDate(question.answer);
+      }
+
+      function canonicalizeQuizDate(value) {
+        const monthMap = {
+          enero: "01",
+          febrero: "02",
+          marzo: "03",
+          abril: "04",
+          mayo: "05",
+          junio: "06",
+          julio: "07",
+          agosto: "08",
+          septiembre: "09",
+          setiembre: "09",
+          octubre: "10",
+          noviembre: "11",
+          diciembre: "12",
+        };
+        const normalized = normalizeQuizText(value);
+        const digits = normalized.replace(/\D/g, "");
+        const monthName = Object.keys(monthMap).find((month) =>
+          normalized.includes(month),
+        );
+        const numberGroups = normalized.match(/\d+/g) || [];
+
+        if (monthName && numberGroups.length >= 1) {
+          return `${padQuizDatePart(numberGroups[0])}/${monthMap[monthName]}`;
+        }
+
+        if (numberGroups.length >= 2) {
+          return `${padQuizDatePart(numberGroups[0])}/${padQuizDatePart(numberGroups[1])}`;
+        }
+
+        if (digits.length === 4) {
+          return `${digits.slice(0, 2)}/${digits.slice(2)}`;
+        }
+
+        if (digits.length === 3) {
+          return `0${digits.slice(0, 1)}/${digits.slice(1)}`;
+        }
+
+        return normalized;
+      }
+
+      function padQuizDatePart(value) {
+        return String(Number.parseInt(value, 10) || 0).padStart(2, "0");
+      }
+
+      function normalizeQuizText(value) {
+        return String(value || "")
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .replace(/\bde\b/g, " ")
+          .replace(/\s+/g, " ")
+          .trim();
       }
 
       function renderPinDisplay(days, selectedDay) {
