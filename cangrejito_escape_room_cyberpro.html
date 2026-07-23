@@ -795,6 +795,131 @@
         margin-top: 1rem;
       }
 
+      .boss-game {
+        margin: 1.5rem 0;
+        padding: 1rem;
+        border: 2px solid #ff0080;
+        background:
+          radial-gradient(circle at 50% 0%, rgba(0, 255, 136, 0.1), transparent 34%),
+          linear-gradient(180deg, rgba(255, 0, 128, 0.08), rgba(0, 255, 136, 0.03)),
+          rgba(0, 0, 0, 0.5);
+        box-shadow:
+          0 0 18px rgba(255, 0, 128, 0.28),
+          inset 0 0 26px rgba(0, 255, 136, 0.06);
+      }
+
+      .boss-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .boss-title {
+        color: #ff0080;
+        font-size: 12px;
+        font-weight: bold;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+
+      .boss-status {
+        color: #00ff88;
+        font-size: 11px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        text-align: right;
+        white-space: nowrap;
+      }
+
+      .boss-board {
+        width: min(100%, 460px);
+        margin: 0 auto;
+        border: 1px solid rgba(255, 0, 128, 0.65);
+        background: #05070d;
+        box-shadow:
+          0 0 18px rgba(255, 0, 128, 0.24),
+          inset 0 0 24px rgba(0, 0, 0, 0.72);
+        position: relative;
+      }
+
+      .boss-canvas {
+        display: block;
+        width: 100%;
+        aspect-ratio: 9 / 14;
+        touch-action: none;
+        user-select: none;
+      }
+
+      .boss-hud {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.55rem;
+        margin: 0 0 1rem;
+      }
+
+      .boss-hud-item {
+        border: 1px solid rgba(255, 0, 128, 0.55);
+        background: rgba(255, 0, 128, 0.06);
+        padding: 0.65rem;
+        min-height: 58px;
+      }
+
+      .boss-hud-label {
+        color: rgba(255, 255, 255, 0.62);
+        font-size: 9px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      .boss-hud-value {
+        margin-top: 0.35rem;
+        color: #00ff88;
+        font-size: 15px;
+        font-weight: bold;
+        letter-spacing: 1px;
+      }
+
+      .boss-controls {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1.4fr;
+        gap: 0.7rem;
+        margin-top: 1rem;
+      }
+
+      .boss-control {
+        min-height: 54px;
+        padding: 0.75rem;
+        border-color: rgba(0, 255, 136, 0.6);
+        background: rgba(0, 255, 136, 0.09);
+        color: #00ff88;
+        box-shadow: 0 0 10px rgba(0, 255, 136, 0.16);
+        touch-action: none;
+      }
+
+      .boss-control.fire {
+        border-color: rgba(255, 0, 128, 0.8);
+        background: rgba(255, 0, 128, 0.1);
+        color: #ffffff;
+      }
+
+      .boss-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        justify-content: center;
+        margin-top: 1rem;
+      }
+
+      .boss-copy {
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 12px;
+        line-height: 1.65;
+        margin: 0 0 1rem;
+        text-align: center;
+      }
+
       .admin-toggle {
         position: fixed;
         bottom: 20px;
@@ -1103,6 +1228,32 @@
           display: grid;
         }
 
+        .boss-game {
+          padding: 0.75rem;
+        }
+
+        .boss-header {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 0.4rem;
+        }
+
+        .boss-status {
+          text-align: left;
+        }
+
+        .boss-hud {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .boss-controls {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .boss-control.fire {
+          grid-column: 1 / -1;
+        }
+
         .admin-panel {
           padding: 1rem;
         }
@@ -1224,7 +1375,7 @@
 
     <script>
       const ADMIN_PASSWORD = "admin";
-      const APP_VERSION = 4;
+      const APP_VERSION = 5;
       const STORAGE_KEY = "cangrejito-progress-v2";
       const LEGACY_STORAGE_KEY = "cangrejito-config";
 
@@ -1290,8 +1441,8 @@
           date: "23/07",
           unlockAt: "2026-07-23T00:00:00+02:00",
           digit: 8,
-          clue: "Boss Fight clasificado. Derrota al objetivo cuando el módulo esté disponible.",
-          method: "Cifra mostrada tras derrotar al boss",
+          clue: "Space Rescue activo. Pilota la nave, derrota al boss italiano y rescata al objetivo.",
+          method: "Cifra mostrada tras completar los tres niveles",
           type: "game",
           gameType: "boss",
         },
@@ -1596,6 +1747,49 @@
         ],
       };
 
+      const BOSS_GAME_DATA = {
+        id: "space-rescue-day-07-v1",
+        mode: "space-rescue-v1",
+        digit: 8,
+        width: 360,
+        height: 560,
+        assets: {
+          rescuer: "assets/rescuer-face.png",
+          rescued: "assets/rescued-face.png",
+          boss: "assets/italian-boss.png",
+          alien: "assets/mini-alien.png",
+        },
+        levels: [
+          {
+            name: "Nivel 1",
+            rows: 2,
+            cols: 5,
+            speed: 20,
+            fireRate: 0.035,
+            bulletSpeed: 115,
+            bossHp: 0,
+          },
+          {
+            name: "Nivel 2",
+            rows: 3,
+            cols: 6,
+            speed: 26,
+            fireRate: 0.048,
+            bulletSpeed: 135,
+            bossHp: 0,
+          },
+          {
+            name: "Boss",
+            rows: 3,
+            cols: 7,
+            speed: 32,
+            fireRate: 0.06,
+            bulletSpeed: 150,
+            bossHp: 12,
+          },
+        ],
+      };
+
       const adminToggle = document.getElementById("adminToggle");
       const adminPanel = document.getElementById("adminPanel");
       const adminClose = document.getElementById("adminClose");
@@ -1611,6 +1805,9 @@
       let pixelArtCanvas = null;
       let pixelArtProgressLabel = null;
       let pixelArtProgressFill = null;
+      let bossGameRuntime = null;
+      let bossGameAssets = null;
+      const bossKeyState = { left: false, right: false, fire: false };
       let state = loadState();
 
       adminToggle.addEventListener("click", () => {
@@ -1634,6 +1831,30 @@
 
       pinInput.addEventListener("input", () => {
         pinInput.value = pinInput.value.replace(/\D/g, "").slice(0, 1);
+      });
+
+      window.addEventListener("keydown", (event) => {
+        if (!bossGameRuntime || isTypingTarget(event.target)) return;
+        if (event.key === "ArrowLeft" || event.key.toLowerCase() === "a") {
+          bossKeyState.left = true;
+          event.preventDefault();
+        } else if (event.key === "ArrowRight" || event.key.toLowerCase() === "d") {
+          bossKeyState.right = true;
+          event.preventDefault();
+        } else if (event.key === " " || event.key === "Enter") {
+          bossKeyState.fire = true;
+          event.preventDefault();
+        }
+      });
+
+      window.addEventListener("keyup", (event) => {
+        if (event.key === "ArrowLeft" || event.key.toLowerCase() === "a") {
+          bossKeyState.left = false;
+        } else if (event.key === "ArrowRight" || event.key.toLowerCase() === "d") {
+          bossKeyState.right = false;
+        } else if (event.key === " " || event.key === "Enter") {
+          bossKeyState.fire = false;
+        }
       });
 
       function createDefaultState() {
@@ -1932,6 +2153,7 @@
         if (!day) return true;
         if (day.gameType === "pixelart") return isPixelArtComplete(getPixelArtSave(false));
         if (day.gameType === "quiz") return false;
+        if (day.gameType === "boss") return false;
         return true;
       }
 
@@ -2173,6 +2395,7 @@
       function renderGameArea(selectedDay) {
         const gameArea = document.getElementById("gameArea");
         gameArea.innerHTML = "";
+        destroyBossGameRuntime();
 
         if (
           !selectedDay ||
@@ -2193,8 +2416,12 @@
           return;
         }
 
+        if (selectedDay.gameType === "boss") {
+          renderBossGame(gameArea, selectedDay);
+          return;
+        }
+
         const gameContent = {
-          boss: "⚔️ BOSS FIGHT - PENDIENTE DE ACTIVACIÓN",
         };
 
         const placeholder = document.createElement("div");
@@ -2598,6 +2825,987 @@
         if (link.parentNode) link.parentNode.removeChild(link);
       }
 
+      function renderBossGame(gameArea, selectedDay) {
+        const progress = getBossGameSave();
+        const wrapper = document.createElement("div");
+        wrapper.className = "boss-game";
+
+        const header = document.createElement("div");
+        header.className = "boss-header";
+
+        const title = document.createElement("div");
+        title.className = "boss-title";
+        title.textContent = "▸ SPACE RESCUE: OPERACIÓN ITALIA";
+
+        const status = document.createElement("div");
+        status.className = "boss-status";
+        status.textContent = progress.completedAt
+          ? "RESCATE COMPLETADO"
+          : "3 NIVELES ACTIVOS";
+
+        header.appendChild(title);
+        header.appendChild(status);
+        wrapper.appendChild(header);
+
+        const copy = document.createElement("p");
+        copy.className = "boss-copy";
+        copy.textContent =
+          "Derrota las oleadas italianas, rompe la captura del boss y completa el rescate.";
+        wrapper.appendChild(copy);
+
+        const hud = document.createElement("div");
+        hud.className = "boss-hud";
+        const hudRefs = {
+          level: createBossHudItem(hud, "Nivel", "1/3"),
+          lives: createBossHudItem(hud, "Vidas", "5"),
+          score: createBossHudItem(hud, "Puntos", "0"),
+          boss: createBossHudItem(hud, "Boss", "Bloqueado"),
+        };
+        wrapper.appendChild(hud);
+
+        const board = document.createElement("div");
+        board.className = "boss-board";
+
+        const canvas = document.createElement("canvas");
+        canvas.className = "boss-canvas";
+        canvas.width = BOSS_GAME_DATA.width;
+        canvas.height = BOSS_GAME_DATA.height;
+        canvas.setAttribute("aria-label", "Lienzo del Space Rescue");
+        board.appendChild(canvas);
+        wrapper.appendChild(board);
+
+        const controls = document.createElement("div");
+        controls.className = "boss-controls";
+        const leftButton = createBossControlButton("◀", "left");
+        const rightButton = createBossControlButton("▶", "right");
+        const fireButton = createBossControlButton("DISPARAR", "fire");
+        fireButton.classList.add("fire");
+        controls.appendChild(leftButton);
+        controls.appendChild(rightButton);
+        controls.appendChild(fireButton);
+        wrapper.appendChild(controls);
+
+        const actions = document.createElement("div");
+        actions.className = "boss-actions";
+
+        const startButton = document.createElement("button");
+        startButton.type = "button";
+        startButton.textContent = progress.completedAt
+          ? "VOLVER A JUGAR"
+          : "INICIAR RESCATE";
+        startButton.disabled = true;
+        startButton.addEventListener("click", startBossGameRuntime);
+        actions.appendChild(startButton);
+
+        wrapper.appendChild(actions);
+        gameArea.appendChild(wrapper);
+
+        loadBossGameAssets().then((assets) => {
+          if (!document.body.contains(canvas)) return;
+          initializeBossGameRuntime(canvas, selectedDay.id, hudRefs, assets);
+          bindBossGameCanvas(canvas);
+          [leftButton, rightButton, fireButton].forEach(bindBossControlButton);
+          startButton.disabled = false;
+          drawBossGameFrame();
+        });
+      }
+
+      function createBossHudItem(parent, label, value) {
+        const item = document.createElement("div");
+        item.className = "boss-hud-item";
+
+        const labelEl = document.createElement("div");
+        labelEl.className = "boss-hud-label";
+        labelEl.textContent = label;
+
+        const valueEl = document.createElement("div");
+        valueEl.className = "boss-hud-value";
+        valueEl.textContent = value;
+
+        item.appendChild(labelEl);
+        item.appendChild(valueEl);
+        parent.appendChild(item);
+        return valueEl;
+      }
+
+      function createBossControlButton(text, control) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "boss-control";
+        button.textContent = text;
+        button.dataset.bossControl = control;
+        return button;
+      }
+
+      function loadBossGameAssets() {
+        if (bossGameAssets) return Promise.resolve(bossGameAssets);
+
+        const entries = Object.entries(BOSS_GAME_DATA.assets);
+        return Promise.all(
+          entries.map(
+            ([key, src]) =>
+              new Promise((resolve) => {
+                const image = new Image();
+                image.onload = () => resolve([key, image]);
+                image.onerror = () => resolve([key, null]);
+                image.src = src;
+              }),
+          ),
+        ).then((loaded) => {
+          bossGameAssets = Object.fromEntries(loaded);
+          return bossGameAssets;
+        });
+      }
+
+      function getBossGameSave(create = true) {
+        if (!state.gameProgress) state.gameProgress = {};
+        const existing = state.gameProgress[BOSS_GAME_DATA.id];
+        if ((!existing || existing.mode !== BOSS_GAME_DATA.mode) && create) {
+          state.gameProgress[BOSS_GAME_DATA.id] = {
+            mode: BOSS_GAME_DATA.mode,
+            completedAt: null,
+            bestScore: 0,
+            attempts: 0,
+          };
+        }
+
+        return (
+          state.gameProgress[BOSS_GAME_DATA.id] || {
+            mode: BOSS_GAME_DATA.mode,
+            completedAt: null,
+            bestScore: 0,
+            attempts: 0,
+          }
+        );
+      }
+
+      function initializeBossGameRuntime(canvas, dayId, hudRefs, assets) {
+        destroyBossGameRuntime();
+        bossGameRuntime = {
+          canvas,
+          context: canvas.getContext("2d"),
+          dayId,
+          hudRefs,
+          assets,
+          phase: "ready",
+          levelIndex: 0,
+          lives: 5,
+          score: 0,
+          player: {
+            x: BOSS_GAME_DATA.width / 2,
+            y: BOSS_GAME_DATA.height - 62,
+            width: 48,
+            height: 52,
+            speed: 245,
+            invulnerable: 0,
+          },
+          aliens: [],
+          boss: null,
+          playerBullets: [],
+          enemyBullets: [],
+          particles: [],
+          stars: createBossStars(),
+          input: { left: false, right: false, fire: false, targetX: null },
+          direction: 1,
+          fireCooldown: 0,
+          phaseTimer: 0,
+          lastFrameAt: 0,
+          animationFrame: null,
+          completed: false,
+        };
+        updateBossHud();
+      }
+
+      function destroyBossGameRuntime() {
+        if (bossGameRuntime && bossGameRuntime.animationFrame) {
+          cancelAnimationFrame(bossGameRuntime.animationFrame);
+        }
+        bossGameRuntime = null;
+        bossKeyState.left = false;
+        bossKeyState.right = false;
+        bossKeyState.fire = false;
+      }
+
+      function startBossGameRuntime() {
+        if (!bossGameRuntime) return;
+
+        const progress = getBossGameSave();
+        progress.attempts = (Number(progress.attempts) || 0) + 1;
+        saveState();
+
+        bossGameRuntime.phase = "playing";
+        bossGameRuntime.levelIndex = 0;
+        bossGameRuntime.lives = 5;
+        bossGameRuntime.score = 0;
+        bossGameRuntime.player.x = BOSS_GAME_DATA.width / 2;
+        bossGameRuntime.player.invulnerable = 1;
+        bossGameRuntime.playerBullets = [];
+        bossGameRuntime.enemyBullets = [];
+        bossGameRuntime.particles = [];
+        bossGameRuntime.completed = false;
+        initializeBossLevel(0);
+        bossGameRuntime.lastFrameAt = 0;
+        bossGameRuntime.animationFrame = requestAnimationFrame(bossGameLoop);
+      }
+
+      function initializeBossLevel(levelIndex) {
+        const runtime = bossGameRuntime;
+        if (!runtime) return;
+
+        const level = BOSS_GAME_DATA.levels[levelIndex];
+        const alienSpacingX = 46;
+        const alienSpacingY = 38;
+        const startX =
+          (BOSS_GAME_DATA.width - (level.cols - 1) * alienSpacingX) / 2;
+        runtime.phase = "playing";
+        runtime.levelIndex = levelIndex;
+        runtime.direction = 1;
+        runtime.playerBullets = [];
+        runtime.enemyBullets = [];
+        runtime.aliens = [];
+        runtime.boss = level.bossHp
+          ? {
+              x: BOSS_GAME_DATA.width / 2,
+              y: 42,
+              width: 76,
+              height: 152,
+              hp: level.bossHp,
+              maxHp: level.bossHp,
+              active: false,
+              vx: 54,
+              fireCooldown: 1.2,
+            }
+          : null;
+
+        for (let row = 0; row < level.rows; row += 1) {
+          for (let col = 0; col < level.cols; col += 1) {
+            runtime.aliens.push({
+              x: startX + col * alienSpacingX,
+              y: 104 + row * alienSpacingY,
+              width: 30,
+              height: 30,
+              alive: true,
+              row,
+              col,
+            });
+          }
+        }
+
+        updateBossHud();
+      }
+
+      function bossGameLoop(timestamp) {
+        const runtime = bossGameRuntime;
+        if (!runtime) return;
+
+        if (!runtime.lastFrameAt) runtime.lastFrameAt = timestamp;
+        const dt = Math.min(0.034, (timestamp - runtime.lastFrameAt) / 1000);
+        runtime.lastFrameAt = timestamp;
+
+        updateBossGame(dt);
+        drawBossGameFrame();
+
+        if (bossGameRuntime && bossGameRuntime.phase !== "gameover") {
+          bossGameRuntime.animationFrame = requestAnimationFrame(bossGameLoop);
+        }
+      }
+
+      function updateBossGame(dt) {
+        const runtime = bossGameRuntime;
+        if (!runtime) return;
+
+        moveBossStars(dt);
+        updateBossParticles(dt);
+
+        if (runtime.phase === "level-clear") {
+          runtime.phaseTimer -= dt;
+          if (runtime.phaseTimer <= 0) {
+            runtime.lives = Math.min(5, runtime.lives + 1);
+            initializeBossLevel(runtime.levelIndex + 1);
+          }
+          updateBossHud();
+          return;
+        }
+
+        if (runtime.phase === "rescued" || runtime.phase === "ready") {
+          updateBossHud();
+          return;
+        }
+
+        if (runtime.phase !== "playing") return;
+
+        const player = runtime.player;
+        if (player.invulnerable > 0) player.invulnerable -= dt;
+
+        const movingLeft = bossKeyState.left || runtime.input.left;
+        const movingRight = bossKeyState.right || runtime.input.right;
+        const firing = bossKeyState.fire || runtime.input.fire;
+        const targetX = runtime.input.targetX;
+
+        if (targetX !== null) {
+          const delta = targetX - player.x;
+          const step = Math.sign(delta) * Math.min(Math.abs(delta), player.speed * dt);
+          player.x += step;
+        }
+        if (movingLeft) player.x -= player.speed * dt;
+        if (movingRight) player.x += player.speed * dt;
+        player.x = clamp(player.x, 30, BOSS_GAME_DATA.width - 30);
+
+        runtime.fireCooldown = Math.max(0, runtime.fireCooldown - dt);
+        if (firing && runtime.fireCooldown <= 0) {
+          bossPlayerShoot();
+        }
+
+        updateBossPlayerBullets(dt);
+        updateBossEnemies(dt);
+        updateBossEnemyBullets(dt);
+        checkBossCollisions();
+        updateBossHud();
+      }
+
+      function updateBossPlayerBullets(dt) {
+        const runtime = bossGameRuntime;
+        runtime.playerBullets.forEach((bullet) => {
+          bullet.y -= bullet.speed * dt;
+        });
+        runtime.playerBullets = runtime.playerBullets.filter(
+          (bullet) => bullet.y > -20,
+        );
+      }
+
+      function updateBossEnemies(dt) {
+        const runtime = bossGameRuntime;
+        const level = BOSS_GAME_DATA.levels[runtime.levelIndex];
+        const aliveAliens = runtime.aliens.filter((alien) => alien.alive);
+
+        if (aliveAliens.length > 0) {
+          let edgeHit = false;
+          aliveAliens.forEach((alien) => {
+            alien.x += runtime.direction * level.speed * dt;
+            if (alien.x < 24 || alien.x > BOSS_GAME_DATA.width - 24) {
+              edgeHit = true;
+            }
+          });
+
+          if (edgeHit) {
+            runtime.direction *= -1;
+            aliveAliens.forEach((alien) => {
+              alien.y += 15 + runtime.levelIndex * 3;
+            });
+          }
+
+          if (Math.random() < level.fireRate * aliveAliens.length * dt) {
+            const shooter = aliveAliens[Math.floor(Math.random() * aliveAliens.length)];
+            runtime.enemyBullets.push({
+              x: shooter.x,
+              y: shooter.y + 18,
+              width: 5,
+              height: 12,
+              speed: level.bulletSpeed,
+            });
+          }
+
+          if (aliveAliens.some((alien) => alien.y > runtime.player.y - 44)) {
+            bossPlayerHit();
+          }
+          return;
+        }
+
+        if (runtime.boss && !runtime.boss.active) {
+          runtime.boss.active = true;
+          runtime.phaseTimer = 0;
+        }
+
+        if (!runtime.boss) {
+          runtime.phase = "level-clear";
+          runtime.phaseTimer = 1.25;
+          createBossBurst(BOSS_GAME_DATA.width / 2, 170, "#00ff88", 22);
+          return;
+        }
+
+        updateBossEnemyBoss(dt);
+      }
+
+      function updateBossEnemyBoss(dt) {
+        const runtime = bossGameRuntime;
+        const boss = runtime.boss;
+        if (!boss || !boss.active) return;
+
+        boss.x += boss.vx * dt;
+        if (boss.x < 58 || boss.x > BOSS_GAME_DATA.width - 58) {
+          boss.vx *= -1;
+        }
+
+        boss.fireCooldown -= dt;
+        if (boss.fireCooldown <= 0) {
+          boss.fireCooldown = 0.65;
+          [-18, 0, 18].forEach((offset) => {
+            runtime.enemyBullets.push({
+              x: boss.x + offset,
+              y: boss.y + boss.height - 18,
+              width: 6,
+              height: 14,
+              speed: 165,
+            });
+          });
+        }
+      }
+
+      function updateBossEnemyBullets(dt) {
+        const runtime = bossGameRuntime;
+        runtime.enemyBullets.forEach((bullet) => {
+          bullet.y += bullet.speed * dt;
+        });
+        runtime.enemyBullets = runtime.enemyBullets.filter(
+          (bullet) => bullet.y < BOSS_GAME_DATA.height + 20,
+        );
+      }
+
+      function updateBossParticles(dt) {
+        const runtime = bossGameRuntime;
+        if (!runtime) return;
+
+        runtime.particles.forEach((particle) => {
+          particle.x += particle.vx * dt;
+          particle.y += particle.vy * dt;
+          particle.life -= dt;
+        });
+        runtime.particles = runtime.particles.filter(
+          (particle) => particle.life > 0,
+        );
+      }
+
+      function bossPlayerShoot() {
+        const runtime = bossGameRuntime;
+        if (!runtime) return;
+
+        runtime.playerBullets.push({
+          x: runtime.player.x,
+          y: runtime.player.y - 30,
+          width: 5,
+          height: 15,
+          speed: 330,
+        });
+        runtime.fireCooldown = 0.18;
+      }
+
+      function checkBossCollisions() {
+        const runtime = bossGameRuntime;
+        if (!runtime) return;
+
+        runtime.playerBullets.forEach((bullet) => {
+          if (bullet.hit) return;
+
+          runtime.aliens.forEach((alien) => {
+            if (!alien.alive || bullet.hit) return;
+            if (rectsOverlap(bullet, alien)) {
+              alien.alive = false;
+              bullet.hit = true;
+              runtime.score += 10;
+              createBossBurst(alien.x, alien.y, "#00ff88", 10);
+            }
+          });
+
+          const boss = runtime.boss;
+          if (
+            boss &&
+            boss.active &&
+            boss.hp > 0 &&
+            !bullet.hit &&
+            rectsOverlap(bullet, {
+              x: boss.x,
+              y: boss.y + boss.height / 2,
+              width: boss.width,
+              height: boss.height,
+            })
+          ) {
+            boss.hp -= 1;
+            bullet.hit = true;
+            runtime.score += 25;
+            createBossBurst(bullet.x, bullet.y, "#ff0080", 8);
+            if (boss.hp <= 0) {
+              completeBossRescue();
+            }
+          }
+        });
+
+        runtime.playerBullets = runtime.playerBullets.filter(
+          (bullet) => !bullet.hit,
+        );
+
+        runtime.enemyBullets.forEach((bullet) => {
+          if (bullet.hit || runtime.player.invulnerable > 0) return;
+          if (rectsOverlap(bullet, runtime.player)) {
+            bullet.hit = true;
+            bossPlayerHit();
+          }
+        });
+        runtime.enemyBullets = runtime.enemyBullets.filter(
+          (bullet) => !bullet.hit,
+        );
+      }
+
+      function bossPlayerHit() {
+        const runtime = bossGameRuntime;
+        if (!runtime || runtime.player.invulnerable > 0) return;
+
+        runtime.lives -= 1;
+        runtime.player.invulnerable = 1.25;
+        createBossBurst(runtime.player.x, runtime.player.y, "#ff0080", 18);
+
+        if (runtime.lives <= 0) {
+          runtime.phase = "gameover";
+          runtime.input.left = false;
+          runtime.input.right = false;
+          runtime.input.fire = false;
+          bossKeyState.left = false;
+          bossKeyState.right = false;
+          bossKeyState.fire = false;
+          const progress = getBossGameSave();
+          progress.bestScore = Math.max(Number(progress.bestScore) || 0, runtime.score);
+          saveState();
+          drawBossGameFrame();
+        }
+      }
+
+      function completeBossRescue() {
+        const runtime = bossGameRuntime;
+        if (!runtime || runtime.completed) return;
+
+        runtime.completed = true;
+        runtime.phase = "rescued";
+        runtime.enemyBullets = [];
+        runtime.playerBullets = [];
+        createBossBurst(BOSS_GAME_DATA.width / 2, 170, "#00ff88", 36);
+
+        const progress = getBossGameSave();
+        progress.completedAt = new Date().toISOString();
+        progress.bestScore = Math.max(Number(progress.bestScore) || 0, runtime.score);
+
+        state.solved[runtime.dayId] = {
+          digit: Number(BOSS_GAME_DATA.digit),
+          solvedAt: new Date().toISOString(),
+          appVersion: APP_VERSION,
+          source: "boss",
+          score: runtime.score,
+        };
+        saveState();
+        showValidationMessage("✓ RESCATE COMPLETADO | CIFRA 8 DECODIFICADA", "success", 5000);
+
+        setTimeout(() => {
+          if (bossGameRuntime && bossGameRuntime.phase === "rescued") {
+            render();
+          }
+        }, 5200);
+      }
+
+      function drawBossGameFrame() {
+        const runtime = bossGameRuntime;
+        if (!runtime || !runtime.context) return;
+
+        const context = runtime.context;
+        context.clearRect(0, 0, BOSS_GAME_DATA.width, BOSS_GAME_DATA.height);
+        drawBossBackground(context);
+
+        if (runtime.phase === "rescued") {
+          drawBossRescueScene(context);
+          updateBossHud();
+          return;
+        }
+
+        drawBossEntity(context);
+        drawBossAliens(context);
+        drawBossBullets(context);
+        drawBossPlayer(context);
+        drawBossParticles(context);
+
+        if (runtime.phase === "ready") {
+          drawBossOverlay(
+            context,
+            "SPACE RESCUE",
+            "3 niveles. Cangrejito retenido por el boss italiano.",
+          );
+        } else if (runtime.phase === "level-clear") {
+          drawBossOverlay(context, "NIVEL SUPERADO", "La señal del rescate sigue activa.");
+        } else if (runtime.phase === "gameover") {
+          drawBossOverlay(context, "REINTENTO", "La nave se recompone para otra misión.");
+        }
+        updateBossHud();
+      }
+
+      function drawBossBackground(context) {
+        const runtime = bossGameRuntime;
+        const gradient = context.createLinearGradient(0, 0, 0, BOSS_GAME_DATA.height);
+        gradient.addColorStop(0, "#08101f");
+        gradient.addColorStop(0.55, "#05070d");
+        gradient.addColorStop(1, "#110413");
+        context.fillStyle = gradient;
+        context.fillRect(0, 0, BOSS_GAME_DATA.width, BOSS_GAME_DATA.height);
+
+        context.fillStyle = "rgba(255,255,255,0.78)";
+        runtime.stars.forEach((star) => {
+          context.globalAlpha = star.alpha;
+          context.fillRect(star.x, star.y, star.size, star.size);
+        });
+        context.globalAlpha = 1;
+
+        context.strokeStyle = "rgba(255, 0, 128, 0.12)";
+        context.lineWidth = 1;
+        for (let y = 40; y < BOSS_GAME_DATA.height; y += 40) {
+          context.beginPath();
+          context.moveTo(0, y);
+          context.lineTo(BOSS_GAME_DATA.width, y);
+          context.stroke();
+        }
+      }
+
+      function drawBossPlayer(context) {
+        const runtime = bossGameRuntime;
+        const player = runtime.player;
+        const flicker = player.invulnerable > 0 && Math.floor(Date.now() / 90) % 2 === 0;
+        if (flicker) return;
+
+        context.save();
+        context.translate(player.x, player.y);
+
+        context.fillStyle = "rgba(0, 255, 136, 0.18)";
+        context.strokeStyle = "#00ff88";
+        context.lineWidth = 2;
+        context.beginPath();
+        context.moveTo(0, -38);
+        context.lineTo(30, 26);
+        context.lineTo(0, 14);
+        context.lineTo(-30, 26);
+        context.closePath();
+        context.fill();
+        context.stroke();
+
+        context.fillStyle = "#ff0080";
+        context.fillRect(-24, 26, 10, 18);
+        context.fillRect(14, 26, 10, 18);
+        context.fillStyle = "#00ff88";
+        context.fillRect(-19, 42, 4, 14);
+        context.fillRect(17, 42, 4, 14);
+
+        drawBossRoundImage(context, runtime.assets.rescuer, -24, -32, 48, 48);
+        context.restore();
+      }
+
+      function drawBossAliens(context) {
+        const runtime = bossGameRuntime;
+        runtime.aliens.forEach((alien) => {
+          if (!alien.alive) return;
+
+          drawBossRoundImage(
+            context,
+            runtime.assets.alien,
+            alien.x - 15,
+            alien.y - 15,
+            30,
+            30,
+          );
+          drawItalianFlag(context, alien.x - 14, alien.y + 18, 28, 8);
+        });
+      }
+
+      function drawBossEntity(context) {
+        const runtime = bossGameRuntime;
+        const boss = runtime.boss;
+        if (!boss) return;
+
+        context.save();
+        context.globalAlpha = boss.active ? 1 : 0.52;
+        if (runtime.assets.boss) {
+          context.drawImage(
+            runtime.assets.boss,
+            boss.x - boss.width / 2,
+            boss.y,
+            boss.width,
+            boss.height,
+          );
+        } else {
+          context.fillStyle = "#7bdc78";
+          context.fillRect(boss.x - boss.width / 2, boss.y, boss.width, boss.height);
+        }
+        drawItalianFlag(context, boss.x - 27, boss.y + boss.height - 28, 54, 14);
+        context.restore();
+
+        if (boss.active) {
+          const barWidth = 104;
+          const healthRatio = Math.max(0, boss.hp / boss.maxHp);
+          context.fillStyle = "rgba(255, 0, 128, 0.22)";
+          context.fillRect(boss.x - barWidth / 2, boss.y - 14, barWidth, 6);
+          context.fillStyle = "#ff0080";
+          context.fillRect(boss.x - barWidth / 2, boss.y - 14, barWidth * healthRatio, 6);
+          context.strokeStyle = "rgba(255,255,255,0.45)";
+          context.strokeRect(boss.x - barWidth / 2, boss.y - 14, barWidth, 6);
+        }
+      }
+
+      function drawBossBullets(context) {
+        const runtime = bossGameRuntime;
+
+        context.fillStyle = "#00ff88";
+        runtime.playerBullets.forEach((bullet) => {
+          context.fillRect(
+            bullet.x - bullet.width / 2,
+            bullet.y - bullet.height / 2,
+            bullet.width,
+            bullet.height,
+          );
+        });
+
+        context.fillStyle = "#ff0080";
+        runtime.enemyBullets.forEach((bullet) => {
+          context.fillRect(
+            bullet.x - bullet.width / 2,
+            bullet.y - bullet.height / 2,
+            bullet.width,
+            bullet.height,
+          );
+        });
+      }
+
+      function drawBossParticles(context) {
+        const runtime = bossGameRuntime;
+        runtime.particles.forEach((particle) => {
+          context.globalAlpha = Math.max(0, particle.life);
+          context.fillStyle = particle.color;
+          context.fillRect(particle.x, particle.y, particle.size, particle.size);
+        });
+        context.globalAlpha = 1;
+      }
+
+      function drawBossRescueScene(context) {
+        const runtime = bossGameRuntime;
+        drawBossBackground(context);
+
+        context.fillStyle = "rgba(0, 255, 136, 0.08)";
+        context.fillRect(24, 96, BOSS_GAME_DATA.width - 48, 300);
+        context.strokeStyle = "#00ff88";
+        context.lineWidth = 2;
+        context.strokeRect(24, 96, BOSS_GAME_DATA.width - 48, 300);
+
+        drawBossRoundImage(context, runtime.assets.rescuer, 74, 170, 86, 86);
+        drawBossRoundImage(context, runtime.assets.rescued, 198, 170, 86, 86);
+
+        context.strokeStyle = "#ff0080";
+        context.lineWidth = 3;
+        context.setLineDash([10, 7]);
+        context.beginPath();
+        context.moveTo(132, 210);
+        context.lineTo(226, 210);
+        context.stroke();
+        context.setLineDash([]);
+
+        context.fillStyle = "#00ff88";
+        context.font = "bold 18px Courier New";
+        context.textAlign = "center";
+        context.fillText("OBJETIVO RESCATADO", BOSS_GAME_DATA.width / 2, 306);
+
+        context.fillStyle = "#ffffff";
+        context.font = "bold 42px Courier New";
+        context.fillText("PIN: 8", BOSS_GAME_DATA.width / 2, 356);
+
+        context.fillStyle = "rgba(255, 0, 128, 0.82)";
+        context.font = "bold 11px Courier New";
+        context.fillText("BOSS ITALIANO NEUTRALIZADO", BOSS_GAME_DATA.width / 2, 384);
+        drawBossParticles(context);
+      }
+
+      function drawBossOverlay(context, title, subtitle) {
+        context.fillStyle = "rgba(0, 0, 0, 0.68)";
+        context.fillRect(24, 190, BOSS_GAME_DATA.width - 48, 132);
+        context.strokeStyle = "#ff0080";
+        context.lineWidth = 2;
+        context.strokeRect(24, 190, BOSS_GAME_DATA.width - 48, 132);
+
+        context.fillStyle = "#00ff88";
+        context.font = "bold 22px Courier New";
+        context.textAlign = "center";
+        context.fillText(title, BOSS_GAME_DATA.width / 2, 238);
+
+        context.fillStyle = "#ffffff";
+        context.font = "bold 11px Courier New";
+        wrapBossText(context, subtitle, BOSS_GAME_DATA.width / 2, 268, 250, 16);
+      }
+
+      function updateBossHud() {
+        const runtime = bossGameRuntime;
+        if (!runtime || !runtime.hudRefs) return;
+
+        const level = BOSS_GAME_DATA.levels[runtime.levelIndex] || BOSS_GAME_DATA.levels[0];
+        runtime.hudRefs.level.textContent = `${runtime.levelIndex + 1}/3`;
+        runtime.hudRefs.lives.textContent = Math.max(0, runtime.lives);
+        runtime.hudRefs.score.textContent = runtime.score;
+
+        if (runtime.phase === "rescued") {
+          runtime.hudRefs.boss.textContent = "Rescate";
+        } else if (runtime.boss && runtime.boss.active) {
+          runtime.hudRefs.boss.textContent = `${Math.max(0, runtime.boss.hp)}/${runtime.boss.maxHp}`;
+        } else if (level && level.bossHp) {
+          runtime.hudRefs.boss.textContent = "Sellado";
+        } else {
+          runtime.hudRefs.boss.textContent = "Oleada";
+        }
+      }
+
+      function bindBossGameCanvas(canvas) {
+        canvas.addEventListener("pointerdown", (event) => {
+          if (!bossGameRuntime || bossGameRuntime.phase !== "playing") return;
+          if (canvas.setPointerCapture) canvas.setPointerCapture(event.pointerId);
+          setBossPointerTarget(canvas, event);
+          bossGameRuntime.input.fire = true;
+          event.preventDefault();
+        });
+
+        canvas.addEventListener("pointermove", (event) => {
+          if (!bossGameRuntime || bossGameRuntime.phase !== "playing") return;
+          setBossPointerTarget(canvas, event);
+          event.preventDefault();
+        });
+
+        ["pointerup", "pointercancel", "pointerleave"].forEach((eventName) => {
+          canvas.addEventListener(eventName, () => {
+            if (!bossGameRuntime) return;
+            bossGameRuntime.input.targetX = null;
+            bossGameRuntime.input.fire = false;
+          });
+        });
+      }
+
+      function bindBossControlButton(button) {
+        const control = button.dataset.bossControl;
+        const setActive = (active) => {
+          if (!bossGameRuntime || !control) return;
+          bossGameRuntime.input[control] = active;
+          if (control === "fire" && active) bossPlayerShoot();
+        };
+
+        button.addEventListener("pointerdown", (event) => {
+          if (button.setPointerCapture) button.setPointerCapture(event.pointerId);
+          setActive(true);
+          event.preventDefault();
+        });
+
+        ["pointerup", "pointercancel", "pointerleave"].forEach((eventName) => {
+          button.addEventListener(eventName, () => setActive(false));
+        });
+      }
+
+      function setBossPointerTarget(canvas, event) {
+        const runtime = bossGameRuntime;
+        const rect = canvas.getBoundingClientRect();
+        const x = ((event.clientX - rect.left) / rect.width) * BOSS_GAME_DATA.width;
+        runtime.input.targetX = clamp(x, 30, BOSS_GAME_DATA.width - 30);
+      }
+
+      function createBossStars() {
+        return Array.from({ length: 58 }, () => ({
+          x: Math.random() * BOSS_GAME_DATA.width,
+          y: Math.random() * BOSS_GAME_DATA.height,
+          size: Math.random() > 0.75 ? 2 : 1,
+          speed: 18 + Math.random() * 48,
+          alpha: 0.35 + Math.random() * 0.55,
+        }));
+      }
+
+      function moveBossStars(dt) {
+        const runtime = bossGameRuntime;
+        if (!runtime) return;
+
+        runtime.stars.forEach((star) => {
+          star.y += star.speed * dt;
+          if (star.y > BOSS_GAME_DATA.height) {
+            star.y = 0;
+            star.x = Math.random() * BOSS_GAME_DATA.width;
+          }
+        });
+      }
+
+      function createBossBurst(x, y, color, count) {
+        const runtime = bossGameRuntime;
+        if (!runtime) return;
+
+        for (let index = 0; index < count; index += 1) {
+          const angle = Math.random() * Math.PI * 2;
+          const speed = 40 + Math.random() * 110;
+          runtime.particles.push({
+            x,
+            y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            life: 0.35 + Math.random() * 0.55,
+            size: 2 + Math.random() * 3,
+            color,
+          });
+        }
+      }
+
+      function drawBossRoundImage(context, image, x, y, width, height) {
+        context.save();
+        context.beginPath();
+        context.arc(x + width / 2, y + height / 2, Math.min(width, height) / 2, 0, Math.PI * 2);
+        context.clip();
+        if (image) {
+          context.drawImage(image, x, y, width, height);
+        } else {
+          context.fillStyle = "#00ff88";
+          context.fillRect(x, y, width, height);
+        }
+        context.restore();
+
+        context.strokeStyle = "rgba(255,255,255,0.85)";
+        context.lineWidth = 2;
+        context.beginPath();
+        context.arc(x + width / 2, y + height / 2, Math.min(width, height) / 2, 0, Math.PI * 2);
+        context.stroke();
+      }
+
+      function drawItalianFlag(context, x, y, width, height) {
+        context.fillStyle = "#009246";
+        context.fillRect(x, y, width / 3, height);
+        context.fillStyle = "#ffffff";
+        context.fillRect(x + width / 3, y, width / 3, height);
+        context.fillStyle = "#ce2b37";
+        context.fillRect(x + (width / 3) * 2, y, width / 3, height);
+        context.strokeStyle = "rgba(0,0,0,0.45)";
+        context.lineWidth = 1;
+        context.strokeRect(x, y, width, height);
+      }
+
+      function rectsOverlap(a, b) {
+        return (
+          Math.abs(a.x - b.x) * 2 < a.width + b.width &&
+          Math.abs(a.y - b.y) * 2 < a.height + b.height
+        );
+      }
+
+      function clamp(value, min, max) {
+        return Math.min(max, Math.max(min, value));
+      }
+
+      function wrapBossText(context, text, x, y, maxWidth, lineHeight) {
+        const words = String(text).split(" ");
+        let line = "";
+        let currentY = y;
+
+        words.forEach((word, index) => {
+          const testLine = line ? `${line} ${word}` : word;
+          if (context.measureText(testLine).width > maxWidth && line) {
+            context.fillText(line, x, currentY);
+            line = word;
+            currentY += lineHeight;
+          } else {
+            line = testLine;
+          }
+
+          if (index === words.length - 1) {
+            context.fillText(line, x, currentY);
+          }
+        });
+      }
+
       function renderRelationshipQuizGame(gameArea, selectedDay) {
         const progress = getRelationshipQuizSave();
         const configured = isRelationshipQuizConfigured();
@@ -2953,6 +4161,13 @@
           .trim();
       }
 
+      function isTypingTarget(target) {
+        if (!target || !target.tagName) return false;
+        return ["INPUT", "TEXTAREA", "SELECT"].includes(
+          target.tagName,
+        );
+      }
+
       function renderPinDisplay(days, selectedDay) {
         const pinDisplay = document.getElementById("pinDisplay");
         pinDisplay.innerHTML = "";
@@ -3175,7 +4390,7 @@
 
       render();
       setInterval(() => {
-        if (!adminPanel.classList.contains("active")) render();
+        if (!adminPanel.classList.contains("active") && !bossGameRuntime) render();
       }, 60000);
     </script>
   </body>
