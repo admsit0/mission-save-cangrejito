@@ -920,6 +920,142 @@
         text-align: center;
       }
 
+      .puzzle-game {
+        margin: 1.5rem 0;
+        padding: 1rem;
+        border: 2px solid #ff0080;
+        background:
+          linear-gradient(180deg, rgba(255, 0, 128, 0.08), rgba(0, 255, 136, 0.03)),
+          rgba(0, 0, 0, 0.48);
+        box-shadow:
+          0 0 18px rgba(255, 0, 128, 0.28),
+          inset 0 0 24px rgba(255, 0, 128, 0.08);
+      }
+
+      .puzzle-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .puzzle-title {
+        color: #ff0080;
+        font-size: 12px;
+        font-weight: bold;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+
+      .puzzle-status {
+        color: #00ff88;
+        font-size: 11px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        text-align: right;
+        white-space: nowrap;
+      }
+
+      .puzzle-copy {
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 12px;
+        line-height: 1.65;
+        margin: 0 0 1rem;
+        text-align: center;
+      }
+
+      .puzzle-board {
+        display: grid;
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        grid-template-rows: repeat(7, minmax(0, 1fr));
+        width: min(100%, 560px);
+        aspect-ratio: 980 / 1307;
+        margin: 0 auto;
+        border: 1px solid rgba(255, 0, 128, 0.7);
+        background: #05070d;
+        box-shadow:
+          0 0 18px rgba(255, 0, 128, 0.22),
+          inset 0 0 18px rgba(0, 0, 0, 0.65);
+        overflow: hidden;
+        touch-action: manipulation;
+      }
+
+      .puzzle-piece {
+        min-width: 0;
+        min-height: 0;
+        padding: 0;
+        border: 1px solid rgba(255, 0, 128, 0.3);
+        background-repeat: no-repeat;
+        background-size: 700% 700%;
+        box-shadow: none;
+        border-radius: 0;
+        transform: translateZ(0);
+      }
+
+      .puzzle-piece:hover {
+        border-color: rgba(255, 255, 255, 0.75);
+        box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.14);
+      }
+
+      .puzzle-piece.selected {
+        border-color: #00ff88;
+        box-shadow:
+          inset 0 0 0 2px #00ff88,
+          0 0 14px rgba(0, 255, 136, 0.48);
+        z-index: 2;
+      }
+
+      .puzzle-piece.correct {
+        border-color: rgba(0, 255, 136, 0.28);
+      }
+
+      .puzzle-piece.complete {
+        border-color: rgba(255, 255, 255, 0.08);
+      }
+
+      .puzzle-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        justify-content: center;
+        margin-top: 1rem;
+      }
+
+      .puzzle-preview {
+        width: min(100%, 240px);
+        aspect-ratio: 980 / 1307;
+        margin: 1rem auto 0;
+        border: 1px solid rgba(0, 255, 136, 0.55);
+        background-size: cover;
+        background-position: center;
+        display: none;
+        box-shadow: 0 0 16px rgba(0, 255, 136, 0.25);
+      }
+
+      .puzzle-preview.active {
+        display: block;
+      }
+
+      .puzzle-complete {
+        display: none;
+        margin-top: 1rem;
+        padding: 0.9rem;
+        border: 1px solid #00ff88;
+        color: #00ff88;
+        background: rgba(0, 255, 136, 0.08);
+        font-size: 11px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        line-height: 1.5;
+        text-align: center;
+        text-transform: uppercase;
+      }
+
+      .puzzle-complete.active {
+        display: block;
+      }
+
       .admin-toggle {
         position: fixed;
         bottom: 20px;
@@ -1254,6 +1390,24 @@
           grid-column: 1 / -1;
         }
 
+        .puzzle-game {
+          padding: 0.75rem;
+        }
+
+        .puzzle-header {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 0.4rem;
+        }
+
+        .puzzle-status {
+          text-align: left;
+        }
+
+        .puzzle-board {
+          width: 100%;
+        }
+
         .admin-panel {
           padding: 1rem;
         }
@@ -1375,7 +1529,7 @@
 
     <script>
       const ADMIN_PASSWORD = "admin";
-      const APP_VERSION = 5;
+      const APP_VERSION = 6;
       const STORAGE_KEY = "cangrejito-progress-v2";
       const LEGACY_STORAGE_KEY = "cangrejito-config";
 
@@ -1460,9 +1614,10 @@
           date: "25/07",
           unlockAt: "2026-07-25T00:00:00+02:00",
           digit: 3,
-          clue: "Operación Taco Bell. Comprueba tus coronas y toma la primera cifra del contador en miles.",
-          method: "Número de coronas en miles",
-          type: "mission",
+          clue: "Puzzle de recuerdo activo. Reconstruye la foto clasificada para desbloquear la cifra de hoy.",
+          method: "Foto reconstruida en puzzle 7x7",
+          type: "game",
+          gameType: "puzzle",
         },
         {
           id: "day-10",
@@ -1788,6 +1943,15 @@
             bossHp: 12,
           },
         ],
+      };
+
+      const PUZZLE_GAME_DATA = {
+        id: "memory-puzzle-day-09-v1",
+        mode: "swap-puzzle-v1",
+        digit: 3,
+        cols: 7,
+        rows: 7,
+        image: "assets/puzzle-day-09.jpg",
       };
 
       const adminToggle = document.getElementById("adminToggle");
@@ -2154,6 +2318,7 @@
         if (day.gameType === "pixelart") return isPixelArtComplete(getPixelArtSave(false));
         if (day.gameType === "quiz") return false;
         if (day.gameType === "boss") return false;
+        if (day.gameType === "puzzle") return false;
         return true;
       }
 
@@ -2418,6 +2583,11 @@
 
         if (selectedDay.gameType === "boss") {
           renderBossGame(gameArea, selectedDay);
+          return;
+        }
+
+        if (selectedDay.gameType === "puzzle") {
+          renderPuzzleGame(gameArea, selectedDay);
           return;
         }
 
@@ -3806,6 +3976,232 @@
         });
       }
 
+      function renderPuzzleGame(gameArea, selectedDay) {
+        const progress = getPuzzleGameSave();
+        const order = progress.order || createSolvedPuzzleOrder();
+        if (!progress.completedAt && isPuzzleOrderComplete(order)) {
+          completePuzzleGame(selectedDay.id, progress);
+          return;
+        }
+
+        const correctCount = getPuzzleCorrectCount(order);
+        const totalPieces = PUZZLE_GAME_DATA.cols * PUZZLE_GAME_DATA.rows;
+        const complete = isPuzzleComplete(progress);
+
+        const wrapper = document.createElement("div");
+        wrapper.className = "puzzle-game";
+
+        const header = document.createElement("div");
+        header.className = "puzzle-header";
+
+        const title = document.createElement("div");
+        title.className = "puzzle-title";
+        title.textContent = "▸ PUZZLE DE RECUERDO";
+
+        const status = document.createElement("div");
+        status.className = "puzzle-status";
+        status.textContent = complete
+          ? "FOTO RECONSTRUIDA"
+          : `${correctCount}/${totalPieces} PIEZAS | ${Number(progress.moves) || 0} MOV.`;
+
+        header.appendChild(title);
+        header.appendChild(status);
+        wrapper.appendChild(header);
+
+        const copy = document.createElement("p");
+        copy.className = "puzzle-copy";
+        copy.textContent =
+          "Selecciona una pieza y luego otra para intercambiarlas. Las piezas ya colocadas se marcan con señal verde.";
+        wrapper.appendChild(copy);
+
+        const board = document.createElement("div");
+        board.className = "puzzle-board";
+        board.style.backgroundImage = `url(\"${PUZZLE_GAME_DATA.image}\")`;
+
+        order.forEach((pieceId, positionIndex) => {
+          const pieceButton = document.createElement("button");
+          const selected = Number(progress.selectedIndex) === positionIndex;
+          const correct = pieceId === positionIndex;
+          pieceButton.type = "button";
+          pieceButton.className = `puzzle-piece${selected ? " selected" : ""}${correct ? " correct" : ""}${complete ? " complete" : ""}`;
+          pieceButton.style.backgroundImage = `url(\"${PUZZLE_GAME_DATA.image}\")`;
+          pieceButton.style.backgroundPosition = getPuzzlePieceBackgroundPosition(pieceId);
+          pieceButton.disabled = complete;
+          pieceButton.setAttribute("aria-label", `Pieza ${positionIndex + 1}`);
+          pieceButton.addEventListener("click", () =>
+            selectPuzzlePiece(selectedDay.id, positionIndex),
+          );
+          board.appendChild(pieceButton);
+        });
+
+        wrapper.appendChild(board);
+
+        const actions = document.createElement("div");
+        actions.className = "puzzle-actions";
+
+        const resetButton = document.createElement("button");
+        resetButton.type = "button";
+        resetButton.textContent = "REINICIAR PUZZLE";
+        resetButton.disabled = complete;
+        resetButton.addEventListener("click", resetPuzzleGame);
+        actions.appendChild(resetButton);
+
+        const previewButton = document.createElement("button");
+        previewButton.type = "button";
+        previewButton.textContent = "VISTA PREVIA";
+        actions.appendChild(previewButton);
+
+        wrapper.appendChild(actions);
+
+        const preview = document.createElement("div");
+        preview.className = "puzzle-preview";
+        preview.style.backgroundImage = `url(\"${PUZZLE_GAME_DATA.image}\")`;
+        previewButton.addEventListener("click", () => {
+          preview.classList.add("active");
+          setTimeout(() => preview.classList.remove("active"), 3500);
+        });
+        wrapper.appendChild(preview);
+
+        const completeMessage = document.createElement("div");
+        completeMessage.className = `puzzle-complete${complete ? " active" : ""}`;
+        completeMessage.textContent =
+          "FOTO RECONSTRUIDA. ARCHIVO EMOCIONAL VALIDADO. CIFRA 3 DECODIFICADA.";
+        wrapper.appendChild(completeMessage);
+
+        gameArea.appendChild(wrapper);
+      }
+
+      function getPuzzleGameSave(create = true) {
+        if (!state.gameProgress) state.gameProgress = {};
+        const existing = state.gameProgress[PUZZLE_GAME_DATA.id];
+        if ((!existing || existing.mode !== PUZZLE_GAME_DATA.mode) && create) {
+          state.gameProgress[PUZZLE_GAME_DATA.id] = createDefaultPuzzleSave();
+        }
+
+        return state.gameProgress[PUZZLE_GAME_DATA.id] || createDefaultPuzzleSave();
+      }
+
+      function createDefaultPuzzleSave() {
+        return {
+          mode: PUZZLE_GAME_DATA.mode,
+          order: createShuffledPuzzleOrder(),
+          selectedIndex: null,
+          moves: 0,
+          completedAt: null,
+        };
+      }
+
+      function createSolvedPuzzleOrder() {
+        return Array.from(
+          { length: PUZZLE_GAME_DATA.cols * PUZZLE_GAME_DATA.rows },
+          (_, index) => index,
+        );
+      }
+
+      function createShuffledPuzzleOrder() {
+        const order = createSolvedPuzzleOrder();
+        for (let index = order.length - 1; index > 0; index -= 1) {
+          const target = Math.floor(Math.random() * (index + 1));
+          [order[index], order[target]] = [order[target], order[index]];
+        }
+
+        if (order.every((pieceId, index) => pieceId === index)) {
+          [order[0], order[1]] = [order[1], order[0]];
+        }
+
+        return order;
+      }
+
+      function getPuzzlePieceBackgroundPosition(pieceId) {
+        const col = pieceId % PUZZLE_GAME_DATA.cols;
+        const row = Math.floor(pieceId / PUZZLE_GAME_DATA.cols);
+        const x = (col / (PUZZLE_GAME_DATA.cols - 1)) * 100;
+        const y = (row / (PUZZLE_GAME_DATA.rows - 1)) * 100;
+        return `${x}% ${y}%`;
+      }
+
+      function selectPuzzlePiece(dayId, positionIndex) {
+        const progress = getPuzzleGameSave();
+        if (progress.completedAt) return;
+
+        const previousIndex = Number.isInteger(progress.selectedIndex)
+          ? progress.selectedIndex
+          : null;
+
+        if (previousIndex === null) {
+          progress.selectedIndex = positionIndex;
+          saveState();
+          render();
+          return;
+        }
+
+        if (previousIndex === positionIndex) {
+          progress.selectedIndex = null;
+          saveState();
+          render();
+          return;
+        }
+
+        const order = [...(progress.order || createSolvedPuzzleOrder())];
+        [order[previousIndex], order[positionIndex]] = [
+          order[positionIndex],
+          order[previousIndex],
+        ];
+        progress.order = order;
+        progress.selectedIndex = null;
+        progress.moves = (Number(progress.moves) || 0) + 1;
+
+        if (isPuzzleOrderComplete(order)) {
+          completePuzzleGame(dayId, progress);
+          return;
+        }
+
+        saveState();
+        render();
+      }
+
+      function completePuzzleGame(dayId, progress) {
+        progress.completedAt = new Date().toISOString();
+        progress.order = createSolvedPuzzleOrder();
+
+        const puzzleDay = getDays().find((day) => day.id === dayId);
+        state.solved[dayId] = {
+          digit: Number(puzzleDay ? puzzleDay.digit : PUZZLE_GAME_DATA.digit),
+          solvedAt: new Date().toISOString(),
+          appVersion: APP_VERSION,
+          source: "puzzle",
+          moves: Number(progress.moves) || 0,
+        };
+
+        const nextAvailableDay = getDays().find(
+          (day) => isAvailable(day) && !isSolved(day),
+        );
+        state.selectedDayId = nextAvailableDay ? nextAvailableDay.id : dayId;
+        saveState();
+        render();
+        showValidationMessage("✓ PUZZLE COMPLETADO | CIFRA 3 DECODIFICADA", "success", 5000);
+      }
+
+      function resetPuzzleGame() {
+        state.gameProgress[PUZZLE_GAME_DATA.id] = createDefaultPuzzleSave();
+        saveState();
+        render();
+      }
+
+      function isPuzzleComplete(progress) {
+        return Boolean(progress && progress.completedAt) ||
+          isPuzzleOrderComplete(progress && progress.order);
+      }
+
+      function isPuzzleOrderComplete(order) {
+        return Array.isArray(order) && order.every((pieceId, index) => pieceId === index);
+      }
+
+      function getPuzzleCorrectCount(order) {
+        if (!Array.isArray(order)) return 0;
+        return order.filter((pieceId, index) => pieceId === index).length;
+      }
+
       function renderRelationshipQuizGame(gameArea, selectedDay) {
         const progress = getRelationshipQuizSave();
         const configured = isRelationshipQuizConfigured();
@@ -4278,7 +4674,7 @@
         <input type="text" value="${escapeAttr(day.type)}" onchange="updateDay('${day.id}', 'type', this.value)" placeholder="item, game, mission, treasure, final">
 
         <div style="font-size: 10px; color: #ff0080; margin-top: 1rem; margin-bottom: 0.5rem;">TIPO DE JUEGO</div>
-        <input type="text" value="${escapeAttr(day.gameType || "")}" onchange="updateDay('${day.id}', 'gameType', this.value)" placeholder="pixelart, boss, quiz">
+        <input type="text" value="${escapeAttr(day.gameType || "")}" onchange="updateDay('${day.id}', 'gameType', this.value)" placeholder="pixelart, boss, quiz, puzzle">
 
         <label>
           <input type="checkbox" ${state.manualAvailable[day.id] ? "checked" : ""} onchange="updateDay('${day.id}', 'manualAvailable', this.checked)">
