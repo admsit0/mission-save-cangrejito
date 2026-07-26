@@ -1056,6 +1056,125 @@
         display: block;
       }
 
+      .catch-game {
+        margin: 1.5rem 0;
+        padding: 1rem;
+        border: 2px solid #ff0080;
+        background:
+          radial-gradient(circle at 50% 0%, rgba(255, 0, 128, 0.12), transparent 36%),
+          linear-gradient(180deg, rgba(0, 255, 136, 0.08), rgba(255, 0, 128, 0.04)),
+          rgba(0, 0, 0, 0.52);
+        box-shadow:
+          0 0 18px rgba(255, 0, 128, 0.28),
+          inset 0 0 24px rgba(0, 255, 136, 0.07);
+      }
+
+      .catch-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .catch-title {
+        color: #ff0080;
+        font-size: 12px;
+        font-weight: bold;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+
+      .catch-status {
+        color: #00ff88;
+        font-size: 11px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        text-align: right;
+        white-space: nowrap;
+      }
+
+      .catch-copy {
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 12px;
+        line-height: 1.65;
+        margin: 0 0 1rem;
+        text-align: center;
+      }
+
+      .catch-hud {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.55rem;
+        margin: 0 0 1rem;
+      }
+
+      .catch-hud-item {
+        border: 1px solid rgba(255, 0, 128, 0.55);
+        background: rgba(255, 0, 128, 0.06);
+        padding: 0.65rem;
+        min-height: 58px;
+      }
+
+      .catch-hud-label {
+        color: rgba(255, 255, 255, 0.62);
+        font-size: 9px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      .catch-hud-value {
+        margin-top: 0.35rem;
+        color: #00ff88;
+        font-size: 15px;
+        font-weight: bold;
+        letter-spacing: 1px;
+      }
+
+      .catch-board {
+        width: min(100%, 460px);
+        margin: 0 auto;
+        border: 1px solid rgba(255, 0, 128, 0.65);
+        background: #05070d;
+        box-shadow:
+          0 0 18px rgba(255, 0, 128, 0.24),
+          inset 0 0 24px rgba(0, 0, 0, 0.72);
+        position: relative;
+      }
+
+      .catch-canvas {
+        display: block;
+        width: 100%;
+        aspect-ratio: 9 / 14;
+        touch-action: none;
+        user-select: none;
+      }
+
+      .catch-controls {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.7rem;
+        margin-top: 1rem;
+      }
+
+      .catch-control {
+        min-height: 58px;
+        padding: 0.75rem;
+        border-color: rgba(0, 255, 136, 0.6);
+        background: rgba(0, 255, 136, 0.09);
+        color: #00ff88;
+        box-shadow: 0 0 10px rgba(0, 255, 136, 0.16);
+        touch-action: none;
+      }
+
+      .catch-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        justify-content: center;
+        margin-top: 1rem;
+      }
+
       .admin-toggle {
         position: fixed;
         bottom: 20px;
@@ -1408,6 +1527,28 @@
           width: 100%;
         }
 
+        .catch-game {
+          padding: 0.75rem;
+        }
+
+        .catch-header {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 0.4rem;
+        }
+
+        .catch-status {
+          text-align: left;
+        }
+
+        .catch-hud {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .catch-board {
+          width: 100%;
+        }
+
         .admin-panel {
           padding: 1rem;
         }
@@ -1529,7 +1670,7 @@
 
     <script>
       const ADMIN_PASSWORD = "admin";
-      const APP_VERSION = 6;
+      const APP_VERSION = 7;
       const STORAGE_KEY = "cangrejito-progress-v2";
       const LEGACY_STORAGE_KEY = "cangrejito-config";
 
@@ -1624,9 +1765,10 @@
           date: "26/07",
           unlockAt: "2026-07-26T00:00:00+02:00",
           digit: 1,
-          clue: "Objetivo Flaming Hot. Verifica el tercer dígito del número de serie bajo el código de barras.",
-          method: "Tercer dígito del número de serie",
-          type: "item",
+          clue: "Atrapa Besos activo. Recoge corazones y besos, evita interferencias italianas y completa los cinco niveles.",
+          method: "Cinco niveles de Atrapa Besos completados",
+          type: "game",
+          gameType: "catch",
         },
         {
           id: "day-11",
@@ -1945,6 +2087,66 @@
         ],
       };
 
+      const CATCH_GAME_DATA = {
+        id: "kiss-catch-day-10-v1",
+        mode: "kiss-catch-v1",
+        digit: 1,
+        width: 360,
+        height: 560,
+        assets: {
+          player: "assets/rescuer-face.png",
+          rescued: "assets/rescued-face.png",
+          alien: "assets/mini-alien.png",
+        },
+        levels: [
+          {
+            name: "Nivel 1",
+            duration: 55,
+            target: 20,
+            spawnEvery: 0.8,
+            goodChance: 0.83,
+            fallSpeed: 78,
+            alienSpeed: 92,
+          },
+          {
+            name: "Nivel 2",
+            duration: 60,
+            target: 26,
+            spawnEvery: 0.72,
+            goodChance: 0.78,
+            fallSpeed: 92,
+            alienSpeed: 112,
+          },
+          {
+            name: "Nivel 3",
+            duration: 65,
+            target: 32,
+            spawnEvery: 0.65,
+            goodChance: 0.74,
+            fallSpeed: 108,
+            alienSpeed: 132,
+          },
+          {
+            name: "Nivel 4",
+            duration: 70,
+            target: 38,
+            spawnEvery: 0.58,
+            goodChance: 0.7,
+            fallSpeed: 124,
+            alienSpeed: 154,
+          },
+          {
+            name: "Nivel 5",
+            duration: 75,
+            target: 44,
+            spawnEvery: 0.52,
+            goodChance: 0.68,
+            fallSpeed: 142,
+            alienSpeed: 178,
+          },
+        ],
+      };
+
       const PUZZLE_GAME_DATA = {
         id: "memory-puzzle-day-09-v1",
         mode: "swap-puzzle-v1",
@@ -1972,6 +2174,9 @@
       let bossGameRuntime = null;
       let bossGameAssets = null;
       const bossKeyState = { left: false, right: false, fire: false };
+      let catchGameRuntime = null;
+      let catchGameAssets = null;
+      const catchKeyState = { left: false, right: false };
       let state = loadState();
 
       adminToggle.addEventListener("click", () => {
@@ -1998,24 +2203,30 @@
       });
 
       window.addEventListener("keydown", (event) => {
-        if (!bossGameRuntime || isTypingTarget(event.target)) return;
+        if (isTypingTarget(event.target)) return;
         if (event.key === "ArrowLeft" || event.key.toLowerCase() === "a") {
-          bossKeyState.left = true;
+          if (bossGameRuntime) bossKeyState.left = true;
+          if (catchGameRuntime) catchKeyState.left = true;
           event.preventDefault();
         } else if (event.key === "ArrowRight" || event.key.toLowerCase() === "d") {
-          bossKeyState.right = true;
+          if (bossGameRuntime) bossKeyState.right = true;
+          if (catchGameRuntime) catchKeyState.right = true;
           event.preventDefault();
         } else if (event.key === " " || event.key === "Enter") {
-          bossKeyState.fire = true;
-          event.preventDefault();
+          if (bossGameRuntime) {
+            bossKeyState.fire = true;
+            event.preventDefault();
+          }
         }
       });
 
       window.addEventListener("keyup", (event) => {
         if (event.key === "ArrowLeft" || event.key.toLowerCase() === "a") {
           bossKeyState.left = false;
+          catchKeyState.left = false;
         } else if (event.key === "ArrowRight" || event.key.toLowerCase() === "d") {
           bossKeyState.right = false;
+          catchKeyState.right = false;
         } else if (event.key === " " || event.key === "Enter") {
           bossKeyState.fire = false;
         }
@@ -2091,6 +2302,11 @@
         if (!nextState.migrations.flamingHotMovedToDay26) {
           migrateFlamingHotQuizDaySwap(nextState);
           nextState.migrations.flamingHotMovedToDay26 = new Date().toISOString();
+        }
+
+        if (!nextState.migrations.day26CatchGame) {
+          migrateDay26CatchGame(nextState);
+          nextState.migrations.day26CatchGame = new Date().toISOString();
         }
 
         return nextState;
@@ -2207,6 +2423,12 @@
         }
       }
 
+      function migrateDay26CatchGame(nextState) {
+        if (nextState.overrides && nextState.overrides["day-10"]) {
+          delete nextState.overrides["day-10"];
+        }
+      }
+
       function migrateLegacyState() {
         const migrated = createDefaultState();
         const legacyRaw = readStorage(LEGACY_STORAGE_KEY);
@@ -2319,6 +2541,7 @@
         if (day.gameType === "quiz") return false;
         if (day.gameType === "boss") return false;
         if (day.gameType === "puzzle") return false;
+        if (day.gameType === "catch") return false;
         return true;
       }
 
@@ -2561,6 +2784,7 @@
         const gameArea = document.getElementById("gameArea");
         gameArea.innerHTML = "";
         destroyBossGameRuntime();
+        destroyCatchGameRuntime();
 
         if (
           !selectedDay ||
@@ -2588,6 +2812,11 @@
 
         if (selectedDay.gameType === "puzzle") {
           renderPuzzleGame(gameArea, selectedDay);
+          return;
+        }
+
+        if (selectedDay.gameType === "catch") {
+          renderCatchGame(gameArea, selectedDay);
           return;
         }
 
@@ -3976,6 +4205,865 @@
         });
       }
 
+      function renderCatchGame(gameArea, selectedDay) {
+        const progress = getCatchGameSave();
+        const wrapper = document.createElement("div");
+        wrapper.className = "catch-game";
+
+        const header = document.createElement("div");
+        header.className = "catch-header";
+
+        const title = document.createElement("div");
+        title.className = "catch-title";
+        title.textContent = "> ATRAPA BESOS: SENAL LIMPIA";
+
+        const status = document.createElement("div");
+        status.className = "catch-status";
+        status.textContent = progress.completedAt
+          ? "PIN DECODIFICADO"
+          : `${Math.min(Number(progress.highestLevel) || 0, 4) + 1}/5 EN CURSO`;
+
+        header.appendChild(title);
+        header.appendChild(status);
+        wrapper.appendChild(header);
+
+        const copy = document.createElement("p");
+        copy.className = "catch-copy";
+        copy.textContent =
+          "Recoge corazones y besos, esquiva las interferencias italianas y completa cinco niveles para abrir la cifra.";
+        wrapper.appendChild(copy);
+
+        const hud = document.createElement("div");
+        hud.className = "catch-hud";
+        const hudRefs = {
+          level: createCatchHudItem(hud, "Nivel", "1/5"),
+          caught: createCatchHudItem(hud, "Besos", "0/20"),
+          shields: createCatchHudItem(hud, "Escudo", "3"),
+          time: createCatchHudItem(hud, "Tiempo", "0:55"),
+        };
+        wrapper.appendChild(hud);
+
+        const board = document.createElement("div");
+        board.className = "catch-board";
+
+        const canvas = document.createElement("canvas");
+        canvas.className = "catch-canvas";
+        canvas.width = CATCH_GAME_DATA.width;
+        canvas.height = CATCH_GAME_DATA.height;
+        canvas.setAttribute("aria-label", "Lienzo de Atrapa Besos");
+        board.appendChild(canvas);
+        wrapper.appendChild(board);
+
+        const controls = document.createElement("div");
+        controls.className = "catch-controls";
+        const leftButton = createCatchControlButton("<", "left");
+        const rightButton = createCatchControlButton(">", "right");
+        controls.appendChild(leftButton);
+        controls.appendChild(rightButton);
+        wrapper.appendChild(controls);
+
+        const actions = document.createElement("div");
+        actions.className = "catch-actions";
+
+        const startButton = document.createElement("button");
+        startButton.type = "button";
+        startButton.textContent = progress.completedAt
+          ? "VOLVER A JUGAR"
+          : "INICIAR ATRAPA BESOS";
+        startButton.disabled = true;
+        startButton.addEventListener("click", startCatchGameRuntime);
+        actions.appendChild(startButton);
+
+        wrapper.appendChild(actions);
+        gameArea.appendChild(wrapper);
+
+        loadCatchGameAssets().then((assets) => {
+          if (!document.body.contains(canvas)) return;
+          initializeCatchGameRuntime(canvas, selectedDay.id, hudRefs, assets);
+          bindCatchGameCanvas(canvas);
+          [leftButton, rightButton].forEach(bindCatchControlButton);
+          startButton.disabled = false;
+          drawCatchGameFrame();
+        });
+      }
+
+      function createCatchHudItem(parent, label, value) {
+        const item = document.createElement("div");
+        item.className = "catch-hud-item";
+
+        const labelEl = document.createElement("div");
+        labelEl.className = "catch-hud-label";
+        labelEl.textContent = label;
+
+        const valueEl = document.createElement("div");
+        valueEl.className = "catch-hud-value";
+        valueEl.textContent = value;
+
+        item.appendChild(labelEl);
+        item.appendChild(valueEl);
+        parent.appendChild(item);
+        return valueEl;
+      }
+
+      function createCatchControlButton(text, control) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "catch-control";
+        button.textContent = text;
+        button.dataset.catchControl = control;
+        return button;
+      }
+
+      function loadCatchGameAssets() {
+        if (catchGameAssets) return Promise.resolve(catchGameAssets);
+
+        const entries = Object.entries(CATCH_GAME_DATA.assets);
+        return Promise.all(
+          entries.map(
+            ([key, src]) =>
+              new Promise((resolve) => {
+                const image = new Image();
+                image.onload = () => resolve([key, image]);
+                image.onerror = () => resolve([key, null]);
+                image.src = src;
+              }),
+          ),
+        ).then((loaded) => {
+          catchGameAssets = Object.fromEntries(loaded);
+          return catchGameAssets;
+        });
+      }
+
+      function createDefaultCatchSave() {
+        return {
+          mode: CATCH_GAME_DATA.mode,
+          completedAt: null,
+          bestScore: 0,
+          attempts: 0,
+          highestLevel: 0,
+          totalCaught: 0,
+        };
+      }
+
+      function getCatchGameSave(create = true) {
+        if (!state.gameProgress) state.gameProgress = {};
+        const existing = state.gameProgress[CATCH_GAME_DATA.id];
+        if ((!existing || existing.mode !== CATCH_GAME_DATA.mode) && create) {
+          state.gameProgress[CATCH_GAME_DATA.id] = createDefaultCatchSave();
+        }
+
+        return state.gameProgress[CATCH_GAME_DATA.id] || createDefaultCatchSave();
+      }
+
+      function initializeCatchGameRuntime(canvas, dayId, hudRefs, assets) {
+        destroyCatchGameRuntime();
+        catchGameRuntime = {
+          canvas,
+          context: canvas.getContext("2d"),
+          dayId,
+          hudRefs,
+          assets,
+          phase: "ready",
+          levelIndex: 0,
+          levelCaught: 0,
+          shields: 3,
+          timeLeft: CATCH_GAME_DATA.levels[0].duration,
+          score: 0,
+          player: {
+            x: CATCH_GAME_DATA.width / 2,
+            y: CATCH_GAME_DATA.height - 60,
+            width: 62,
+            height: 70,
+            speed: 260,
+            invulnerable: 0,
+          },
+          items: [],
+          particles: [],
+          stars: createCatchStars(),
+          input: { left: false, right: false, targetX: null },
+          spawnCooldown: 0.6,
+          phaseTimer: 0,
+          lastFrameAt: 0,
+          animationFrame: null,
+          completed: false,
+        };
+        updateCatchHud();
+      }
+
+      function destroyCatchGameRuntime() {
+        if (catchGameRuntime && catchGameRuntime.animationFrame) {
+          cancelAnimationFrame(catchGameRuntime.animationFrame);
+        }
+        catchGameRuntime = null;
+        catchKeyState.left = false;
+        catchKeyState.right = false;
+      }
+
+      function startCatchGameRuntime() {
+        if (!catchGameRuntime) return;
+
+        const progress = getCatchGameSave();
+        progress.attempts = (Number(progress.attempts) || 0) + 1;
+        saveState();
+
+        const savedLevel = Math.min(
+          Number(progress.highestLevel) || 0,
+          CATCH_GAME_DATA.levels.length - 1,
+        );
+
+        if (catchGameRuntime.animationFrame) {
+          cancelAnimationFrame(catchGameRuntime.animationFrame);
+        }
+        catchGameRuntime.levelIndex = savedLevel;
+        catchGameRuntime.score = 0;
+        catchGameRuntime.player.x = CATCH_GAME_DATA.width / 2;
+        catchGameRuntime.player.invulnerable = 1;
+        catchGameRuntime.items = [];
+        catchGameRuntime.particles = [];
+        catchGameRuntime.stars = createCatchStars();
+        catchGameRuntime.completed = false;
+        initializeCatchLevel(savedLevel);
+        catchGameRuntime.lastFrameAt = 0;
+        catchGameRuntime.animationFrame = requestAnimationFrame(catchGameLoop);
+      }
+
+      function initializeCatchLevel(levelIndex) {
+        const runtime = catchGameRuntime;
+        if (!runtime) return;
+
+        const level = CATCH_GAME_DATA.levels[levelIndex];
+        if (!level) {
+          completeCatchGame();
+          return;
+        }
+
+        runtime.phase = "playing";
+        runtime.levelIndex = levelIndex;
+        runtime.levelCaught = 0;
+        runtime.shields = 3;
+        runtime.timeLeft = level.duration;
+        runtime.items = [];
+        runtime.spawnCooldown = 0.45;
+        runtime.phaseTimer = 0;
+        runtime.input.left = false;
+        runtime.input.right = false;
+        runtime.input.targetX = null;
+        runtime.player.x = CATCH_GAME_DATA.width / 2;
+        runtime.player.invulnerable = 0.9;
+        updateCatchHud();
+      }
+
+      function catchGameLoop(timestamp) {
+        const runtime = catchGameRuntime;
+        if (!runtime) return;
+
+        if (!runtime.lastFrameAt) runtime.lastFrameAt = timestamp;
+        const dt = Math.min(0.034, (timestamp - runtime.lastFrameAt) / 1000);
+        runtime.lastFrameAt = timestamp;
+
+        updateCatchGame(dt);
+        drawCatchGameFrame();
+
+        if (catchGameRuntime && catchGameRuntime.phase !== "stopped") {
+          catchGameRuntime.animationFrame = requestAnimationFrame(catchGameLoop);
+        }
+      }
+
+      function updateCatchGame(dt) {
+        const runtime = catchGameRuntime;
+        if (!runtime) return;
+
+        moveCatchStars(dt);
+        updateCatchParticles(dt);
+
+        if (runtime.phase === "level-clear") {
+          runtime.phaseTimer -= dt;
+          if (runtime.phaseTimer <= 0) {
+            initializeCatchLevel(runtime.levelIndex + 1);
+          }
+          updateCatchHud();
+          return;
+        }
+
+        if (runtime.phase === "level-fail") {
+          runtime.phaseTimer -= dt;
+          if (runtime.phaseTimer <= 0) {
+            initializeCatchLevel(runtime.levelIndex);
+          }
+          updateCatchHud();
+          return;
+        }
+
+        if (runtime.phase === "rescued" || runtime.phase === "ready") {
+          runtime.phaseTimer += dt;
+          updateCatchHud();
+          return;
+        }
+
+        if (runtime.phase !== "playing") return;
+
+        const level = CATCH_GAME_DATA.levels[runtime.levelIndex];
+        const player = runtime.player;
+        if (player.invulnerable > 0) player.invulnerable -= dt;
+
+        const movingLeft = catchKeyState.left || runtime.input.left;
+        const movingRight = catchKeyState.right || runtime.input.right;
+
+        if (runtime.input.targetX !== null) {
+          const delta = runtime.input.targetX - player.x;
+          const step = Math.sign(delta) * Math.min(Math.abs(delta), player.speed * dt * 1.15);
+          player.x += step;
+        }
+        if (movingLeft) {
+          runtime.input.targetX = null;
+          player.x -= player.speed * dt;
+        }
+        if (movingRight) {
+          runtime.input.targetX = null;
+          player.x += player.speed * dt;
+        }
+        player.x = clamp(player.x, 34, CATCH_GAME_DATA.width - 34);
+
+        runtime.spawnCooldown -= dt;
+        while (runtime.spawnCooldown <= 0) {
+          spawnCatchItem(level);
+          runtime.spawnCooldown += level.spawnEvery * (0.78 + Math.random() * 0.32);
+        }
+
+        runtime.items.forEach((item) => {
+          item.y += item.speed * dt;
+          item.x += item.vx * dt + Math.sin(item.age * 4 + item.spin) * item.drift * dt;
+          item.age += dt;
+          item.x = clamp(item.x, item.width / 2 + 8, CATCH_GAME_DATA.width - item.width / 2 - 8);
+        });
+
+        checkCatchCollisions();
+        runtime.items = runtime.items.filter(
+          (item) => !item.collected && item.y < CATCH_GAME_DATA.height + 44,
+        );
+
+        runtime.timeLeft -= dt;
+        if (runtime.timeLeft <= 0) {
+          if (runtime.levelCaught >= level.target) {
+            clearCatchLevel();
+          } else {
+            failCatchLevel("FALTAN BESOS");
+          }
+        }
+
+        updateCatchHud();
+      }
+
+      function spawnCatchItem(level) {
+        const runtime = catchGameRuntime;
+        if (!runtime) return;
+
+        const isGood = Math.random() < level.goodChance;
+        const type = isGood ? (Math.random() < 0.58 ? "heart" : "kiss") : "alien";
+        const size = type === "alien" ? 34 : 30 + Math.random() * 8;
+        runtime.items.push({
+          type,
+          x: 18 + Math.random() * (CATCH_GAME_DATA.width - 36),
+          y: -size,
+          width: size,
+          height: size,
+          speed: (type === "alien" ? level.alienSpeed : level.fallSpeed) * (0.88 + Math.random() * 0.28),
+          vx: (Math.random() - 0.5) * (type === "alien" ? 30 : 18),
+          drift: type === "alien" ? 14 : 9,
+          spin: Math.random() * Math.PI * 2,
+          age: 0,
+          value: 1,
+        });
+
+        if (runtime.levelIndex >= 2 && Math.random() < 0.08 + runtime.levelIndex * 0.02) {
+          const extraType = Math.random() < 0.72 ? "heart" : "alien";
+          const extraSize = extraType === "alien" ? 30 : 28;
+          runtime.items.push({
+            type: extraType,
+            x: 18 + Math.random() * (CATCH_GAME_DATA.width - 36),
+            y: -extraSize - 26,
+            width: extraSize,
+            height: extraSize,
+            speed: (extraType === "alien" ? level.alienSpeed : level.fallSpeed) * 0.92,
+            vx: (Math.random() - 0.5) * 26,
+            drift: 10,
+            spin: Math.random() * Math.PI * 2,
+            age: 0,
+            value: 1,
+          });
+        }
+      }
+
+      function checkCatchCollisions() {
+        const runtime = catchGameRuntime;
+        if (!runtime) return;
+
+        const playerHitbox = {
+          x: runtime.player.x,
+          y: runtime.player.y - 6,
+          width: runtime.player.width + 12,
+          height: runtime.player.height,
+        };
+
+        runtime.items.forEach((item) => {
+          if (item.collected || !rectsOverlap(playerHitbox, item)) return;
+
+          item.collected = true;
+          if (item.type === "alien") {
+            if (runtime.player.invulnerable <= 0) {
+              runtime.shields -= 1;
+              runtime.score = Math.max(0, runtime.score - 18);
+              runtime.player.invulnerable = 1.1;
+              createCatchBurst(item.x, item.y, "#ff0080", 16);
+              if (runtime.shields <= 0) failCatchLevel("INTERFERENCIA");
+            }
+            return;
+          }
+
+          runtime.levelCaught += item.value;
+          runtime.score += item.type === "kiss" ? 18 : 14;
+          createCatchBurst(item.x, item.y, item.type === "kiss" ? "#ff66ff" : "#00ff88", 10);
+        });
+      }
+
+      function clearCatchLevel() {
+        const runtime = catchGameRuntime;
+        if (!runtime || runtime.phase !== "playing") return;
+
+        const progress = getCatchGameSave();
+        progress.highestLevel = Math.max(
+          Number(progress.highestLevel) || 0,
+          runtime.levelIndex + 1,
+        );
+        progress.totalCaught = (Number(progress.totalCaught) || 0) + runtime.levelCaught;
+        progress.bestScore = Math.max(Number(progress.bestScore) || 0, runtime.score);
+        saveState();
+
+        if (runtime.levelIndex >= CATCH_GAME_DATA.levels.length - 1) {
+          completeCatchGame();
+          return;
+        }
+
+        runtime.phase = "level-clear";
+        runtime.phaseTimer = 1.8;
+        runtime.items = [];
+        createCatchBurst(CATCH_GAME_DATA.width / 2, 170, "#00ff88", 26);
+      }
+
+      function failCatchLevel(reason) {
+        const runtime = catchGameRuntime;
+        if (!runtime || runtime.phase !== "playing") return;
+
+        runtime.phase = "level-fail";
+        runtime.phaseTimer = 2.1;
+        runtime.failReason = reason;
+        runtime.items = [];
+        runtime.input.left = false;
+        runtime.input.right = false;
+        runtime.input.targetX = null;
+        catchKeyState.left = false;
+        catchKeyState.right = false;
+        createCatchBurst(runtime.player.x, runtime.player.y, "#ff0080", 22);
+
+        const progress = getCatchGameSave();
+        progress.bestScore = Math.max(Number(progress.bestScore) || 0, runtime.score);
+        saveState();
+      }
+
+      function completeCatchGame() {
+        const runtime = catchGameRuntime;
+        if (!runtime || runtime.completed) return;
+
+        runtime.completed = true;
+        runtime.phase = "rescued";
+        runtime.phaseTimer = 0;
+        runtime.items = [];
+        createCatchBurst(CATCH_GAME_DATA.width / 2, 180, "#00ff88", 42);
+
+        const progress = getCatchGameSave();
+        progress.completedAt = new Date().toISOString();
+        progress.highestLevel = CATCH_GAME_DATA.levels.length;
+        progress.bestScore = Math.max(Number(progress.bestScore) || 0, runtime.score);
+
+        state.solved[runtime.dayId] = {
+          digit: Number(CATCH_GAME_DATA.digit),
+          solvedAt: new Date().toISOString(),
+          appVersion: APP_VERSION,
+          source: "catch",
+          score: runtime.score,
+        };
+        saveState();
+        showValidationMessage("OK ATRAPA BESOS COMPLETADO | CIFRA 1 DECODIFICADA", "success", 5200);
+
+        setTimeout(() => {
+          if (catchGameRuntime && catchGameRuntime.phase === "rescued") {
+            render();
+          }
+        }, 5400);
+      }
+
+      function drawCatchGameFrame() {
+        const runtime = catchGameRuntime;
+        if (!runtime || !runtime.context) return;
+
+        const context = runtime.context;
+        context.clearRect(0, 0, CATCH_GAME_DATA.width, CATCH_GAME_DATA.height);
+        drawCatchBackground(context);
+
+        if (runtime.phase === "rescued") {
+          drawCatchRescueScene(context);
+          updateCatchHud();
+          return;
+        }
+
+        drawCatchItems(context);
+        drawCatchPlayer(context);
+        drawCatchParticles(context);
+
+        if (runtime.phase === "ready") {
+          drawCatchOverlay(
+            context,
+            "ATRAPA BESOS",
+            "5 niveles. La senal se limpia con corazones.",
+          );
+        } else if (runtime.phase === "level-clear") {
+          drawCatchOverlay(context, "NIVEL LIMPIO", "La ruta al rescate sigue abierta.");
+        } else if (runtime.phase === "level-fail") {
+          drawCatchOverlay(
+            context,
+            "REINTENTO",
+            `${runtime.failReason || "SENAL INCOMPLETA"}. Reiniciando este nivel.`,
+          );
+        }
+        updateCatchHud();
+      }
+
+      function drawCatchBackground(context) {
+        const runtime = catchGameRuntime;
+        const gradient = context.createLinearGradient(0, 0, 0, CATCH_GAME_DATA.height);
+        gradient.addColorStop(0, "#07151f");
+        gradient.addColorStop(0.5, "#05070d");
+        gradient.addColorStop(1, "#170515");
+        context.fillStyle = gradient;
+        context.fillRect(0, 0, CATCH_GAME_DATA.width, CATCH_GAME_DATA.height);
+
+        context.fillStyle = "rgba(255,255,255,0.78)";
+        runtime.stars.forEach((star) => {
+          context.globalAlpha = star.alpha;
+          context.fillRect(star.x, star.y, star.size, star.size);
+        });
+        context.globalAlpha = 1;
+
+        context.strokeStyle = "rgba(255, 0, 128, 0.12)";
+        context.lineWidth = 1;
+        for (let y = 42; y < CATCH_GAME_DATA.height; y += 42) {
+          context.beginPath();
+          context.moveTo(0, y);
+          context.lineTo(CATCH_GAME_DATA.width, y);
+          context.stroke();
+        }
+
+        context.strokeStyle = "rgba(0, 255, 136, 0.09)";
+        for (let x = 60; x < CATCH_GAME_DATA.width; x += 60) {
+          context.beginPath();
+          context.moveTo(x, 0);
+          context.lineTo(x, CATCH_GAME_DATA.height);
+          context.stroke();
+        }
+      }
+
+      function drawCatchPlayer(context) {
+        const runtime = catchGameRuntime;
+        const player = runtime.player;
+        const flicker = player.invulnerable > 0 && Math.floor(Date.now() / 90) % 2 === 0;
+        if (flicker) return;
+
+        context.save();
+        context.translate(player.x, player.y);
+
+        context.fillStyle = "rgba(255, 0, 128, 0.18)";
+        context.strokeStyle = "#ff0080";
+        context.lineWidth = 2;
+        context.beginPath();
+        context.moveTo(-34, 12);
+        context.quadraticCurveTo(0, 36, 34, 12);
+        context.lineTo(24, 34);
+        context.quadraticCurveTo(0, 48, -24, 34);
+        context.closePath();
+        context.fill();
+        context.stroke();
+
+        context.fillStyle = "#00ff88";
+        context.fillRect(-22, 36, 8, 16);
+        context.fillRect(14, 36, 8, 16);
+        context.fillStyle = "#ff0080";
+        context.fillRect(-18, 52, 4, 12);
+        context.fillRect(16, 52, 4, 12);
+
+        drawBossRoundImage(context, runtime.assets.player, -30, -50, 60, 60);
+        context.restore();
+      }
+
+      function drawCatchItems(context) {
+        const runtime = catchGameRuntime;
+
+        runtime.items.forEach((item) => {
+          if (item.type === "alien") {
+            drawBossRoundImage(
+              context,
+              runtime.assets.alien,
+              item.x - item.width / 2,
+              item.y - item.height / 2,
+              item.width,
+              item.height,
+            );
+            drawItalianFlag(context, item.x - 15, item.y + item.height / 2 + 2, 30, 9);
+            return;
+          }
+
+          if (item.type === "kiss") {
+            drawCatchKiss(context, item.x, item.y, item.width);
+            return;
+          }
+
+          drawCatchHeart(context, item.x, item.y, item.width);
+        });
+      }
+
+      function drawCatchHeart(context, x, y, size) {
+        const scale = size / 32;
+        context.save();
+        context.translate(x, y);
+        context.scale(scale, scale);
+        context.shadowColor = "rgba(255, 0, 128, 0.7)";
+        context.shadowBlur = 12;
+        context.fillStyle = "#ff0080";
+        context.beginPath();
+        context.moveTo(0, 11);
+        context.bezierCurveTo(-21, -3, -11, -18, 0, -8);
+        context.bezierCurveTo(11, -18, 21, -3, 0, 11);
+        context.closePath();
+        context.fill();
+        context.shadowBlur = 0;
+        context.strokeStyle = "rgba(255,255,255,0.75)";
+        context.lineWidth = 1.4;
+        context.stroke();
+        context.restore();
+      }
+
+      function drawCatchKiss(context, x, y, size) {
+        const scale = size / 34;
+        context.save();
+        context.translate(x, y);
+        context.scale(scale, scale);
+        context.shadowColor = "rgba(255, 102, 255, 0.7)";
+        context.shadowBlur = 12;
+        context.fillStyle = "#ff66ff";
+        context.beginPath();
+        context.moveTo(-16, -2);
+        context.bezierCurveTo(-10, -13, -3, -8, 0, -3);
+        context.bezierCurveTo(4, -9, 12, -12, 16, -2);
+        context.bezierCurveTo(9, 3, 5, 5, 0, 4);
+        context.bezierCurveTo(-5, 5, -10, 3, -16, -2);
+        context.closePath();
+        context.fill();
+        context.beginPath();
+        context.moveTo(-15, 3);
+        context.bezierCurveTo(-7, 15, 7, 15, 15, 3);
+        context.bezierCurveTo(7, 6, -7, 6, -15, 3);
+        context.closePath();
+        context.fillStyle = "#ff2a9d";
+        context.fill();
+        context.shadowBlur = 0;
+        context.strokeStyle = "rgba(255,255,255,0.78)";
+        context.lineWidth = 1.2;
+        context.stroke();
+        context.restore();
+      }
+
+      function drawCatchParticles(context) {
+        const runtime = catchGameRuntime;
+        runtime.particles.forEach((particle) => {
+          context.globalAlpha = Math.max(0, particle.life);
+          context.fillStyle = particle.color;
+          context.fillRect(particle.x, particle.y, particle.size, particle.size);
+        });
+        context.globalAlpha = 1;
+      }
+
+      function drawCatchRescueScene(context) {
+        const runtime = catchGameRuntime;
+        drawCatchBackground(context);
+
+        context.fillStyle = "rgba(255, 0, 128, 0.08)";
+        context.fillRect(24, 94, CATCH_GAME_DATA.width - 48, 320);
+        context.strokeStyle = "#00ff88";
+        context.lineWidth = 2;
+        context.strokeRect(24, 94, CATCH_GAME_DATA.width - 48, 320);
+
+        const pulse = Math.sin(Date.now() / 260) * 4;
+        drawBossRoundImage(context, runtime.assets.player, 70, 164 + pulse, 88, 88);
+        drawBossRoundImage(context, runtime.assets.rescued, 202, 164 - pulse, 88, 88);
+
+        context.strokeStyle = "#ff0080";
+        context.lineWidth = 3;
+        context.setLineDash([9, 7]);
+        context.beginPath();
+        context.moveTo(140, 209);
+        context.lineTo(220, 209);
+        context.stroke();
+        context.setLineDash([]);
+
+        drawCatchHeart(context, 180, 206, 34);
+        drawCatchKiss(context, 180, 242, 28);
+
+        context.fillStyle = "#00ff88";
+        context.font = "bold 18px Courier New";
+        context.textAlign = "center";
+        context.fillText("RESCATE CON BESOS", CATCH_GAME_DATA.width / 2, 314);
+
+        context.fillStyle = "#ffffff";
+        context.font = "bold 42px Courier New";
+        context.fillText("PIN: 1", CATCH_GAME_DATA.width / 2, 364);
+
+        context.fillStyle = "rgba(255, 0, 128, 0.82)";
+        context.font = "bold 11px Courier New";
+        context.fillText("INTERFERENCIAS ITALIANAS NEUTRALIZADAS", CATCH_GAME_DATA.width / 2, 392);
+        drawCatchParticles(context);
+      }
+
+      function drawCatchOverlay(context, title, subtitle) {
+        context.fillStyle = "rgba(0, 0, 0, 0.7)";
+        context.fillRect(24, 190, CATCH_GAME_DATA.width - 48, 138);
+        context.strokeStyle = "#ff0080";
+        context.lineWidth = 2;
+        context.strokeRect(24, 190, CATCH_GAME_DATA.width - 48, 138);
+
+        context.fillStyle = "#00ff88";
+        context.font = "bold 22px Courier New";
+        context.textAlign = "center";
+        context.fillText(title, CATCH_GAME_DATA.width / 2, 238);
+
+        context.fillStyle = "#ffffff";
+        context.font = "bold 11px Courier New";
+        wrapBossText(context, subtitle, CATCH_GAME_DATA.width / 2, 270, 250, 16);
+      }
+
+      function updateCatchHud() {
+        const runtime = catchGameRuntime;
+        if (!runtime || !runtime.hudRefs) return;
+
+        const level = CATCH_GAME_DATA.levels[runtime.levelIndex] || CATCH_GAME_DATA.levels[0];
+        runtime.hudRefs.level.textContent = `${Math.min(runtime.levelIndex + 1, 5)}/5`;
+        runtime.hudRefs.caught.textContent = `${Math.max(0, runtime.levelCaught)}/${level.target}`;
+        runtime.hudRefs.shields.textContent = Math.max(0, runtime.shields);
+        runtime.hudRefs.time.textContent = formatCatchTime(runtime.timeLeft);
+      }
+
+      function formatCatchTime(seconds) {
+        const safeSeconds = Math.max(0, Math.ceil(Number(seconds) || 0));
+        const minutes = Math.floor(safeSeconds / 60);
+        const remainingSeconds = String(safeSeconds % 60).padStart(2, "0");
+        return `${minutes}:${remainingSeconds}`;
+      }
+
+      function bindCatchGameCanvas(canvas) {
+        canvas.addEventListener("pointerdown", (event) => {
+          if (!catchGameRuntime || catchGameRuntime.phase !== "playing") return;
+          if (canvas.setPointerCapture) canvas.setPointerCapture(event.pointerId);
+          setCatchPointerTarget(canvas, event);
+          event.preventDefault();
+        });
+
+        canvas.addEventListener("pointermove", (event) => {
+          if (!catchGameRuntime || catchGameRuntime.phase !== "playing") return;
+          setCatchPointerTarget(canvas, event);
+          event.preventDefault();
+        });
+      }
+
+      function bindCatchControlButton(button) {
+        const control = button.dataset.catchControl;
+        const setActive = (active) => {
+          if (!catchGameRuntime || !control) return;
+          catchGameRuntime.input[control] = active;
+          if (active) catchGameRuntime.input.targetX = null;
+        };
+
+        button.addEventListener("pointerdown", (event) => {
+          if (button.setPointerCapture) button.setPointerCapture(event.pointerId);
+          setActive(true);
+          event.preventDefault();
+        });
+
+        ["pointerup", "pointercancel", "pointerleave"].forEach((eventName) => {
+          button.addEventListener(eventName, () => setActive(false));
+        });
+      }
+
+      function setCatchPointerTarget(canvas, event) {
+        const runtime = catchGameRuntime;
+        const rect = canvas.getBoundingClientRect();
+        const x = ((event.clientX - rect.left) / rect.width) * CATCH_GAME_DATA.width;
+        runtime.input.targetX = clamp(x, 34, CATCH_GAME_DATA.width - 34);
+      }
+
+      function createCatchStars() {
+        return Array.from({ length: 68 }, () => ({
+          x: Math.random() * CATCH_GAME_DATA.width,
+          y: Math.random() * CATCH_GAME_DATA.height,
+          size: Math.random() > 0.76 ? 2 : 1,
+          speed: 16 + Math.random() * 54,
+          alpha: 0.28 + Math.random() * 0.58,
+        }));
+      }
+
+      function moveCatchStars(dt) {
+        const runtime = catchGameRuntime;
+        if (!runtime) return;
+
+        runtime.stars.forEach((star) => {
+          star.y += star.speed * dt;
+          if (star.y > CATCH_GAME_DATA.height) {
+            star.y = 0;
+            star.x = Math.random() * CATCH_GAME_DATA.width;
+          }
+        });
+      }
+
+      function updateCatchParticles(dt) {
+        const runtime = catchGameRuntime;
+        if (!runtime) return;
+
+        runtime.particles.forEach((particle) => {
+          particle.x += particle.vx * dt;
+          particle.y += particle.vy * dt;
+          particle.life -= dt;
+        });
+        runtime.particles = runtime.particles.filter(
+          (particle) => particle.life > 0,
+        );
+      }
+
+      function createCatchBurst(x, y, color, count) {
+        const runtime = catchGameRuntime;
+        if (!runtime) return;
+
+        for (let index = 0; index < count; index += 1) {
+          const angle = Math.random() * Math.PI * 2;
+          const speed = 35 + Math.random() * 115;
+          runtime.particles.push({
+            x,
+            y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            life: 0.35 + Math.random() * 0.58,
+            size: 2 + Math.random() * 3,
+            color,
+          });
+        }
+      }
+
       function renderPuzzleGame(gameArea, selectedDay) {
         const progress = getPuzzleGameSave();
         const order = progress.order || createSolvedPuzzleOrder();
@@ -4674,7 +5762,7 @@
         <input type="text" value="${escapeAttr(day.type)}" onchange="updateDay('${day.id}', 'type', this.value)" placeholder="item, game, mission, treasure, final">
 
         <div style="font-size: 10px; color: #ff0080; margin-top: 1rem; margin-bottom: 0.5rem;">TIPO DE JUEGO</div>
-        <input type="text" value="${escapeAttr(day.gameType || "")}" onchange="updateDay('${day.id}', 'gameType', this.value)" placeholder="pixelart, boss, quiz, puzzle">
+              <input type="text" value="${escapeAttr(day.gameType || "")}" onchange="updateDay('${day.id}', 'gameType', this.value)" placeholder="pixelart, boss, quiz, puzzle, catch">
 
         <label>
           <input type="checkbox" ${state.manualAvailable[day.id] ? "checked" : ""} onchange="updateDay('${day.id}', 'manualAvailable', this.checked)">
@@ -4786,7 +5874,7 @@
 
       render();
       setInterval(() => {
-        if (!adminPanel.classList.contains("active") && !bossGameRuntime) render();
+        if (!adminPanel.classList.contains("active") && !bossGameRuntime && !catchGameRuntime) render();
       }, 60000);
     </script>
   </body>
