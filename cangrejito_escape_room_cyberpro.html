@@ -1175,6 +1175,142 @@
         margin-top: 1rem;
       }
 
+      .orbit-game {
+        margin: 1.5rem 0;
+        padding: 1rem;
+        border: 2px solid #00ff88;
+        background:
+          radial-gradient(circle at 50% 8%, rgba(0, 255, 136, 0.12), transparent 38%),
+          linear-gradient(180deg, rgba(255, 0, 128, 0.08), rgba(0, 255, 136, 0.04)),
+          rgba(0, 0, 0, 0.54);
+        box-shadow:
+          0 0 18px rgba(0, 255, 136, 0.22),
+          inset 0 0 26px rgba(255, 0, 128, 0.07);
+      }
+
+      .orbit-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .orbit-title {
+        color: #00ff88;
+        font-size: 12px;
+        font-weight: bold;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+
+      .orbit-status {
+        color: #ff0080;
+        font-size: 11px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        text-align: right;
+        white-space: nowrap;
+      }
+
+      .orbit-copy {
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 12px;
+        line-height: 1.65;
+        margin: 0 0 1rem;
+        text-align: center;
+      }
+
+      .orbit-hud {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.55rem;
+        margin: 0 0 1rem;
+      }
+
+      .orbit-hud-item {
+        border: 1px solid rgba(0, 255, 136, 0.55);
+        background: rgba(0, 255, 136, 0.06);
+        padding: 0.65rem;
+        min-height: 58px;
+      }
+
+      .orbit-hud-label {
+        color: rgba(255, 255, 255, 0.62);
+        font-size: 9px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      .orbit-hud-value {
+        margin-top: 0.35rem;
+        color: #ff0080;
+        font-size: 15px;
+        font-weight: bold;
+        letter-spacing: 1px;
+      }
+
+      .orbit-board {
+        width: min(100%, 460px);
+        margin: 0 auto;
+        border: 1px solid rgba(0, 255, 136, 0.65);
+        background: #05070d;
+        box-shadow:
+          0 0 18px rgba(0, 255, 136, 0.22),
+          inset 0 0 24px rgba(0, 0, 0, 0.72);
+        position: relative;
+      }
+
+      .orbit-canvas {
+        display: block;
+        width: 100%;
+        aspect-ratio: 9 / 14;
+        touch-action: none;
+        user-select: none;
+      }
+
+      .orbit-controls {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.55rem;
+        width: min(100%, 320px);
+        margin: 1rem auto 0;
+      }
+
+      .orbit-control {
+        min-height: 54px;
+        padding: 0.75rem;
+        border-color: rgba(255, 0, 128, 0.68);
+        background: rgba(255, 0, 128, 0.09);
+        color: #ffffff;
+        box-shadow: 0 0 10px rgba(255, 0, 128, 0.16);
+        touch-action: none;
+      }
+
+      .orbit-control.up {
+        grid-column: 2;
+      }
+
+      .orbit-control.left {
+        grid-column: 1;
+      }
+
+      .orbit-control.down {
+        grid-column: 2;
+      }
+
+      .orbit-control.right {
+        grid-column: 3;
+      }
+
+      .orbit-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        justify-content: center;
+        margin-top: 1rem;
+      }
+
       .admin-toggle {
         position: fixed;
         bottom: 20px;
@@ -1549,6 +1685,29 @@
           width: 100%;
         }
 
+        .orbit-game {
+          padding: 0.75rem;
+        }
+
+        .orbit-header {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 0.4rem;
+        }
+
+        .orbit-status {
+          text-align: left;
+        }
+
+        .orbit-hud {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .orbit-board,
+        .orbit-controls {
+          width: 100%;
+        }
+
         .admin-panel {
           padding: 1rem;
         }
@@ -1670,7 +1829,7 @@
 
     <script>
       const ADMIN_PASSWORD = "admin";
-      const APP_VERSION = 7;
+      const APP_VERSION = 8;
       const STORAGE_KEY = "cangrejito-progress-v2";
       const LEGACY_STORAGE_KEY = "cangrejito-config";
 
@@ -1775,9 +1934,10 @@
           date: "27/07",
           unlockAt: "2026-07-27T00:00:00+02:00",
           digit: 6,
-          clue: "Misión cookie. Consigue el objetivo del supermercado y fíjate en la primera cifra de su peso.",
-          method: "Primera cifra del peso (60-70g)",
-          type: "item",
+          clue: "Constelacion Cangrejito activa. Enciende cinco sectores del mapa estelar y esquiva las interferencias italianas.",
+          method: "Cinco sectores de la constelacion completados",
+          type: "game",
+          gameType: "orbit",
         },
         {
           id: "day-12",
@@ -2147,6 +2307,61 @@
         ],
       };
 
+      const ORBIT_GAME_DATA = {
+        id: "constellation-day-11-v1",
+        mode: "constellation-v1",
+        digit: 6,
+        width: 360,
+        height: 560,
+        assets: {
+          player: "assets/rescuer-face.png",
+          rescued: "assets/rescued-face.png",
+          alien: "assets/mini-alien.png",
+        },
+        levels: [
+          {
+            name: "Sector 1",
+            duration: 50,
+            target: 4,
+            aliens: 3,
+            alienSpeed: 55,
+            fragmentPulse: 1,
+          },
+          {
+            name: "Sector 2",
+            duration: 55,
+            target: 5,
+            aliens: 4,
+            alienSpeed: 66,
+            fragmentPulse: 1.08,
+          },
+          {
+            name: "Sector 3",
+            duration: 60,
+            target: 6,
+            aliens: 5,
+            alienSpeed: 76,
+            fragmentPulse: 1.16,
+          },
+          {
+            name: "Sector 4",
+            duration: 65,
+            target: 7,
+            aliens: 6,
+            alienSpeed: 88,
+            fragmentPulse: 1.24,
+          },
+          {
+            name: "Sector 5",
+            duration: 70,
+            target: 8,
+            aliens: 7,
+            alienSpeed: 102,
+            fragmentPulse: 1.32,
+          },
+        ],
+      };
+
       const PUZZLE_GAME_DATA = {
         id: "memory-puzzle-day-09-v1",
         mode: "swap-puzzle-v1",
@@ -2177,6 +2392,9 @@
       let catchGameRuntime = null;
       let catchGameAssets = null;
       const catchKeyState = { left: false, right: false };
+      let orbitGameRuntime = null;
+      let orbitGameAssets = null;
+      const orbitKeyState = { left: false, right: false, up: false, down: false };
       let state = loadState();
 
       adminToggle.addEventListener("click", () => {
@@ -2207,11 +2425,23 @@
         if (event.key === "ArrowLeft" || event.key.toLowerCase() === "a") {
           if (bossGameRuntime) bossKeyState.left = true;
           if (catchGameRuntime) catchKeyState.left = true;
+          if (orbitGameRuntime) orbitKeyState.left = true;
           event.preventDefault();
         } else if (event.key === "ArrowRight" || event.key.toLowerCase() === "d") {
           if (bossGameRuntime) bossKeyState.right = true;
           if (catchGameRuntime) catchKeyState.right = true;
+          if (orbitGameRuntime) orbitKeyState.right = true;
           event.preventDefault();
+        } else if (event.key === "ArrowUp" || event.key.toLowerCase() === "w") {
+          if (orbitGameRuntime) {
+            orbitKeyState.up = true;
+            event.preventDefault();
+          }
+        } else if (event.key === "ArrowDown" || event.key.toLowerCase() === "s") {
+          if (orbitGameRuntime) {
+            orbitKeyState.down = true;
+            event.preventDefault();
+          }
         } else if (event.key === " " || event.key === "Enter") {
           if (bossGameRuntime) {
             bossKeyState.fire = true;
@@ -2224,9 +2454,15 @@
         if (event.key === "ArrowLeft" || event.key.toLowerCase() === "a") {
           bossKeyState.left = false;
           catchKeyState.left = false;
+          orbitKeyState.left = false;
         } else if (event.key === "ArrowRight" || event.key.toLowerCase() === "d") {
           bossKeyState.right = false;
           catchKeyState.right = false;
+          orbitKeyState.right = false;
+        } else if (event.key === "ArrowUp" || event.key.toLowerCase() === "w") {
+          orbitKeyState.up = false;
+        } else if (event.key === "ArrowDown" || event.key.toLowerCase() === "s") {
+          orbitKeyState.down = false;
         } else if (event.key === " " || event.key === "Enter") {
           bossKeyState.fire = false;
         }
@@ -2307,6 +2543,11 @@
         if (!nextState.migrations.day26CatchGame) {
           migrateDay26CatchGame(nextState);
           nextState.migrations.day26CatchGame = new Date().toISOString();
+        }
+
+        if (!nextState.migrations.day27OrbitGame) {
+          migrateDay27OrbitGame(nextState);
+          nextState.migrations.day27OrbitGame = new Date().toISOString();
         }
 
         return nextState;
@@ -2429,6 +2670,12 @@
         }
       }
 
+      function migrateDay27OrbitGame(nextState) {
+        if (nextState.overrides && nextState.overrides["day-11"]) {
+          delete nextState.overrides["day-11"];
+        }
+      }
+
       function migrateLegacyState() {
         const migrated = createDefaultState();
         const legacyRaw = readStorage(LEGACY_STORAGE_KEY);
@@ -2542,6 +2789,7 @@
         if (day.gameType === "boss") return false;
         if (day.gameType === "puzzle") return false;
         if (day.gameType === "catch") return false;
+        if (day.gameType === "orbit") return false;
         return true;
       }
 
@@ -2785,6 +3033,7 @@
         gameArea.innerHTML = "";
         destroyBossGameRuntime();
         destroyCatchGameRuntime();
+        destroyOrbitGameRuntime();
 
         if (
           !selectedDay ||
@@ -2817,6 +3066,11 @@
 
         if (selectedDay.gameType === "catch") {
           renderCatchGame(gameArea, selectedDay);
+          return;
+        }
+
+        if (selectedDay.gameType === "orbit") {
+          renderOrbitGame(gameArea, selectedDay);
           return;
         }
 
@@ -5064,6 +5318,919 @@
         }
       }
 
+      function renderOrbitGame(gameArea, selectedDay) {
+        const progress = getOrbitGameSave();
+        const wrapper = document.createElement("div");
+        wrapper.className = "orbit-game";
+
+        const header = document.createElement("div");
+        header.className = "orbit-header";
+
+        const title = document.createElement("div");
+        title.className = "orbit-title";
+        title.textContent = "> CONSTELACION CANGREJITO";
+
+        const status = document.createElement("div");
+        status.className = "orbit-status";
+        status.textContent = progress.completedAt
+          ? "CONSTELACION COMPLETA"
+          : `${Math.min(Number(progress.highestLevel) || 0, 4) + 1}/5 SECTORES`;
+
+        header.appendChild(title);
+        header.appendChild(status);
+        wrapper.appendChild(header);
+
+        const copy = document.createElement("p");
+        copy.className = "orbit-copy";
+        copy.textContent =
+          "Guia su senal por el mapa, recoge fragmentos de amor y evita aliens italianos hasta encender los cinco sectores.";
+        wrapper.appendChild(copy);
+
+        const hud = document.createElement("div");
+        hud.className = "orbit-hud";
+        const hudRefs = {
+          sector: createOrbitHudItem(hud, "Sector", "1/5"),
+          fragments: createOrbitHudItem(hud, "Fragmentos", "0/4"),
+          shields: createOrbitHudItem(hud, "Escudo", "3"),
+          time: createOrbitHudItem(hud, "Tiempo", "0:50"),
+        };
+        wrapper.appendChild(hud);
+
+        const board = document.createElement("div");
+        board.className = "orbit-board";
+
+        const canvas = document.createElement("canvas");
+        canvas.className = "orbit-canvas";
+        canvas.width = ORBIT_GAME_DATA.width;
+        canvas.height = ORBIT_GAME_DATA.height;
+        canvas.setAttribute("aria-label", "Lienzo de Constelacion Cangrejito");
+        board.appendChild(canvas);
+        wrapper.appendChild(board);
+
+        const controls = document.createElement("div");
+        controls.className = "orbit-controls";
+        const upButton = createOrbitControlButton("^", "up");
+        const leftButton = createOrbitControlButton("<", "left");
+        const downButton = createOrbitControlButton("v", "down");
+        const rightButton = createOrbitControlButton(">", "right");
+        controls.appendChild(upButton);
+        controls.appendChild(leftButton);
+        controls.appendChild(downButton);
+        controls.appendChild(rightButton);
+        wrapper.appendChild(controls);
+
+        const actions = document.createElement("div");
+        actions.className = "orbit-actions";
+
+        const startButton = document.createElement("button");
+        startButton.type = "button";
+        startButton.textContent = progress.completedAt
+          ? "VOLVER A JUGAR"
+          : "INICIAR CONSTELACION";
+        startButton.disabled = true;
+        startButton.addEventListener("click", startOrbitGameRuntime);
+        actions.appendChild(startButton);
+
+        wrapper.appendChild(actions);
+        gameArea.appendChild(wrapper);
+
+        loadOrbitGameAssets().then((assets) => {
+          if (!document.body.contains(canvas)) return;
+          initializeOrbitGameRuntime(canvas, selectedDay.id, hudRefs, assets);
+          bindOrbitGameCanvas(canvas);
+          [upButton, leftButton, downButton, rightButton].forEach(bindOrbitControlButton);
+          startButton.disabled = false;
+          drawOrbitGameFrame();
+        });
+      }
+
+      function createOrbitHudItem(parent, label, value) {
+        const item = document.createElement("div");
+        item.className = "orbit-hud-item";
+
+        const labelEl = document.createElement("div");
+        labelEl.className = "orbit-hud-label";
+        labelEl.textContent = label;
+
+        const valueEl = document.createElement("div");
+        valueEl.className = "orbit-hud-value";
+        valueEl.textContent = value;
+
+        item.appendChild(labelEl);
+        item.appendChild(valueEl);
+        parent.appendChild(item);
+        return valueEl;
+      }
+
+      function createOrbitControlButton(text, control) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = `orbit-control ${control}`;
+        button.textContent = text;
+        button.dataset.orbitControl = control;
+        return button;
+      }
+
+      function loadOrbitGameAssets() {
+        if (orbitGameAssets) return Promise.resolve(orbitGameAssets);
+
+        const entries = Object.entries(ORBIT_GAME_DATA.assets);
+        return Promise.all(
+          entries.map(
+            ([key, src]) =>
+              new Promise((resolve) => {
+                const image = new Image();
+                image.onload = () => resolve([key, image]);
+                image.onerror = () => resolve([key, null]);
+                image.src = src;
+              }),
+          ),
+        ).then((loaded) => {
+          orbitGameAssets = Object.fromEntries(loaded);
+          return orbitGameAssets;
+        });
+      }
+
+      function createDefaultOrbitSave() {
+        return {
+          mode: ORBIT_GAME_DATA.mode,
+          completedAt: null,
+          bestScore: 0,
+          attempts: 0,
+          highestLevel: 0,
+          totalFragments: 0,
+        };
+      }
+
+      function getOrbitGameSave(create = true) {
+        if (!state.gameProgress) state.gameProgress = {};
+        const existing = state.gameProgress[ORBIT_GAME_DATA.id];
+        if ((!existing || existing.mode !== ORBIT_GAME_DATA.mode) && create) {
+          state.gameProgress[ORBIT_GAME_DATA.id] = createDefaultOrbitSave();
+        }
+
+        return state.gameProgress[ORBIT_GAME_DATA.id] || createDefaultOrbitSave();
+      }
+
+      function initializeOrbitGameRuntime(canvas, dayId, hudRefs, assets) {
+        destroyOrbitGameRuntime();
+        orbitGameRuntime = {
+          canvas,
+          context: canvas.getContext("2d"),
+          dayId,
+          hudRefs,
+          assets,
+          phase: "ready",
+          levelIndex: 0,
+          levelCollected: 0,
+          shields: 3,
+          timeLeft: ORBIT_GAME_DATA.levels[0].duration,
+          score: 0,
+          player: {
+            x: ORBIT_GAME_DATA.width / 2,
+            y: ORBIT_GAME_DATA.height - 72,
+            width: 58,
+            height: 58,
+            speed: 214,
+            invulnerable: 0,
+          },
+          fragment: null,
+          aliens: [],
+          particles: [],
+          stars: createOrbitStars(),
+          input: { left: false, right: false, up: false, down: false, targetX: null, targetY: null },
+          phaseTimer: 0,
+          lastFrameAt: 0,
+          animationFrame: null,
+          completed: false,
+        };
+        updateOrbitHud();
+      }
+
+      function destroyOrbitGameRuntime() {
+        if (orbitGameRuntime && orbitGameRuntime.animationFrame) {
+          cancelAnimationFrame(orbitGameRuntime.animationFrame);
+        }
+        orbitGameRuntime = null;
+        orbitKeyState.left = false;
+        orbitKeyState.right = false;
+        orbitKeyState.up = false;
+        orbitKeyState.down = false;
+      }
+
+      function startOrbitGameRuntime() {
+        if (!orbitGameRuntime) return;
+
+        const progress = getOrbitGameSave();
+        progress.attempts = (Number(progress.attempts) || 0) + 1;
+        saveState();
+
+        const savedLevel = progress.completedAt
+          ? 0
+          : Math.min(Number(progress.highestLevel) || 0, ORBIT_GAME_DATA.levels.length - 1);
+
+        if (orbitGameRuntime.animationFrame) {
+          cancelAnimationFrame(orbitGameRuntime.animationFrame);
+        }
+        orbitGameRuntime.levelIndex = savedLevel;
+        orbitGameRuntime.score = 0;
+        orbitGameRuntime.player.x = ORBIT_GAME_DATA.width / 2;
+        orbitGameRuntime.player.y = ORBIT_GAME_DATA.height - 72;
+        orbitGameRuntime.player.invulnerable = 1;
+        orbitGameRuntime.particles = [];
+        orbitGameRuntime.stars = createOrbitStars();
+        orbitGameRuntime.completed = false;
+        initializeOrbitLevel(savedLevel);
+        orbitGameRuntime.lastFrameAt = 0;
+        orbitGameRuntime.animationFrame = requestAnimationFrame(orbitGameLoop);
+      }
+
+      function initializeOrbitLevel(levelIndex) {
+        const runtime = orbitGameRuntime;
+        if (!runtime) return;
+
+        const level = ORBIT_GAME_DATA.levels[levelIndex];
+        if (!level) {
+          completeOrbitGame();
+          return;
+        }
+
+        runtime.phase = "playing";
+        runtime.levelIndex = levelIndex;
+        runtime.levelCollected = 0;
+        runtime.shields = 3;
+        runtime.timeLeft = level.duration;
+        runtime.fragment = null;
+        runtime.aliens = createOrbitAliens(level);
+        runtime.phaseTimer = 0;
+        runtime.input.left = false;
+        runtime.input.right = false;
+        runtime.input.up = false;
+        runtime.input.down = false;
+        runtime.input.targetX = null;
+        runtime.input.targetY = null;
+        runtime.player.x = ORBIT_GAME_DATA.width / 2;
+        runtime.player.y = ORBIT_GAME_DATA.height - 72;
+        runtime.player.invulnerable = 0.9;
+        spawnOrbitFragment();
+        updateOrbitHud();
+      }
+
+      function orbitGameLoop(timestamp) {
+        const runtime = orbitGameRuntime;
+        if (!runtime) return;
+
+        if (!runtime.lastFrameAt) runtime.lastFrameAt = timestamp;
+        const dt = Math.min(0.034, (timestamp - runtime.lastFrameAt) / 1000);
+        runtime.lastFrameAt = timestamp;
+
+        updateOrbitGame(dt);
+        drawOrbitGameFrame();
+
+        if (orbitGameRuntime && orbitGameRuntime.phase !== "stopped") {
+          orbitGameRuntime.animationFrame = requestAnimationFrame(orbitGameLoop);
+        }
+      }
+
+      function updateOrbitGame(dt) {
+        const runtime = orbitGameRuntime;
+        if (!runtime) return;
+
+        moveOrbitStars(dt);
+        updateOrbitParticles(dt);
+
+        if (runtime.phase === "level-clear") {
+          runtime.phaseTimer -= dt;
+          if (runtime.phaseTimer <= 0) initializeOrbitLevel(runtime.levelIndex + 1);
+          updateOrbitHud();
+          return;
+        }
+
+        if (runtime.phase === "level-fail") {
+          runtime.phaseTimer -= dt;
+          if (runtime.phaseTimer <= 0) initializeOrbitLevel(runtime.levelIndex);
+          updateOrbitHud();
+          return;
+        }
+
+        if (runtime.phase === "rescued" || runtime.phase === "ready") {
+          runtime.phaseTimer += dt;
+          updateOrbitHud();
+          return;
+        }
+
+        if (runtime.phase !== "playing") return;
+
+        const level = ORBIT_GAME_DATA.levels[runtime.levelIndex];
+        const player = runtime.player;
+        if (player.invulnerable > 0) player.invulnerable -= dt;
+
+        moveOrbitPlayer(dt);
+        moveOrbitAliens(dt, level);
+
+        checkOrbitCollisions();
+
+        runtime.timeLeft -= dt;
+        if (runtime.timeLeft <= 0) {
+          if (runtime.levelCollected >= level.target) {
+            clearOrbitLevel();
+          } else {
+            failOrbitLevel("FRAGMENTOS INSUFICIENTES");
+          }
+        }
+
+        updateOrbitHud();
+      }
+
+      function moveOrbitPlayer(dt) {
+        const runtime = orbitGameRuntime;
+        const player = runtime.player;
+        let moveX = 0;
+        let moveY = 0;
+
+        if (runtime.input.targetX !== null && runtime.input.targetY !== null) {
+          const deltaX = runtime.input.targetX - player.x;
+          const deltaY = runtime.input.targetY - player.y;
+          const distance = Math.hypot(deltaX, deltaY);
+          if (distance > 2) {
+            const step = Math.min(distance, player.speed * dt * 1.08);
+            player.x += (deltaX / distance) * step;
+            player.y += (deltaY / distance) * step;
+          }
+        }
+
+        if (orbitKeyState.left || runtime.input.left) moveX -= 1;
+        if (orbitKeyState.right || runtime.input.right) moveX += 1;
+        if (orbitKeyState.up || runtime.input.up) moveY -= 1;
+        if (orbitKeyState.down || runtime.input.down) moveY += 1;
+
+        if (moveX || moveY) {
+          runtime.input.targetX = null;
+          runtime.input.targetY = null;
+          const length = Math.hypot(moveX, moveY) || 1;
+          player.x += (moveX / length) * player.speed * dt;
+          player.y += (moveY / length) * player.speed * dt;
+        }
+
+        player.x = clamp(player.x, 34, ORBIT_GAME_DATA.width - 34);
+        player.y = clamp(player.y, 74, ORBIT_GAME_DATA.height - 42);
+      }
+
+      function createOrbitAliens(level) {
+        return Array.from({ length: level.aliens }, (_, index) => {
+          const angle = (index / Math.max(1, level.aliens)) * Math.PI * 2 + Math.random() * 0.6;
+          const speed = level.alienSpeed * (0.82 + Math.random() * 0.34);
+          return {
+            x: 52 + Math.random() * (ORBIT_GAME_DATA.width - 104),
+            y: 105 + Math.random() * (ORBIT_GAME_DATA.height - 215),
+            width: 34,
+            height: 34,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed * 0.75,
+            wobble: Math.random() * Math.PI * 2,
+          };
+        });
+      }
+
+      function moveOrbitAliens(dt, level) {
+        const runtime = orbitGameRuntime;
+        runtime.aliens.forEach((alien) => {
+          alien.wobble += dt * 2.2;
+          alien.x += (alien.vx + Math.sin(alien.wobble) * 12) * dt;
+          alien.y += (alien.vy + Math.cos(alien.wobble * 0.7) * 8) * dt;
+
+          if (alien.x < 26 || alien.x > ORBIT_GAME_DATA.width - 26) {
+            alien.vx *= -1;
+            alien.x = clamp(alien.x, 26, ORBIT_GAME_DATA.width - 26);
+          }
+          if (alien.y < 86 || alien.y > ORBIT_GAME_DATA.height - 104) {
+            alien.vy *= -1;
+            alien.y = clamp(alien.y, 86, ORBIT_GAME_DATA.height - 104);
+          }
+
+          if (runtime.levelIndex >= 3 && Math.random() < 0.018 * dt) {
+            const boost = level.alienSpeed * 0.34;
+            alien.vx += (Math.random() - 0.5) * boost;
+            alien.vy += (Math.random() - 0.5) * boost;
+          }
+        });
+      }
+
+      function spawnOrbitFragment() {
+        const runtime = orbitGameRuntime;
+        if (!runtime) return;
+
+        let x = 0;
+        let y = 0;
+        for (let attempt = 0; attempt < 20; attempt += 1) {
+          x = 42 + Math.random() * (ORBIT_GAME_DATA.width - 84);
+          y = 96 + Math.random() * (ORBIT_GAME_DATA.height - 190);
+          if (Math.hypot(x - runtime.player.x, y - runtime.player.y) > 82) break;
+        }
+
+        runtime.fragment = {
+          x,
+          y,
+          width: 34,
+          height: 34,
+          kind: Math.random() < 0.62 ? "heart" : "kiss",
+          age: 0,
+        };
+      }
+
+      function checkOrbitCollisions() {
+        const runtime = orbitGameRuntime;
+        if (!runtime) return;
+
+        const playerHitbox = {
+          x: runtime.player.x,
+          y: runtime.player.y,
+          width: runtime.player.width,
+          height: runtime.player.height,
+        };
+
+        if (runtime.fragment && rectsOverlap(playerHitbox, runtime.fragment)) {
+          const fragment = runtime.fragment;
+          runtime.levelCollected += 1;
+          runtime.score += fragment.kind === "kiss" ? 22 : 18;
+          createOrbitBurst(fragment.x, fragment.y, fragment.kind === "kiss" ? "#ff66ff" : "#00ff88", 16);
+          spawnOrbitFragment();
+        }
+
+        runtime.aliens.forEach((alien) => {
+          if (runtime.player.invulnerable > 0) return;
+          if (!rectsOverlap(playerHitbox, alien)) return;
+
+          runtime.shields -= 1;
+          runtime.score = Math.max(0, runtime.score - 24);
+          runtime.player.invulnerable = 1.15;
+          createOrbitBurst(runtime.player.x, runtime.player.y, "#ff0080", 22);
+          if (runtime.shields <= 0) failOrbitLevel("INTERFERENCIA ITALIANA");
+        });
+      }
+
+      function clearOrbitLevel() {
+        const runtime = orbitGameRuntime;
+        if (!runtime || runtime.phase !== "playing") return;
+
+        const progress = getOrbitGameSave();
+        progress.highestLevel = Math.max(
+          Number(progress.highestLevel) || 0,
+          runtime.levelIndex + 1,
+        );
+        progress.totalFragments = (Number(progress.totalFragments) || 0) + runtime.levelCollected;
+        progress.bestScore = Math.max(Number(progress.bestScore) || 0, runtime.score);
+        saveState();
+
+        if (runtime.levelIndex >= ORBIT_GAME_DATA.levels.length - 1) {
+          completeOrbitGame();
+          return;
+        }
+
+        runtime.phase = "level-clear";
+        runtime.phaseTimer = 1.8;
+        runtime.fragment = null;
+        runtime.aliens = [];
+        createOrbitBurst(ORBIT_GAME_DATA.width / 2, 180, "#00ff88", 30);
+      }
+
+      function failOrbitLevel(reason) {
+        const runtime = orbitGameRuntime;
+        if (!runtime || runtime.phase !== "playing") return;
+
+        runtime.phase = "level-fail";
+        runtime.phaseTimer = 2.2;
+        runtime.failReason = reason;
+        runtime.fragment = null;
+        runtime.aliens = [];
+        runtime.input.left = false;
+        runtime.input.right = false;
+        runtime.input.up = false;
+        runtime.input.down = false;
+        runtime.input.targetX = null;
+        runtime.input.targetY = null;
+        orbitKeyState.left = false;
+        orbitKeyState.right = false;
+        orbitKeyState.up = false;
+        orbitKeyState.down = false;
+        createOrbitBurst(runtime.player.x, runtime.player.y, "#ff0080", 24);
+
+        const progress = getOrbitGameSave();
+        progress.bestScore = Math.max(Number(progress.bestScore) || 0, runtime.score);
+        saveState();
+      }
+
+      function completeOrbitGame() {
+        const runtime = orbitGameRuntime;
+        if (!runtime || runtime.completed) return;
+
+        runtime.completed = true;
+        runtime.phase = "rescued";
+        runtime.phaseTimer = 0;
+        runtime.fragment = null;
+        runtime.aliens = [];
+        createOrbitBurst(ORBIT_GAME_DATA.width / 2, 180, "#00ff88", 46);
+
+        const progress = getOrbitGameSave();
+        progress.completedAt = new Date().toISOString();
+        progress.highestLevel = ORBIT_GAME_DATA.levels.length;
+        progress.bestScore = Math.max(Number(progress.bestScore) || 0, runtime.score);
+
+        state.solved[runtime.dayId] = {
+          digit: Number(ORBIT_GAME_DATA.digit),
+          solvedAt: new Date().toISOString(),
+          appVersion: APP_VERSION,
+          source: "orbit",
+          score: runtime.score,
+        };
+        saveState();
+        showValidationMessage("OK CONSTELACION COMPLETA | CIFRA 6 DECODIFICADA", "success", 5400);
+
+        setTimeout(() => {
+          if (orbitGameRuntime && orbitGameRuntime.phase === "rescued") {
+            render();
+          }
+        }, 5600);
+      }
+
+      function drawOrbitGameFrame() {
+        const runtime = orbitGameRuntime;
+        if (!runtime || !runtime.context) return;
+
+        const context = runtime.context;
+        context.clearRect(0, 0, ORBIT_GAME_DATA.width, ORBIT_GAME_DATA.height);
+        drawOrbitBackground(context);
+
+        if (runtime.phase === "rescued") {
+          drawOrbitRescueScene(context);
+          updateOrbitHud();
+          return;
+        }
+
+        drawOrbitConstellation(context);
+        drawOrbitFragment(context);
+        drawOrbitAliens(context);
+        drawOrbitPlayer(context);
+        drawOrbitParticles(context);
+
+        if (runtime.phase === "ready") {
+          drawOrbitOverlay(
+            context,
+            "CONSTELACION",
+            "5 sectores. Recoge fragmentos y evita la interferencia italiana.",
+          );
+        } else if (runtime.phase === "level-clear") {
+          drawOrbitOverlay(context, "SECTOR ENCENDIDO", "La constelacion se abre un poco mas.");
+        } else if (runtime.phase === "level-fail") {
+          drawOrbitOverlay(
+            context,
+            "REINTENTO",
+            `${runtime.failReason || "SENAL PERDIDA"}. Reiniciando este sector.`,
+          );
+        }
+        updateOrbitHud();
+      }
+
+      function drawOrbitBackground(context) {
+        const runtime = orbitGameRuntime;
+        const gradient = context.createLinearGradient(0, 0, 0, ORBIT_GAME_DATA.height);
+        gradient.addColorStop(0, "#071b24");
+        gradient.addColorStop(0.55, "#05070d");
+        gradient.addColorStop(1, "#160416");
+        context.fillStyle = gradient;
+        context.fillRect(0, 0, ORBIT_GAME_DATA.width, ORBIT_GAME_DATA.height);
+
+        context.fillStyle = "rgba(255,255,255,0.78)";
+        runtime.stars.forEach((star) => {
+          context.globalAlpha = star.alpha;
+          context.fillRect(star.x, star.y, star.size, star.size);
+        });
+        context.globalAlpha = 1;
+
+        context.strokeStyle = "rgba(0, 255, 136, 0.11)";
+        context.lineWidth = 1;
+        for (let y = 44; y < ORBIT_GAME_DATA.height; y += 44) {
+          context.beginPath();
+          context.moveTo(0, y);
+          context.lineTo(ORBIT_GAME_DATA.width, y);
+          context.stroke();
+        }
+
+        context.strokeStyle = "rgba(255, 0, 128, 0.08)";
+        for (let x = 45; x < ORBIT_GAME_DATA.width; x += 45) {
+          context.beginPath();
+          context.moveTo(x, 0);
+          context.lineTo(x, ORBIT_GAME_DATA.height);
+          context.stroke();
+        }
+      }
+
+      function drawOrbitConstellation(context) {
+        const runtime = orbitGameRuntime;
+        const level = ORBIT_GAME_DATA.levels[runtime.levelIndex] || ORBIT_GAME_DATA.levels[0];
+        const total = level.target;
+        const lit = Math.min(runtime.levelCollected, total);
+        const points = Array.from({ length: total }, (_, index) => {
+          const spread = total <= 4 ? 58 : 44;
+          const startX = ORBIT_GAME_DATA.width / 2 - ((total - 1) * spread) / 2;
+          return {
+            x: startX + index * spread,
+            y: 42 + Math.sin(index * 1.4 + runtime.levelIndex) * 10,
+          };
+        });
+
+        context.lineWidth = 2;
+        for (let index = 0; index < points.length - 1; index += 1) {
+          context.strokeStyle =
+            index < lit - 1 ? "rgba(0, 255, 136, 0.82)" : "rgba(255, 255, 255, 0.16)";
+          context.beginPath();
+          context.moveTo(points[index].x, points[index].y);
+          context.lineTo(points[index + 1].x, points[index + 1].y);
+          context.stroke();
+        }
+
+        points.forEach((point, index) => {
+          const active = index < lit;
+          context.fillStyle = active ? "#00ff88" : "rgba(255, 255, 255, 0.18)";
+          context.shadowColor = active ? "rgba(0, 255, 136, 0.7)" : "transparent";
+          context.shadowBlur = active ? 10 : 0;
+          context.beginPath();
+          context.arc(point.x, point.y, active ? 5 : 4, 0, Math.PI * 2);
+          context.fill();
+        });
+        context.shadowBlur = 0;
+      }
+
+      function drawOrbitFragment(context) {
+        const runtime = orbitGameRuntime;
+        const fragment = runtime.fragment;
+        if (!fragment) return;
+
+        const level = ORBIT_GAME_DATA.levels[runtime.levelIndex] || ORBIT_GAME_DATA.levels[0];
+        fragment.age += 0.016;
+        const pulse = 1 + Math.sin(Date.now() / 180) * 0.12 * level.fragmentPulse;
+        const size = fragment.width * pulse;
+        if (fragment.kind === "kiss") {
+          drawCatchKiss(context, fragment.x, fragment.y, size);
+        } else {
+          drawCatchHeart(context, fragment.x, fragment.y, size);
+        }
+
+        context.strokeStyle = "rgba(255,255,255,0.32)";
+        context.lineWidth = 1;
+        context.beginPath();
+        context.arc(fragment.x, fragment.y, 26 + Math.sin(Date.now() / 210) * 3, 0, Math.PI * 2);
+        context.stroke();
+      }
+
+      function drawOrbitAliens(context) {
+        const runtime = orbitGameRuntime;
+        runtime.aliens.forEach((alien) => {
+          drawBossRoundImage(
+            context,
+            runtime.assets.alien,
+            alien.x - alien.width / 2,
+            alien.y - alien.height / 2,
+            alien.width,
+            alien.height,
+          );
+          drawItalianFlag(context, alien.x - 15, alien.y + alien.height / 2 + 2, 30, 9);
+        });
+      }
+
+      function drawOrbitPlayer(context) {
+        const runtime = orbitGameRuntime;
+        const player = runtime.player;
+        const flicker = player.invulnerable > 0 && Math.floor(Date.now() / 90) % 2 === 0;
+        if (flicker) return;
+
+        context.save();
+        context.translate(player.x, player.y);
+        context.strokeStyle = "#00ff88";
+        context.fillStyle = "rgba(0, 255, 136, 0.13)";
+        context.lineWidth = 2;
+        context.beginPath();
+        context.arc(0, 0, 36, 0, Math.PI * 2);
+        context.fill();
+        context.stroke();
+
+        context.strokeStyle = "rgba(255, 0, 128, 0.78)";
+        context.setLineDash([4, 5]);
+        context.beginPath();
+        context.arc(0, 0, 44, 0, Math.PI * 2);
+        context.stroke();
+        context.setLineDash([]);
+
+        drawBossRoundImage(context, runtime.assets.player, -29, -29, 58, 58);
+        context.restore();
+      }
+
+      function drawOrbitParticles(context) {
+        const runtime = orbitGameRuntime;
+        runtime.particles.forEach((particle) => {
+          context.globalAlpha = Math.max(0, particle.life);
+          context.fillStyle = particle.color;
+          context.fillRect(particle.x, particle.y, particle.size, particle.size);
+        });
+        context.globalAlpha = 1;
+      }
+
+      function drawOrbitRescueScene(context) {
+        const runtime = orbitGameRuntime;
+        drawOrbitBackground(context);
+
+        context.fillStyle = "rgba(0, 255, 136, 0.08)";
+        context.fillRect(24, 94, ORBIT_GAME_DATA.width - 48, 320);
+        context.strokeStyle = "#00ff88";
+        context.lineWidth = 2;
+        context.strokeRect(24, 94, ORBIT_GAME_DATA.width - 48, 320);
+
+        const pulse = Math.sin(Date.now() / 260) * 4;
+        drawBossRoundImage(context, runtime.assets.player, 70, 164 + pulse, 88, 88);
+        drawBossRoundImage(context, runtime.assets.rescued, 202, 164 - pulse, 88, 88);
+
+        context.strokeStyle = "#ff0080";
+        context.lineWidth = 3;
+        context.setLineDash([9, 7]);
+        context.beginPath();
+        context.moveTo(140, 209);
+        context.lineTo(220, 209);
+        context.stroke();
+        context.setLineDash([]);
+
+        drawOrbitFinalConstellation(context);
+
+        context.fillStyle = "#00ff88";
+        context.font = "bold 18px Courier New";
+        context.textAlign = "center";
+        context.fillText("CONSTELACION COMPLETA", ORBIT_GAME_DATA.width / 2, 318);
+
+        context.fillStyle = "#ffffff";
+        context.font = "bold 42px Courier New";
+        context.fillText("PIN: 6", ORBIT_GAME_DATA.width / 2, 368);
+
+        context.fillStyle = "rgba(255, 0, 128, 0.82)";
+        context.font = "bold 11px Courier New";
+        context.fillText("SENAL ROMANTICA RESTAURADA", ORBIT_GAME_DATA.width / 2, 396);
+        drawOrbitParticles(context);
+      }
+
+      function drawOrbitFinalConstellation(context) {
+        const points = [
+          { x: 146, y: 254 },
+          { x: 171, y: 238 },
+          { x: 199, y: 253 },
+          { x: 188, y: 282 },
+          { x: 154, y: 281 },
+          { x: 146, y: 254 },
+        ];
+        context.strokeStyle = "rgba(0, 255, 136, 0.85)";
+        context.lineWidth = 2;
+        context.beginPath();
+        points.forEach((point, index) => {
+          if (index === 0) context.moveTo(point.x, point.y);
+          else context.lineTo(point.x, point.y);
+        });
+        context.stroke();
+        points.slice(0, -1).forEach((point) => {
+          context.fillStyle = "#ff0080";
+          context.beginPath();
+          context.arc(point.x, point.y, 4, 0, Math.PI * 2);
+          context.fill();
+        });
+        drawCatchHeart(context, 172, 264, 28);
+      }
+
+      function drawOrbitOverlay(context, title, subtitle) {
+        context.fillStyle = "rgba(0, 0, 0, 0.72)";
+        context.fillRect(24, 190, ORBIT_GAME_DATA.width - 48, 138);
+        context.strokeStyle = "#00ff88";
+        context.lineWidth = 2;
+        context.strokeRect(24, 190, ORBIT_GAME_DATA.width - 48, 138);
+
+        context.fillStyle = "#ff0080";
+        context.font = "bold 22px Courier New";
+        context.textAlign = "center";
+        context.fillText(title, ORBIT_GAME_DATA.width / 2, 238);
+
+        context.fillStyle = "#ffffff";
+        context.font = "bold 11px Courier New";
+        wrapBossText(context, subtitle, ORBIT_GAME_DATA.width / 2, 270, 250, 16);
+      }
+
+      function updateOrbitHud() {
+        const runtime = orbitGameRuntime;
+        if (!runtime || !runtime.hudRefs) return;
+
+        const level = ORBIT_GAME_DATA.levels[runtime.levelIndex] || ORBIT_GAME_DATA.levels[0];
+        runtime.hudRefs.sector.textContent = `${Math.min(runtime.levelIndex + 1, 5)}/5`;
+        runtime.hudRefs.fragments.textContent = `${Math.min(runtime.levelCollected, level.target)}/${level.target}`;
+        runtime.hudRefs.shields.textContent = Math.max(0, runtime.shields);
+        runtime.hudRefs.time.textContent = formatCatchTime(runtime.timeLeft);
+      }
+
+      function bindOrbitGameCanvas(canvas) {
+        canvas.addEventListener("pointerdown", (event) => {
+          if (!orbitGameRuntime || orbitGameRuntime.phase !== "playing") return;
+          if (canvas.setPointerCapture) canvas.setPointerCapture(event.pointerId);
+          setOrbitPointerTarget(canvas, event);
+          event.preventDefault();
+        });
+
+        canvas.addEventListener("pointermove", (event) => {
+          if (!orbitGameRuntime || orbitGameRuntime.phase !== "playing") return;
+          setOrbitPointerTarget(canvas, event);
+          event.preventDefault();
+        });
+      }
+
+      function bindOrbitControlButton(button) {
+        const control = button.dataset.orbitControl;
+        const setActive = (active) => {
+          if (!orbitGameRuntime || !control) return;
+          orbitGameRuntime.input[control] = active;
+          if (active) {
+            orbitGameRuntime.input.targetX = null;
+            orbitGameRuntime.input.targetY = null;
+          }
+        };
+
+        button.addEventListener("pointerdown", (event) => {
+          if (button.setPointerCapture) button.setPointerCapture(event.pointerId);
+          setActive(true);
+          event.preventDefault();
+        });
+
+        ["pointerup", "pointercancel", "pointerleave"].forEach((eventName) => {
+          button.addEventListener(eventName, () => setActive(false));
+        });
+      }
+
+      function setOrbitPointerTarget(canvas, event) {
+        const runtime = orbitGameRuntime;
+        const rect = canvas.getBoundingClientRect();
+        const x = ((event.clientX - rect.left) / rect.width) * ORBIT_GAME_DATA.width;
+        const y = ((event.clientY - rect.top) / rect.height) * ORBIT_GAME_DATA.height;
+        runtime.input.targetX = clamp(x, 34, ORBIT_GAME_DATA.width - 34);
+        runtime.input.targetY = clamp(y, 74, ORBIT_GAME_DATA.height - 42);
+      }
+
+      function createOrbitStars() {
+        return Array.from({ length: 76 }, () => ({
+          x: Math.random() * ORBIT_GAME_DATA.width,
+          y: Math.random() * ORBIT_GAME_DATA.height,
+          size: Math.random() > 0.72 ? 2 : 1,
+          speed: 10 + Math.random() * 36,
+          alpha: 0.28 + Math.random() * 0.58,
+        }));
+      }
+
+      function moveOrbitStars(dt) {
+        const runtime = orbitGameRuntime;
+        if (!runtime) return;
+
+        runtime.stars.forEach((star) => {
+          star.y += star.speed * dt;
+          if (star.y > ORBIT_GAME_DATA.height) {
+            star.y = 0;
+            star.x = Math.random() * ORBIT_GAME_DATA.width;
+          }
+        });
+      }
+
+      function updateOrbitParticles(dt) {
+        const runtime = orbitGameRuntime;
+        if (!runtime) return;
+
+        runtime.particles.forEach((particle) => {
+          particle.x += particle.vx * dt;
+          particle.y += particle.vy * dt;
+          particle.life -= dt;
+        });
+        runtime.particles = runtime.particles.filter(
+          (particle) => particle.life > 0,
+        );
+      }
+
+      function createOrbitBurst(x, y, color, count) {
+        const runtime = orbitGameRuntime;
+        if (!runtime) return;
+
+        for (let index = 0; index < count; index += 1) {
+          const angle = Math.random() * Math.PI * 2;
+          const speed = 35 + Math.random() * 125;
+          runtime.particles.push({
+            x,
+            y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            life: 0.35 + Math.random() * 0.62,
+            size: 2 + Math.random() * 3,
+            color,
+          });
+        }
+      }
+
       function renderPuzzleGame(gameArea, selectedDay) {
         const progress = getPuzzleGameSave();
         const order = progress.order || createSolvedPuzzleOrder();
@@ -5762,7 +6929,7 @@
         <input type="text" value="${escapeAttr(day.type)}" onchange="updateDay('${day.id}', 'type', this.value)" placeholder="item, game, mission, treasure, final">
 
         <div style="font-size: 10px; color: #ff0080; margin-top: 1rem; margin-bottom: 0.5rem;">TIPO DE JUEGO</div>
-              <input type="text" value="${escapeAttr(day.gameType || "")}" onchange="updateDay('${day.id}', 'gameType', this.value)" placeholder="pixelart, boss, quiz, puzzle, catch">
+              <input type="text" value="${escapeAttr(day.gameType || "")}" onchange="updateDay('${day.id}', 'gameType', this.value)" placeholder="pixelart, boss, quiz, puzzle, catch, orbit">
 
         <label>
           <input type="checkbox" ${state.manualAvailable[day.id] ? "checked" : ""} onchange="updateDay('${day.id}', 'manualAvailable', this.checked)">
@@ -5874,7 +7041,7 @@
 
       render();
       setInterval(() => {
-        if (!adminPanel.classList.contains("active") && !bossGameRuntime && !catchGameRuntime) render();
+        if (!adminPanel.classList.contains("active") && !bossGameRuntime && !catchGameRuntime && !orbitGameRuntime) render();
       }, 60000);
     </script>
   </body>
