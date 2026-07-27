@@ -2080,7 +2080,7 @@
 
     <script>
       const ADMIN_PASSWORD = "admin";
-      const APP_VERSION = 9;
+      const APP_VERSION = 10;
       const STORAGE_KEY = "cangrejito-progress-v2";
       const LEGACY_STORAGE_KEY = "cangrejito-config";
 
@@ -2625,8 +2625,8 @@
         pads: [
           { id: "heart", label: "Corazon", symbol: "<3", color: "#ff0080" },
           { id: "kiss", label: "Beso", symbol: "BESO", color: "#ff66ff" },
-          { id: "her", label: "Ella", asset: "player", color: "#00ff88" },
-          { id: "him", label: "Tu", asset: "rescued", color: "#ffffff" },
+          { id: "her", label: "DRA.POMELA", asset: "player", color: "#00ff88" },
+          { id: "him", label: "MR.PISTACHITO", asset: "rescued", color: "#ffffff" },
           { id: "noise", label: "Ruido Italia", asset: "alien", color: "#ff0080", noise: true },
         ],
         levels: [
@@ -6968,7 +6968,7 @@
 
         const playerImage = document.createElement("img");
         playerImage.className = "signal-portrait";
-        playerImage.alt = "Ella";
+        playerImage.alt = "DRA.POMELA";
         playerImage.src = SIGNAL_GAME_DATA.assets.player;
 
         const link = document.createElement("div");
@@ -6977,7 +6977,7 @@
 
         const rescuedImage = document.createElement("img");
         rescuedImage.className = "signal-portrait";
-        rescuedImage.alt = "Rescatado";
+        rescuedImage.alt = "MR.PISTACHITO";
         rescuedImage.src = SIGNAL_GAME_DATA.assets.rescued;
 
         portraits.appendChild(playerImage);
