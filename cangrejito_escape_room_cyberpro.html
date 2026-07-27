@@ -2080,7 +2080,7 @@
 
     <script>
       const ADMIN_PASSWORD = "admin";
-      const APP_VERSION = 10;
+      const APP_VERSION = 11;
       const STORAGE_KEY = "cangrejito-progress-v2";
       const LEGACY_STORAGE_KEY = "cangrejito-config";
 
@@ -2185,8 +2185,8 @@
           date: "27/07",
           unlockAt: "2026-07-27T00:00:00+02:00",
           digit: 6,
-          clue: "Central de radio romantica activa. Memoriza las senales reales, ignora las interferencias italianas y completa cinco canales.",
-          method: "Cinco canales de radio romantica decodificados",
+          clue: "Central de radio romantica activa. Memoriza cinco cadenas cortas, ignora las interferencias italianas y decodifica la cifra.",
+          method: "Cinco cadenas de radio romantica decodificadas",
           type: "game",
           gameType: "signal",
         },
@@ -2630,11 +2630,11 @@
           { id: "noise", label: "Ruido Italia", asset: "alien", color: "#ff0080", noise: true },
         ],
         levels: [
-          { name: "Canal 1", sequenceLength: 4, transmissions: 2, flashMs: 650, noiseEvery: 3 },
-          { name: "Canal 2", sequenceLength: 5, transmissions: 2, flashMs: 620, noiseEvery: 3 },
-          { name: "Canal 3", sequenceLength: 6, transmissions: 2, flashMs: 590, noiseEvery: 2 },
-          { name: "Canal 4", sequenceLength: 7, transmissions: 2, flashMs: 560, noiseEvery: 2 },
-          { name: "Canal 5", sequenceLength: 8, transmissions: 3, flashMs: 530, noiseEvery: 2 },
+          { name: "Cadena 1", sequenceLength: 1, transmissions: 1, flashMs: 680, noiseEvery: 4 },
+          { name: "Cadena 2", sequenceLength: 2, transmissions: 1, flashMs: 650, noiseEvery: 4 },
+          { name: "Cadena 3", sequenceLength: 3, transmissions: 1, flashMs: 620, noiseEvery: 3 },
+          { name: "Cadena 4", sequenceLength: 4, transmissions: 1, flashMs: 590, noiseEvery: 3 },
+          { name: "Cadena 5", sequenceLength: 5, transmissions: 1, flashMs: 560, noiseEvery: 3 },
         ],
       };
 
@@ -6554,7 +6554,7 @@
         status.className = "signal-status";
         status.textContent = progress.completedAt
           ? "SENAL DECODIFICADA"
-          : `${Math.min(Number(progress.highestLevel) || 0, 4) + 1}/5 CANALES`;
+          : `${Math.min(Number(progress.highestLevel) || 0, 4) + 1}/5 CADENAS`;
 
         header.appendChild(title);
         header.appendChild(status);
@@ -6569,8 +6569,8 @@
         const hud = document.createElement("div");
         hud.className = "signal-hud";
         const hudRefs = {
-          channel: createSignalHudItem(hud, "Canal", "1/5"),
-          chain: createSignalHudItem(hud, "Cadena", "1/2"),
+          channel: createSignalHudItem(hud, "Cadena", "1/5"),
+          chain: createSignalHudItem(hud, "Ronda", "1/1"),
           progress: createSignalHudItem(hud, "Entrada", "0/4"),
           score: createSignalHudItem(hud, "Senal", "0"),
         };
@@ -6864,7 +6864,7 @@
           return;
         }
 
-        updateSignalStage("CADENA LIMPIA", "Preparando la siguiente transmision del canal.");
+        updateSignalStage("CADENA LIMPIA", "Preparando la siguiente transmision corta.");
         updateSignalHud();
         scheduleSignalTimer(startSignalTransmission, 1250);
       }
@@ -6903,7 +6903,7 @@
         runtime.phase = "locked";
         runtime.levelIndex += 1;
         runtime.transmissionIndex = 0;
-        updateSignalStage("CANAL DECODIFICADO", "La radio romantica abre el siguiente canal.");
+        updateSignalStage("CADENA DECODIFICADA", "La radio romantica abre la siguiente cadena.");
         updateSignalHud();
         scheduleSignalTimer(startSignalTransmission, 1450);
       }
@@ -6994,7 +6994,7 @@
 
         const copy = document.createElement("div");
         copy.className = "signal-stage-copy";
-        copy.textContent = "Cinco canales limpios. Interferencia italiana silenciada.";
+        copy.textContent = "Cinco cadenas limpias. Interferencia italiana silenciada.";
 
         runtime.stage.appendChild(portraits);
         runtime.stage.appendChild(title);
