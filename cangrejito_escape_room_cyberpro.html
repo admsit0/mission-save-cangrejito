@@ -1311,6 +1311,225 @@
         margin-top: 1rem;
       }
 
+      .signal-game {
+        margin: 1.5rem 0;
+        padding: 1rem;
+        border: 2px solid #ff0080;
+        background:
+          radial-gradient(circle at 50% 0%, rgba(255, 0, 128, 0.11), transparent 36%),
+          linear-gradient(180deg, rgba(0, 255, 136, 0.07), rgba(255, 0, 128, 0.04)),
+          rgba(0, 0, 0, 0.55);
+        box-shadow:
+          0 0 18px rgba(255, 0, 128, 0.26),
+          inset 0 0 24px rgba(0, 255, 136, 0.07);
+      }
+
+      .signal-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .signal-title {
+        color: #ff0080;
+        font-size: 12px;
+        font-weight: bold;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+
+      .signal-status {
+        color: #00ff88;
+        font-size: 11px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        text-align: right;
+        white-space: nowrap;
+      }
+
+      .signal-copy {
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 12px;
+        line-height: 1.65;
+        margin: 0 0 1rem;
+        text-align: center;
+      }
+
+      .signal-hud {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.55rem;
+        margin: 0 0 1rem;
+      }
+
+      .signal-hud-item {
+        border: 1px solid rgba(255, 0, 128, 0.55);
+        background: rgba(255, 0, 128, 0.06);
+        padding: 0.65rem;
+        min-height: 58px;
+      }
+
+      .signal-hud-label {
+        color: rgba(255, 255, 255, 0.62);
+        font-size: 9px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      .signal-hud-value {
+        margin-top: 0.35rem;
+        color: #00ff88;
+        font-size: 15px;
+        font-weight: bold;
+        letter-spacing: 1px;
+      }
+
+      .signal-stage {
+        width: min(100%, 460px);
+        min-height: 190px;
+        margin: 0 auto 1rem;
+        padding: 1rem;
+        border: 1px solid rgba(0, 255, 136, 0.65);
+        background:
+          linear-gradient(180deg, rgba(0, 255, 136, 0.08), rgba(0, 0, 0, 0.35)),
+          #05070d;
+        box-shadow:
+          0 0 18px rgba(0, 255, 136, 0.2),
+          inset 0 0 24px rgba(0, 0, 0, 0.75);
+        display: grid;
+        align-content: center;
+        justify-items: center;
+        gap: 0.75rem;
+        text-align: center;
+      }
+
+      .signal-stage-title {
+        color: #00ff88;
+        font-size: 18px;
+        font-weight: bold;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+
+      .signal-stage-copy {
+        color: rgba(255, 255, 255, 0.78);
+        font-size: 11px;
+        line-height: 1.55;
+        max-width: 340px;
+      }
+
+      .signal-stage-pin {
+        color: #ffffff;
+        font-size: 42px;
+        font-weight: bold;
+        letter-spacing: 3px;
+      }
+
+      .signal-portraits {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1.25rem;
+      }
+
+      .signal-portrait {
+        width: 82px;
+        height: 82px;
+        border: 2px solid rgba(255, 255, 255, 0.8);
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow: 0 0 16px rgba(255, 0, 128, 0.35);
+      }
+
+      .signal-link {
+        color: #ff0080;
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      .signal-pad-grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 0.65rem;
+        width: min(100%, 560px);
+        margin: 0 auto;
+      }
+
+      .signal-pad {
+        min-height: 82px;
+        padding: 0.55rem;
+        border-color: rgba(255, 0, 128, 0.62);
+        background: rgba(255, 0, 128, 0.07);
+        color: #ffffff;
+        box-shadow: 0 0 10px rgba(255, 0, 128, 0.16);
+        display: grid;
+        align-content: center;
+        justify-items: center;
+        gap: 0.35rem;
+      }
+
+      .signal-pad-index {
+        color: rgba(255, 255, 255, 0.55);
+        font-size: 9px;
+      }
+
+      .signal-pad-symbol {
+        font-size: 24px;
+        font-weight: bold;
+        line-height: 1;
+      }
+
+      .signal-pad img {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 1px solid rgba(255, 255, 255, 0.8);
+      }
+
+      .signal-pad-label {
+        font-size: 9px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      .signal-pad.active {
+        border-color: #00ff88;
+        background: rgba(0, 255, 136, 0.18);
+        color: #00ff88;
+        box-shadow:
+          0 0 18px rgba(0, 255, 136, 0.45),
+          inset 0 0 14px rgba(0, 255, 136, 0.16);
+      }
+
+      .signal-pad.noise {
+        border-color: #ff0080;
+        background: rgba(255, 0, 128, 0.2);
+        color: #ff0080;
+        box-shadow:
+          0 0 18px rgba(255, 0, 128, 0.48),
+          inset 0 0 14px rgba(255, 0, 128, 0.18);
+      }
+
+      .signal-pad.good {
+        border-color: #00ff88;
+      }
+
+      .signal-pad.bad {
+        border-color: #ff0080;
+        transform: translateY(1px);
+      }
+
+      .signal-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        justify-content: center;
+        margin-top: 1rem;
+      }
+
       .admin-toggle {
         position: fixed;
         bottom: 20px;
@@ -1708,6 +1927,38 @@
           width: 100%;
         }
 
+        .signal-game {
+          padding: 0.75rem;
+        }
+
+        .signal-header {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 0.4rem;
+        }
+
+        .signal-status {
+          text-align: left;
+        }
+
+        .signal-hud {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .signal-stage {
+          width: 100%;
+          min-height: 176px;
+        }
+
+        .signal-pad-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          width: 100%;
+        }
+
+        .signal-pad:last-child {
+          grid-column: 1 / -1;
+        }
+
         .admin-panel {
           padding: 1rem;
         }
@@ -1829,7 +2080,7 @@
 
     <script>
       const ADMIN_PASSWORD = "admin";
-      const APP_VERSION = 8;
+      const APP_VERSION = 9;
       const STORAGE_KEY = "cangrejito-progress-v2";
       const LEGACY_STORAGE_KEY = "cangrejito-config";
 
@@ -1934,10 +2185,10 @@
           date: "27/07",
           unlockAt: "2026-07-27T00:00:00+02:00",
           digit: 6,
-          clue: "Constelacion Cangrejito activa. Enciende cinco sectores del mapa estelar y esquiva las interferencias italianas.",
-          method: "Cinco sectores de la constelacion completados",
+          clue: "Central de radio romantica activa. Memoriza las senales reales, ignora las interferencias italianas y completa cinco canales.",
+          method: "Cinco canales de radio romantica decodificados",
           type: "game",
-          gameType: "orbit",
+          gameType: "signal",
         },
         {
           id: "day-12",
@@ -2362,6 +2613,31 @@
         ],
       };
 
+      const SIGNAL_GAME_DATA = {
+        id: "radio-signal-day-11-v1",
+        mode: "radio-signal-v1",
+        digit: 6,
+        assets: {
+          player: "assets/rescuer-face.png",
+          rescued: "assets/rescued-face.png",
+          alien: "assets/mini-alien.png",
+        },
+        pads: [
+          { id: "heart", label: "Corazon", symbol: "<3", color: "#ff0080" },
+          { id: "kiss", label: "Beso", symbol: "BESO", color: "#ff66ff" },
+          { id: "her", label: "Ella", asset: "player", color: "#00ff88" },
+          { id: "him", label: "Tu", asset: "rescued", color: "#ffffff" },
+          { id: "noise", label: "Ruido Italia", asset: "alien", color: "#ff0080", noise: true },
+        ],
+        levels: [
+          { name: "Canal 1", sequenceLength: 4, transmissions: 2, flashMs: 650, noiseEvery: 3 },
+          { name: "Canal 2", sequenceLength: 5, transmissions: 2, flashMs: 620, noiseEvery: 3 },
+          { name: "Canal 3", sequenceLength: 6, transmissions: 2, flashMs: 590, noiseEvery: 2 },
+          { name: "Canal 4", sequenceLength: 7, transmissions: 2, flashMs: 560, noiseEvery: 2 },
+          { name: "Canal 5", sequenceLength: 8, transmissions: 3, flashMs: 530, noiseEvery: 2 },
+        ],
+      };
+
       const PUZZLE_GAME_DATA = {
         id: "memory-puzzle-day-09-v1",
         mode: "swap-puzzle-v1",
@@ -2395,6 +2671,8 @@
       let orbitGameRuntime = null;
       let orbitGameAssets = null;
       const orbitKeyState = { left: false, right: false, up: false, down: false };
+      let signalGameRuntime = null;
+      let signalGameAssets = null;
       let state = loadState();
 
       adminToggle.addEventListener("click", () => {
@@ -2445,6 +2723,13 @@
         } else if (event.key === " " || event.key === "Enter") {
           if (bossGameRuntime) {
             bossKeyState.fire = true;
+            event.preventDefault();
+          }
+        } else if (signalGameRuntime && /^[1-5]$/.test(event.key)) {
+          const padIndex = Number(event.key) - 1;
+          const pad = SIGNAL_GAME_DATA.pads[padIndex];
+          if (pad) {
+            handleSignalPadInput(pad.id);
             event.preventDefault();
           }
         }
@@ -2548,6 +2833,11 @@
         if (!nextState.migrations.day27OrbitGame) {
           migrateDay27OrbitGame(nextState);
           nextState.migrations.day27OrbitGame = new Date().toISOString();
+        }
+
+        if (!nextState.migrations.day27SignalGame) {
+          migrateDay27SignalGame(nextState);
+          nextState.migrations.day27SignalGame = new Date().toISOString();
         }
 
         return nextState;
@@ -2676,6 +2966,16 @@
         }
       }
 
+      function migrateDay27SignalGame(nextState) {
+        if (nextState.overrides && nextState.overrides["day-11"]) {
+          delete nextState.overrides["day-11"];
+        }
+
+        if (nextState.solved && nextState.solved["day-11"] && nextState.solved["day-11"].source === "orbit") {
+          delete nextState.solved["day-11"];
+        }
+      }
+
       function migrateLegacyState() {
         const migrated = createDefaultState();
         const legacyRaw = readStorage(LEGACY_STORAGE_KEY);
@@ -2790,6 +3090,7 @@
         if (day.gameType === "puzzle") return false;
         if (day.gameType === "catch") return false;
         if (day.gameType === "orbit") return false;
+        if (day.gameType === "signal") return false;
         return true;
       }
 
@@ -3034,6 +3335,7 @@
         destroyBossGameRuntime();
         destroyCatchGameRuntime();
         destroyOrbitGameRuntime();
+        destroySignalGameRuntime();
 
         if (
           !selectedDay ||
@@ -3071,6 +3373,11 @@
 
         if (selectedDay.gameType === "orbit") {
           renderOrbitGame(gameArea, selectedDay);
+          return;
+        }
+
+        if (selectedDay.gameType === "signal") {
+          renderSignalGame(gameArea, selectedDay);
           return;
         }
 
@@ -6231,6 +6538,526 @@
         }
       }
 
+      function renderSignalGame(gameArea, selectedDay) {
+        const progress = getSignalGameSave();
+        const wrapper = document.createElement("div");
+        wrapper.className = "signal-game";
+
+        const header = document.createElement("div");
+        header.className = "signal-header";
+
+        const title = document.createElement("div");
+        title.className = "signal-title";
+        title.textContent = "> CENTRAL DE RADIO ROMANTICA";
+
+        const status = document.createElement("div");
+        status.className = "signal-status";
+        status.textContent = progress.completedAt
+          ? "SENAL DECODIFICADA"
+          : `${Math.min(Number(progress.highestLevel) || 0, 4) + 1}/5 CANALES`;
+
+        header.appendChild(title);
+        header.appendChild(status);
+        wrapper.appendChild(header);
+
+        const copy = document.createElement("p");
+        copy.className = "signal-copy";
+        copy.textContent =
+          "Observa la transmision, memoriza solo las senales reales y repitelas. El alien italiano es ruido: no se pulsa.";
+        wrapper.appendChild(copy);
+
+        const hud = document.createElement("div");
+        hud.className = "signal-hud";
+        const hudRefs = {
+          channel: createSignalHudItem(hud, "Canal", "1/5"),
+          chain: createSignalHudItem(hud, "Cadena", "1/2"),
+          progress: createSignalHudItem(hud, "Entrada", "0/4"),
+          score: createSignalHudItem(hud, "Senal", "0"),
+        };
+        wrapper.appendChild(hud);
+
+        const stage = document.createElement("div");
+        stage.className = "signal-stage";
+        wrapper.appendChild(stage);
+
+        const padGrid = document.createElement("div");
+        padGrid.className = "signal-pad-grid";
+        const padButtons = {};
+
+        SIGNAL_GAME_DATA.pads.forEach((pad, index) => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "signal-pad";
+          button.dataset.signalPad = pad.id;
+          button.style.setProperty("--signal-pad-color", pad.color);
+
+          const indexEl = document.createElement("div");
+          indexEl.className = "signal-pad-index";
+          indexEl.textContent = String(index + 1);
+          button.appendChild(indexEl);
+
+          if (pad.asset) {
+            const image = document.createElement("img");
+            image.alt = pad.label;
+            image.src = SIGNAL_GAME_DATA.assets[pad.asset];
+            button.appendChild(image);
+          } else {
+            const symbol = document.createElement("div");
+            symbol.className = "signal-pad-symbol";
+            symbol.textContent = pad.symbol;
+            button.appendChild(symbol);
+          }
+
+          const label = document.createElement("div");
+          label.className = "signal-pad-label";
+          label.textContent = pad.label;
+          button.appendChild(label);
+
+          button.addEventListener("click", () => handleSignalPadInput(pad.id));
+          padGrid.appendChild(button);
+          padButtons[pad.id] = button;
+        });
+        wrapper.appendChild(padGrid);
+
+        const actions = document.createElement("div");
+        actions.className = "signal-actions";
+
+        const startButton = document.createElement("button");
+        startButton.type = "button";
+        startButton.textContent = progress.completedAt
+          ? "VOLVER A JUGAR"
+          : "INICIAR TRANSMISION";
+        startButton.disabled = true;
+        startButton.addEventListener("click", startSignalGameRuntime);
+        actions.appendChild(startButton);
+
+        wrapper.appendChild(actions);
+        gameArea.appendChild(wrapper);
+
+        loadSignalGameAssets().then((assets) => {
+          if (!document.body.contains(wrapper)) return;
+          initializeSignalGameRuntime(selectedDay.id, stage, hudRefs, padButtons, assets);
+          startButton.disabled = false;
+          updateSignalStage("CENTRAL EN ESPERA", "Pulsa iniciar. Se iluminara una secuencia; repite solo las senales reales.");
+          updateSignalHud();
+        });
+      }
+
+      function createSignalHudItem(parent, label, value) {
+        const item = document.createElement("div");
+        item.className = "signal-hud-item";
+
+        const labelEl = document.createElement("div");
+        labelEl.className = "signal-hud-label";
+        labelEl.textContent = label;
+
+        const valueEl = document.createElement("div");
+        valueEl.className = "signal-hud-value";
+        valueEl.textContent = value;
+
+        item.appendChild(labelEl);
+        item.appendChild(valueEl);
+        parent.appendChild(item);
+        return valueEl;
+      }
+
+      function loadSignalGameAssets() {
+        if (signalGameAssets) return Promise.resolve(signalGameAssets);
+
+        const entries = Object.entries(SIGNAL_GAME_DATA.assets);
+        return Promise.all(
+          entries.map(
+            ([key, src]) =>
+              new Promise((resolve) => {
+                const image = new Image();
+                image.onload = () => resolve([key, image]);
+                image.onerror = () => resolve([key, null]);
+                image.src = src;
+              }),
+          ),
+        ).then((loaded) => {
+          signalGameAssets = Object.fromEntries(loaded);
+          return signalGameAssets;
+        });
+      }
+
+      function createDefaultSignalSave() {
+        return {
+          mode: SIGNAL_GAME_DATA.mode,
+          completedAt: null,
+          bestScore: 0,
+          attempts: 0,
+          highestLevel: 0,
+          totalChains: 0,
+        };
+      }
+
+      function getSignalGameSave(create = true) {
+        if (!state.gameProgress) state.gameProgress = {};
+        const existing = state.gameProgress[SIGNAL_GAME_DATA.id];
+        if ((!existing || existing.mode !== SIGNAL_GAME_DATA.mode) && create) {
+          state.gameProgress[SIGNAL_GAME_DATA.id] = createDefaultSignalSave();
+        }
+
+        return state.gameProgress[SIGNAL_GAME_DATA.id] || createDefaultSignalSave();
+      }
+
+      function initializeSignalGameRuntime(dayId, stage, hudRefs, padButtons, assets) {
+        destroySignalGameRuntime();
+        signalGameRuntime = {
+          dayId,
+          stage,
+          hudRefs,
+          padButtons,
+          assets,
+          phase: "ready",
+          levelIndex: 0,
+          transmissionIndex: 0,
+          sequence: [],
+          inputIndex: 0,
+          score: 0,
+          timers: [],
+          completed: false,
+        };
+      }
+
+      function destroySignalGameRuntime() {
+        if (signalGameRuntime && Array.isArray(signalGameRuntime.timers)) {
+          signalGameRuntime.timers.forEach((timer) => clearTimeout(timer));
+        }
+        signalGameRuntime = null;
+      }
+
+      function startSignalGameRuntime() {
+        if (!signalGameRuntime) return;
+
+        const progress = getSignalGameSave();
+        progress.attempts = (Number(progress.attempts) || 0) + 1;
+        saveState();
+
+        const savedLevel = progress.completedAt
+          ? 0
+          : Math.min(Number(progress.highestLevel) || 0, SIGNAL_GAME_DATA.levels.length - 1);
+
+        clearSignalTimers();
+        signalGameRuntime.levelIndex = savedLevel;
+        signalGameRuntime.transmissionIndex = 0;
+        signalGameRuntime.score = 0;
+        signalGameRuntime.completed = false;
+        startSignalTransmission();
+      }
+
+      function startSignalTransmission() {
+        const runtime = signalGameRuntime;
+        if (!runtime) return;
+
+        const level = SIGNAL_GAME_DATA.levels[runtime.levelIndex];
+        if (!level) {
+          completeSignalGame();
+          return;
+        }
+
+        runtime.phase = "preview";
+        runtime.sequence = createSignalSequence(level.sequenceLength);
+        runtime.inputIndex = 0;
+        setSignalPadsDisabled(true);
+        updateSignalHud();
+        updateSignalStage(
+          "OBSERVA LA TRANSMISION",
+          "Memoriza los botones reales. Si parpadea el alien, es solo ruido italiano.",
+        );
+        playSignalPreview();
+      }
+
+      function createSignalSequence(length) {
+        const validPads = SIGNAL_GAME_DATA.pads.filter((pad) => !pad.noise);
+        const sequence = [];
+        for (let index = 0; index < length; index += 1) {
+          let nextPad = validPads[Math.floor(Math.random() * validPads.length)].id;
+          if (
+            sequence.length >= 2 &&
+            sequence[sequence.length - 1] === nextPad &&
+            sequence[sequence.length - 2] === nextPad
+          ) {
+            const alternatives = validPads.filter((pad) => pad.id !== nextPad);
+            nextPad = alternatives[Math.floor(Math.random() * alternatives.length)].id;
+          }
+          sequence.push(nextPad);
+        }
+        return sequence;
+      }
+
+      function createSignalPreviewQueue(sequence, level) {
+        const queue = [];
+        sequence.forEach((padId, index) => {
+          queue.push({ id: padId, noise: false });
+          if ((index + 1) % level.noiseEvery === 0 && index < sequence.length - 1) {
+            queue.push({ id: "noise", noise: true });
+          }
+        });
+        return queue;
+      }
+
+      function playSignalPreview() {
+        const runtime = signalGameRuntime;
+        if (!runtime) return;
+
+        clearSignalTimers();
+        const level = SIGNAL_GAME_DATA.levels[runtime.levelIndex];
+        const queue = createSignalPreviewQueue(runtime.sequence, level);
+        const stepMs = level.flashMs + 190;
+
+        queue.forEach((entry, index) => {
+          scheduleSignalTimer(() => {
+            flashSignalPad(entry.id, entry.noise ? "noise" : "active", level.flashMs);
+          }, index * stepMs);
+        });
+
+        scheduleSignalTimer(() => {
+          runtime.phase = "input";
+          setSignalPadsDisabled(false);
+          updateSignalStage(
+            "REPITE LA SENAL REAL",
+            "Pulsa la cadena en orden. Recuerda: el alien italiano era interferencia.",
+          );
+          updateSignalHud();
+        }, queue.length * stepMs + 220);
+      }
+
+      function handleSignalPadInput(padId) {
+        const runtime = signalGameRuntime;
+        if (!runtime || runtime.phase !== "input") return;
+
+        const expected = runtime.sequence[runtime.inputIndex];
+        if (padId === "noise") {
+          failSignalTransmission("RUIDO ITALIANO PULSADO");
+          return;
+        }
+
+        if (padId !== expected) {
+          failSignalTransmission("CADENA ALTERADA");
+          return;
+        }
+
+        runtime.inputIndex += 1;
+        runtime.score += 12 + runtime.levelIndex * 2;
+        flashSignalPad(padId, "good", 180);
+        updateSignalHud();
+
+        if (runtime.inputIndex >= runtime.sequence.length) {
+          clearSignalTransmission();
+        }
+      }
+
+      function clearSignalTransmission() {
+        const runtime = signalGameRuntime;
+        if (!runtime) return;
+
+        runtime.phase = "locked";
+        setSignalPadsDisabled(true);
+        runtime.transmissionIndex += 1;
+        runtime.score += 35 + runtime.levelIndex * 8;
+
+        const level = SIGNAL_GAME_DATA.levels[runtime.levelIndex];
+        if (runtime.transmissionIndex >= level.transmissions) {
+          clearSignalLevel();
+          return;
+        }
+
+        updateSignalStage("CADENA LIMPIA", "Preparando la siguiente transmision del canal.");
+        updateSignalHud();
+        scheduleSignalTimer(startSignalTransmission, 1250);
+      }
+
+      function failSignalTransmission(reason) {
+        const runtime = signalGameRuntime;
+        if (!runtime) return;
+
+        runtime.phase = "locked";
+        runtime.score = Math.max(0, runtime.score - 18);
+        setSignalPadsDisabled(true);
+        flashSignalPad("noise", "bad", 260);
+        updateSignalStage("SENAL CORTADA", `${reason}. La central repite esta cadena.`);
+        updateSignalHud();
+        scheduleSignalTimer(startSignalTransmission, 1500);
+      }
+
+      function clearSignalLevel() {
+        const runtime = signalGameRuntime;
+        if (!runtime) return;
+
+        const progress = getSignalGameSave();
+        progress.highestLevel = Math.max(
+          Number(progress.highestLevel) || 0,
+          runtime.levelIndex + 1,
+        );
+        progress.totalChains = (Number(progress.totalChains) || 0) + runtime.transmissionIndex;
+        progress.bestScore = Math.max(Number(progress.bestScore) || 0, runtime.score);
+        saveState();
+
+        if (runtime.levelIndex >= SIGNAL_GAME_DATA.levels.length - 1) {
+          completeSignalGame();
+          return;
+        }
+
+        runtime.phase = "locked";
+        runtime.levelIndex += 1;
+        runtime.transmissionIndex = 0;
+        updateSignalStage("CANAL DECODIFICADO", "La radio romantica abre el siguiente canal.");
+        updateSignalHud();
+        scheduleSignalTimer(startSignalTransmission, 1450);
+      }
+
+      function completeSignalGame() {
+        const runtime = signalGameRuntime;
+        if (!runtime || runtime.completed) return;
+
+        runtime.completed = true;
+        runtime.phase = "complete";
+        setSignalPadsDisabled(true);
+
+        const progress = getSignalGameSave();
+        progress.completedAt = new Date().toISOString();
+        progress.highestLevel = SIGNAL_GAME_DATA.levels.length;
+        progress.bestScore = Math.max(Number(progress.bestScore) || 0, runtime.score);
+
+        state.solved[runtime.dayId] = {
+          digit: Number(SIGNAL_GAME_DATA.digit),
+          solvedAt: new Date().toISOString(),
+          appVersion: APP_VERSION,
+          source: "signal",
+          score: runtime.score,
+        };
+        saveState();
+        renderSignalFinalScene();
+        showValidationMessage("OK RADIO ROMANTICA DECODIFICADA | CIFRA 6 DESBLOQUEADA", "success", 5400);
+
+        scheduleSignalTimer(() => {
+          if (signalGameRuntime && signalGameRuntime.phase === "complete") {
+            render();
+          }
+        }, 5600);
+      }
+
+      function updateSignalStage(title, copy) {
+        const runtime = signalGameRuntime;
+        if (!runtime || !runtime.stage) return;
+
+        runtime.stage.innerHTML = "";
+
+        const titleEl = document.createElement("div");
+        titleEl.className = "signal-stage-title";
+        titleEl.textContent = title;
+
+        const copyEl = document.createElement("div");
+        copyEl.className = "signal-stage-copy";
+        copyEl.textContent = copy;
+
+        runtime.stage.appendChild(titleEl);
+        runtime.stage.appendChild(copyEl);
+      }
+
+      function renderSignalFinalScene() {
+        const runtime = signalGameRuntime;
+        if (!runtime || !runtime.stage) return;
+
+        runtime.stage.innerHTML = "";
+
+        const portraits = document.createElement("div");
+        portraits.className = "signal-portraits";
+
+        const playerImage = document.createElement("img");
+        playerImage.className = "signal-portrait";
+        playerImage.alt = "Ella";
+        playerImage.src = SIGNAL_GAME_DATA.assets.player;
+
+        const link = document.createElement("div");
+        link.className = "signal-link";
+        link.textContent = "<3";
+
+        const rescuedImage = document.createElement("img");
+        rescuedImage.className = "signal-portrait";
+        rescuedImage.alt = "Rescatado";
+        rescuedImage.src = SIGNAL_GAME_DATA.assets.rescued;
+
+        portraits.appendChild(playerImage);
+        portraits.appendChild(link);
+        portraits.appendChild(rescuedImage);
+
+        const title = document.createElement("div");
+        title.className = "signal-stage-title";
+        title.textContent = "TRANSMISION RESTAURADA";
+
+        const pin = document.createElement("div");
+        pin.className = "signal-stage-pin";
+        pin.textContent = "PIN: 6";
+
+        const copy = document.createElement("div");
+        copy.className = "signal-stage-copy";
+        copy.textContent = "Cinco canales limpios. Interferencia italiana silenciada.";
+
+        runtime.stage.appendChild(portraits);
+        runtime.stage.appendChild(title);
+        runtime.stage.appendChild(pin);
+        runtime.stage.appendChild(copy);
+      }
+
+      function updateSignalHud() {
+        const runtime = signalGameRuntime;
+        if (!runtime || !runtime.hudRefs) return;
+
+        const level = SIGNAL_GAME_DATA.levels[runtime.levelIndex] || SIGNAL_GAME_DATA.levels[0];
+        runtime.hudRefs.channel.textContent = `${Math.min(runtime.levelIndex + 1, 5)}/5`;
+        runtime.hudRefs.chain.textContent = `${Math.min(runtime.transmissionIndex + 1, level.transmissions)}/${level.transmissions}`;
+        runtime.hudRefs.progress.textContent = `${Math.min(runtime.inputIndex, runtime.sequence.length)}/${level.sequenceLength}`;
+        runtime.hudRefs.score.textContent = runtime.score;
+      }
+
+      function setSignalPadsDisabled(disabled) {
+        const runtime = signalGameRuntime;
+        if (!runtime || !runtime.padButtons) return;
+
+        Object.values(runtime.padButtons).forEach((button) => {
+          button.disabled = disabled;
+        });
+      }
+
+      function flashSignalPad(padId, className, duration) {
+        const runtime = signalGameRuntime;
+        if (!runtime || !runtime.padButtons || !runtime.padButtons[padId]) return;
+
+        const button = runtime.padButtons[padId];
+        button.classList.add(className);
+        scheduleSignalTimer(() => {
+          button.classList.remove(className);
+        }, duration);
+      }
+
+      function scheduleSignalTimer(callback, delay) {
+        const runtime = signalGameRuntime;
+        if (!runtime) return null;
+
+        const timer = setTimeout(() => {
+          runtime.timers = runtime.timers.filter((item) => item !== timer);
+          callback();
+        }, delay);
+        runtime.timers.push(timer);
+        return timer;
+      }
+
+      function clearSignalTimers() {
+        const runtime = signalGameRuntime;
+        if (!runtime || !Array.isArray(runtime.timers)) return;
+
+        runtime.timers.forEach((timer) => clearTimeout(timer));
+        runtime.timers = [];
+        if (runtime.padButtons) {
+          Object.values(runtime.padButtons).forEach((button) => {
+            button.classList.remove("active", "noise", "good", "bad");
+          });
+        }
+      }
+
       function renderPuzzleGame(gameArea, selectedDay) {
         const progress = getPuzzleGameSave();
         const order = progress.order || createSolvedPuzzleOrder();
@@ -6929,7 +7756,7 @@
         <input type="text" value="${escapeAttr(day.type)}" onchange="updateDay('${day.id}', 'type', this.value)" placeholder="item, game, mission, treasure, final">
 
         <div style="font-size: 10px; color: #ff0080; margin-top: 1rem; margin-bottom: 0.5rem;">TIPO DE JUEGO</div>
-              <input type="text" value="${escapeAttr(day.gameType || "")}" onchange="updateDay('${day.id}', 'gameType', this.value)" placeholder="pixelart, boss, quiz, puzzle, catch, orbit">
+              <input type="text" value="${escapeAttr(day.gameType || "")}" onchange="updateDay('${day.id}', 'gameType', this.value)" placeholder="pixelart, boss, quiz, puzzle, catch, orbit, signal">
 
         <label>
           <input type="checkbox" ${state.manualAvailable[day.id] ? "checked" : ""} onchange="updateDay('${day.id}', 'manualAvailable', this.checked)">
@@ -7041,7 +7868,7 @@
 
       render();
       setInterval(() => {
-        if (!adminPanel.classList.contains("active") && !bossGameRuntime && !catchGameRuntime && !orbitGameRuntime) render();
+        if (!adminPanel.classList.contains("active") && !bossGameRuntime && !catchGameRuntime && !orbitGameRuntime && !signalGameRuntime) render();
       }, 60000);
     </script>
   </body>
